@@ -23,5 +23,10 @@ public class Player extends Thing {
   //////////////////////////
   // Methods
   //////////////////////////
-
+  public int getCellNumber(){
+    return 4;
+  }
+  public void setCellNumber(int cellNumber){
+    System.out.println(cellNumber);
+  }
 }

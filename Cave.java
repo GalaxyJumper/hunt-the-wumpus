@@ -11,7 +11,7 @@ public class Cave {
   //////////////////////////
   // Properties
   //////////////////////////
-  String[] gameLocations = new int[30];
+  String[] gameLocations = new String[30];
   
   //////////////////////////
   // Constructor(s)
