@@ -1,5 +1,7 @@
 READ ME
-You can edit this code as you like as long as you leave a description in your commit saying what you did.
+
+
+this IS A  TEST
 Cool 
 
 This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it.
