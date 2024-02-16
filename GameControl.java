@@ -1,4 +1,5 @@
-// Joshua Lennon and Nicholas Lennon
+// Joshua Lennon
+// Nick Lennon
 // 2/12/2024
 // Game Control Object
 
