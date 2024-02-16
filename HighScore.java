@@ -3,7 +3,7 @@
 //Scores Object
 
 
-public class Scores {
+public class HighScore {
     ///Properties
 
 
