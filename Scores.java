@@ -5,7 +5,7 @@
 
 public class Scores {
     ///Properties
-
+    
 
     ///Constructors
 
