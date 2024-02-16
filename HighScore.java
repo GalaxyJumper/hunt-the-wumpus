@@ -5,7 +5,7 @@
 
 public class HighScore {
     ///Properties
-
+    
 
     ///Constructors
 
