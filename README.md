@@ -15,7 +15,7 @@ The work
 - Lincoln: Trivia and detail
 - Other guy I dont know how to spell the name of: Trivia and detail.
 - Oliver: Team lead Graphics, sounds
-- Kavya: Score manager
+- Kavya: Highschore manager
 - Avi: Professional idiot, Cave
 - Josh & Nick: Player and Player movement
 
