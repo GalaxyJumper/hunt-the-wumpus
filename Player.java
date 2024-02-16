@@ -1,8 +1,8 @@
-// Joshua Lennon
+// Joshua Lennon and Nicholas Lennon
 // 2/12/2024
 // Player Object
 
-public class Player {
+public class Player{
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
