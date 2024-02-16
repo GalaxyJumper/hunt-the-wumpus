@@ -17,5 +17,5 @@ The work
 - Oliver: Team lead Graphics, sounds
 - Kavya: Highschore manager
 - Avi: Professional idiot, Cave
-- Josh & Nick: Player and Player movement
+- Josh & Nick: Player, Gameloc, Gamecontrol
 
