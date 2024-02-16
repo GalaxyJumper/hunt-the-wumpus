@@ -1,4 +1,4 @@
-// Joshua Lennon
+// Joshua Lennon and Nicholas Lennon
 // 2/12/2024
 // Game Locations Object
 
