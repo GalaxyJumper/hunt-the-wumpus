@@ -1,9 +1,5 @@
 READ ME
 
-
-this IS A  TEST
-Cool 
-
 This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it.
 
 It is like the original wumpus, with a few minor and a small amount of major modifications.
