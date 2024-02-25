@@ -3,7 +3,7 @@ README
 
 # **Make sure to check workingInReplit on line 5 of Main.java!!**
 
-This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it.
+This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it. Heavily inspired by Iron Lung.
 
 It is like the original wumpus, with a few minor and a small amount of major modifications.
 1. Wumpus is scarier, and does not die
