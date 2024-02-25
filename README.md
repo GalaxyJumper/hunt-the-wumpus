@@ -1,4 +1,7 @@
-READ ME
+README
+
+
+# **Make sure to check workingInReplit on line 5 of Main.java!!**
 
 This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it.
 
