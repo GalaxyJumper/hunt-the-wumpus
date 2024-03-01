@@ -14,7 +14,7 @@ It is like the original wumpus, with a few minor and a small amount of major mod
 
 The work
 - Lincoln: Trivia and detail
-- Other guy I dont know how to spell the name of: Trivia and detail.
+- Shvnsh: Trivia and detail.
 - Oliver: Team lead Graphics, sounds
 - Kavya: Highschore manager
 - Avi: Professional idiot, Cave
