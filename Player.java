@@ -33,6 +33,22 @@ public class Player{
     // METHODS
     ///////////////////////////////////////////////
 
+    public void move(){
+
+    }
+
+    public void shootArrow(){
+
+    }
+
+    public void buyArrows(){
+
+    }
+ 
+    public void purchaseSecret(){
+
+    }
+
     public int calcScore(){
         return 0;
     }
