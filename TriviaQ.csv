@@ -1,2 +1,2 @@
-id,question,answers,key,topic,
-00,This_is_a_test_question_,A-Cool B-Ok C-Damn D-Shoot,a,Lore
+id,question,answers,key,genre
+00,This_is_a_test_question_,A-Cool B-Ok C-Damn D-Shoot,a,lore

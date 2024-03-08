@@ -8,7 +8,7 @@ public class Main {
         if (workingInReplit){ 
             Gui gui = new Gui("HUNT THE WUMPUS", 960, 540); 
         }
-        //bonjour
+        //bonjour 
         System.out.println("Your code works! 🎉");
     }
 }
