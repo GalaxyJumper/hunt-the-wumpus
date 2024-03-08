@@ -1,10 +1,9 @@
-READ ME
+README
 
 
-this IS A  TEST
-Cool 
+# **Make sure to check workingInReplit on line 5 of Main.java!!**
 
-This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it.
+This is our cool project, Codenamed IRON WUMPUS until we can figure out a proper name to give it. Heavily inspired by Iron Lung.
 
 It is like the original wumpus, with a few minor and a small amount of major modifications.
 1. Wumpus is scarier, and does not die
@@ -15,7 +14,7 @@ It is like the original wumpus, with a few minor and a small amount of major mod
 
 The work
 - Lincoln: Trivia and detail
-- Other guy I dont know how to spell the name of: Trivia and detail.
+- Shvnsh: Trivia and detail.
 - Oliver: Team lead Graphics, sounds
 - Kavya: Highschore manager
 - Avi: Professional idiot, Cave
