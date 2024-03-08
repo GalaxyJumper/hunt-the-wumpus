@@ -14,7 +14,7 @@ class Trivia{
     String hint;
     int amount;
     int right;
-    // 0 - trivia, 1 - 2 - 3 - 4 - ect ill update this later
+    // 0 - lore, 1 - misc 2 - actions 3 -  4 - ect ill update this later
 
     // CONSTRUCTOR --------------------
 public Trivia(){
