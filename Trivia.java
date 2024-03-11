@@ -39,6 +39,18 @@ public boolean triviaRun(int amount, int right, String genre){
     //Returns a hint
     //Hints - Tells the player useless or useful stuff.
 public String Triviahint(){
+    String temp = " ";
+    if (h.hasNextLine()) {
+        h.nextLine();
+     }
+
+     while(h.hasNextLine()){
+         String line = h.nextLine();
+         String[] fileParts = line.split(",");
+         temp = fileParts[2];
+     }
+
+     hint = temp;
 
     //fancy algorhithm to determine which hint to give them go here. 
     //occurs when you want to get a hint
