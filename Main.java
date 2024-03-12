@@ -9,6 +9,6 @@ public class Main {
             Gui gui = new Gui("HUNT THE WUMPUS", 960, 540); 
         }
         //bonjour
-        System.out.println("Your code works! 🎉");
+        System.out.println("Your code works ~*,`");
     }
 }

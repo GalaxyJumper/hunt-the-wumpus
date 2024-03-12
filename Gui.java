@@ -40,4 +40,29 @@ public class Gui extends JPanel{
     /////////////////////////////////////
     // METHODS
     /////////////////////////////////////
+
+
+    //public void drawActionText(String[] text)
+
+    //public void drawScene(String[] room)
+
+
+    //public void drawPlayer(int x, y)
+    
+
+    //public void drawTriviaMenu(String question, String[] answers)
+
+
+    //public void drawWumpus(int x, y)
+
+
+    //public void drawObstacle(String[] room)
+    
+
+    //Returns an array of the current keys pressed.
+    //public boolean[] getInput()
+
+
+
+    
 }
