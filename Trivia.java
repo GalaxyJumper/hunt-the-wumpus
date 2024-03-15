@@ -4,16 +4,17 @@ import java.util.Random;
 import java.io.File;
 class Trivia{
     // PROPERTIES --------------------
-    Scanner in = new Scanner(System.in);
-    File trivia = new File("TriviaQ.csv");
-    Scanner triv = new Scanner("trivia");
-    File Hint = new File("TriviaT.csv");
-    Scanner h = new Scanner("Hint");
-    String genre = "";
-    boolean rightflag;
-    String hint;
-    int amount;
-    int right;
+    Scanner in =    new Scanner(System.in); //Scans Usr imput
+    File trivia =   new File("TriviaQ.csv"); //The file we refer to
+    Scanner triv =  new Scanner("trivia"); //the scanner that reads the file ("TriviaQ.csv")
+    File Hint =     new File("TriviaT.csv"); //the file we refer to
+    Scanner h =     new Scanner("Hint"); //The scanner that reads the file ("TriviaQ.csv")
+    //Values of the questions
+    String genre =  ""; //Gets the genre
+    boolean rightflag; //returns true = right and false = wrong lmao
+    String hint; //gets the hint
+    int amount; //amount requested
+    int right; //amound needed to be right
     // 0 - lore, 1 - misc 2 - actions 3 -  4 - ect ill update this later
 
     // CONSTRUCTOR --------------------

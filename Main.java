@@ -8,7 +8,11 @@ public class Main {
         if (workingInReplit){ 
             Gui gui = new Gui("HUNT THE WUMPUS", 960, 540); 
         }
+        Trivia trivia = new Trivia();
+        trivia.Triviahint();
         //bonjour 
         System.out.println("Your code works ~*,`");
+        //Here's a little thing for testing Triva
+
     }
 }
