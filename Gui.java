@@ -5,6 +5,7 @@ public class Gui extends JPanel{
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     /////////////////////////////////////
+    Graphics2D g2d;
     public Gui(String name, int width, int height){
         // Create a new Frame for everything to live in
         JFrame frame = new JFrame();
@@ -41,6 +42,20 @@ public class Gui extends JPanel{
     // METHODS
     /////////////////////////////////////
 
+    public void paint(Graphics g){
+        g2d = (Graphics2D)g;
+        drawHex(100, 100, 100);
+    }
+    public void drawHex(int centerX, int centerY, int radius){
+        int[] currentPos = new int[2];
+        int[] lastPos = {radius, 0};
+        for(int i = 0; i < 6; i++) {
+            currentPos[0] = (int)(centerX + radius * Math.cos((Math.PI/6) * i));
+            currentPos[1] = (int)(centerY + radius * Math.sin((Math.PI/6) * i));
+            g2d.drawLine(currentPos[0], currentPos[1], lastPos[0], lastPos[1]);
+            lastPos = currentPos;
+        }
+    }
 
     //public void drawActionText(String[] text)
 
