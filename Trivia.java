@@ -16,7 +16,7 @@ class Trivia{
     String hint; //gets the hint
     int amount; //amount requested
     int right; //amound needed to be right
-    // 0 - lore, 1 - misc 2 - actions 3 -  4 - ect ill update this later
+    // 0 - lore, 1 - misc 2 - actions 3 - chem  4 - ect ill update this later
 
     // CONSTRUCTOR --------------------
 public Trivia() throws FileNotFoundException{
