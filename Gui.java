@@ -47,13 +47,17 @@ public class Gui extends JPanel{
         drawHex(100, 100, 100);
     }
     public void drawHex(int centerX, int centerY, int radius){
-        int[] currentPos = new int[2];
-        int[] lastPos = {radius, 0};
-        for(int i = 0; i < 6; i++) {
-            currentPos[0] = (int)(centerX + radius * Math.cos((Math.PI/6) * i));
-            currentPos[1] = (int)(centerY + radius * Math.sin((Math.PI/6) * i));
-            g2d.drawLine(currentPos[0], currentPos[1], lastPos[0], lastPos[1]);
-            lastPos = currentPos;
+        int lastX = centerX + radius;
+        int lastY = centerY;
+        int currentX = 0;
+        int currentY = 0;
+        for(int i = -1; i < 6; i++){
+            currentX = centerX + (int)(Math.cos((Math.PI/3) * i) * radius);
+            currentY = centerY + (int)(Math.sin((Math.PI/3) * i) * radius);
+            g2d.setStroke(new BasicStroke(2));
+            g2d.drawLine(currentX, currentY, lastX, lastY);
+            lastX = currentX;
+            lastY = currentY;
         }
     }
 
