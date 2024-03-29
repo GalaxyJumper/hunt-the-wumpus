@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
@@ -20,10 +21,7 @@ public class HighScore {
     ///Constructors
     public HighScore(){
     
-        //String path = GetDefaultLogFileName();
-        //File highScoreFile = new File(path);
-
-        
+        File highScoreFile = new File("Highscore.csv");
 
 
         //File HighScore = new File("Highscore.csv");
@@ -35,10 +33,7 @@ public class HighScore {
 
 
 
-    ///Methods
-    //private static String GetDefaultLogFileName() {
-        //return System.getProperty(C:\git\hunt-the-wumpus-1\Highscore.csv);
-       // }
+    ///Method
 
     //checks if the current player has a high score, updates data table, and displays data table
     public void endOfGame(Player player){
@@ -49,6 +44,8 @@ public class HighScore {
     
     //checks if player has a high score
     public boolean endOfGameCheck(Player player){
+        //Scanner user = new Scanner(this.highScoreFile);
+
         return false;
     }
     
