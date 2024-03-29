@@ -2,22 +2,29 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.io.File;
+import java.io.FileNotFoundException;
 class Trivia{
     // PROPERTIES --------------------
-    Scanner in = new Scanner(System.in);
-    File trivia = new File("TriviaQ.csv");
-    Scanner triv = new Scanner("trivia");
-    File Hint = new File("TriviaT.csv");
-    Scanner h = new Scanner("Hint");
-    String genre = "";
-    boolean rightflag;
-    String hint;
-    int amount;
-    int right;
-    // 0 - lore, 1 - misc 2 - actions 3 -  4 - ect ill update this later
+    Scanner in; //Scans Usr imput
+    File trivia; //The file we refer to
+    Scanner triv; //the scanner that reads the file ("TriviaQ.csv")
+    File Hint; //the file we refer to
+    Scanner h; //The scanner that reads the file ("TriviaT.csv")
+    //Values of the questions
+    String genre =  ""; //Gets the genre
+    boolean rightflag; //returns true = right and false = wrong lmao
+    String hint; //gets the hint
+    int amount; //amount requested
+    int right; //amound needed to be right
+    // 0 - lore, 1 - misc 2 - actions 3 - chem  4 - ect ill update this later
 
     // CONSTRUCTOR --------------------
-public Trivia(){
+public Trivia() throws FileNotFoundException{
+    in     =   new Scanner(System.in); //Scans Usr imput
+    trivia =   new File("TriviaQ.csv"); //The file we refer to
+    triv   =   new Scanner("trivia"); //the scanner that reads the file ("TriviaQ.csv")
+    Hint   =   new File("TriviaT.csv"); //the file we refer to
+    h      =   new Scanner(Hint); //The scanner that reads the file ("TriviaQ.csv")
 
 }
     // Methoods -----------------------
@@ -31,7 +38,9 @@ public Trivia(){
     //Split this into multiple objects? Getters and setters
 public boolean triviaRun(int amount, int right, String genre){
     String in;
+    int filelengthT;
     System.out.println("This program works! - Triviarun");
+    
     //WEIOUIL HEOIHLHASO DJADASDCFEFSDC
     //1 - 
     return rightflag;
@@ -39,15 +48,21 @@ public boolean triviaRun(int amount, int right, String genre){
     //Returns a hint
     //Hints - Tells the player useless or useful stuff.
 public String Triviahint(){
+System.out.println("This program works! - TriviaHint");
+    int filelengthT = 5;
+    int rand = (int)(Math.random() * (filelengthT - 0)+0);
+    System.out.println(rand);
     String temp = " ";
-    if (h.hasNextLine()) {
+    /* 
+    if (h.hasNextLine()) {yy
+y
         h.nextLine();
      }
-
+*/
      while(h.hasNextLine()){
          String line = h.nextLine();
          String[] fileParts = line.split(",");
-         temp = fileParts[2];
+         temp = fileParts[1];
      }
 
      hint = temp;
