@@ -31,6 +31,10 @@ public  class GameControl {
 
     }
 
+    public void getCave(){
+        
+    }
+
     // background
     public void passTurn(){
 
