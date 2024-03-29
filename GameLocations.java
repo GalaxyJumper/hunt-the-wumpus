@@ -15,13 +15,16 @@ public class GameLocations {
     ///////////////////////////////////////////////
 
     private Random random = new Random();
+    private ArrayList<GameLocations> Map = new ArrayList<GameLocations>();
 
+
+    private int numCorridors;
     private int numPits;
     private int numBats;
     private boolean isPit;
     private boolean isBat;
-    private ArrayList<GameLocations> Map = new ArrayList<GameLocations>();
-
+    private boolean hasPlayer;
+    
 
 
     //ArrayList of pentagonal rooms that represent the map
@@ -38,19 +41,38 @@ public class GameLocations {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
-    //determining 
+    //When you initailize a gameLocation (room in the cave) it has a 5% chance of becoming a Pit 
+    //and a 5% chance of becoming a bat. It cannot become both. 
 
         public GameLocations(){
             if (this.numPits < 2){
-                
+                if(random.nextInt(20)   >   19){
+                    this.isPit = true;
+                    this.numPits++;
+                }
             }
 
-            if (this.numBats < 2){
-                
+            if (this.numBats < 2 & this.isPit != true){
+                if(random.nextInt(20)   >   19){
+                    this.isBat = true;
+                    this.numBats++;
+                }
             }
         }
+
+
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
+
+    public void playerEntersRoom(){
+        this.hasPlayer = true;
+    }
+
+    public void playerExitsRoom(){
+        this.hasPlayer = false;
+    }
+
+
 }
