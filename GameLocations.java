@@ -7,14 +7,22 @@
 //tracking hazards and wumpus
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameLocations {
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
 
+    private Random random = new Random();
+
+    private int numPits;
+    private int numBats;
     private boolean isPit;
     private boolean isBat;
+    private ArrayList<GameLocations> Map = new ArrayList<GameLocations>();
+
+
 
     //ArrayList of pentagonal rooms that represent the map
     //Each one's location in the array is its assigned "number" (0-19 for a 20-sided dodecahedron)
@@ -24,12 +32,23 @@ public class GameLocations {
     //GameControl will have a method to check when the Player moves into a new room if it is a "pit"
     //Or if it contains "Bats" with a boolean set to "true"
 
-    //ArrayList<Type> Map = new ArrayList<Type>();
 
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////
+
+    //determining 
+
+        public GameLocations(){
+            if (this.numPits < 2){
+                
+            }
+
+            if (this.numBats < 2){
+                
+            }
+        }
 
     ///////////////////////////////////////////////
     // METHODS
