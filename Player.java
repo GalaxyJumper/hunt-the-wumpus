@@ -10,14 +10,15 @@
 // Player Object
 
 public class Player{
+    
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
 
-    private int arrows;
-    private int coins;
-
+    private String name;
     private int turnsTaken;
+    private int coins;
+    private int arrows;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -32,6 +33,22 @@ public class Player{
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
+
+    public void move(){
+
+    }
+
+    public void shootArrow(){
+
+    }
+
+    public void buyArrows(){
+
+    }
+ 
+    public void purchaseSecret(){
+
+    }
 
     public int calcScore(){
         return 0;
