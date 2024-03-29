@@ -13,18 +13,31 @@ public class Cave {
 
     public Cave() {
         File maps = new File("maps.csv");
+        Scanner mapInterpreter = new Scanner(System.in);
         try {
-            Scanner mapInterpreter = new Scanner(maps);
+            mapInterpreter = new Scanner(maps);
         } catch(FileNotFoundException e) {
             print("lmao dumbass");
+            System.exit(0);
+        }
+        interpretFile(mapInterpreter);
+    }
+
+    private void interpretFile(Scanner mapInterpreter){
+        for (int i = 0; i < 30; i++){
+            map[i / 6][i % 6] = mapInterpreter.next();
         }
     }
 
     public boolean canMove(int[] curLoc, int[] newLoc){
         boolean canMove = false;
+        String[] curLocInfo = (map[curLoc[0]][curLoc[1]]).split(";");
         String[] temp = new String[2];
+        
         for (int i = 0; i < (map[curLoc[0]][curLoc[1]].split(";")).length; i++){
-            temp = ((map[curLoc[0]][curLoc[1]]).split(";"))[i].split(",");
+
+            temp = (curLocInfo[i]).split(",");
+
             if ((Integer.parseInt(temp[0]) == newLoc[0]) && (Integer.parseInt(temp[1]) == newLoc[1])){
                 canMove = true;
                 break;
