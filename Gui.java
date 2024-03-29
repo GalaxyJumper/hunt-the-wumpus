@@ -5,6 +5,7 @@ public class Gui extends JPanel{
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     /////////////////////////////////////
+    Graphics2D g2d;
     public Gui(String name, int width, int height){
         // Create a new Frame for everything to live in
         JFrame frame = new JFrame();
@@ -40,4 +41,47 @@ public class Gui extends JPanel{
     /////////////////////////////////////
     // METHODS
     /////////////////////////////////////
+
+    public void paint(Graphics g){
+        g2d = (Graphics2D)g;
+        drawHex(100, 100, 100);
+    }
+    public void drawHex(int centerX, int centerY, int radius){
+        int lastX = centerX + radius;
+        int lastY = centerY;
+        int currentX = 0;
+        int currentY = 0;
+        for(int i = -1; i < 6; i++){
+            currentX = centerX + (int)(Math.cos((Math.PI/3) * i) * radius);
+            currentY = centerY + (int)(Math.sin((Math.PI/3) * i) * radius);
+            g2d.setStroke(new BasicStroke(2));
+            g2d.drawLine(currentX, currentY, lastX, lastY);
+            lastX = currentX;
+            lastY = currentY;
+        }
+    }
+
+    //public void drawActionText(String[] text)
+
+    //public void drawScene(String[] room)
+
+
+    //public void drawPlayer(int x, y)
+    
+
+    //public void drawTriviaMenu(String question, String[] answers)
+
+
+    //public void drawWumpus(int x, y)
+
+
+    //public void drawObstacle(String[] room)
+    
+
+    //Returns an array of the current keys pressed.
+    //public boolean[] getInput()
+
+
+
+    
 }
