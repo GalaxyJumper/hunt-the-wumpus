@@ -93,6 +93,12 @@ public class GameLocations {
         return randLocs;
     }
 
+    //reads the first layer of the 3D array and parses that int into a string 
+    //that tells you the type of hazard that exists in the room
+    public void getType(int x, int y){
+       // locsTable
+    }
+
 
 }
 
