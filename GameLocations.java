@@ -14,20 +14,19 @@ public class GameLocations {
     // VARIABLES
     ///////////////////////////////////////////////
 
+    private final String[] TYPES = {"Player", "Wumpus", "Bat", "Pit"};
+
     private Random random = new Random();
-    private ArrayList<GameLocations> Map = new ArrayList<GameLocations>();
+    private int[][][] locsTable;
 
-
-    private int numCorridors;
-    private int numPits;
-    private int numBats;
-    private boolean isPit;
-    private boolean isBat;
-    private boolean hasPlayer;
     
 
 
-    //ArrayList of pentagonal rooms that represent the map
+    
+    
+
+
+    //ArrayList of hexagonal rooms that represent the map
     //Each one's location in the array is its assigned "number" (0-19 for a 20-sided dodecahedron)
     //Two of the locations are randomly chosen to be "pits" 
     //Two of the locations, aside from the two pits, are randomly chosen to be "bats"
@@ -41,23 +40,10 @@ public class GameLocations {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
-    //When you initailize a gameLocation (room in the cave) it has a 5% chance of becoming a Pit 
-    //and a 5% chance of becoming a bat. It cannot become both. 
+    
 
         public GameLocations(){
-            if (this.numPits < 2){
-                if(random.nextInt(20)   >   19){
-                    this.isPit = true;
-                    this.numPits++;
-                }
-            }
-
-            if (this.numBats < 2 & this.isPit != true){
-                if(random.nextInt(20)   >   19){
-                    this.isBat = true;
-                    this.numBats++;
-                }
-            }
+            this.locsTable = initializeLocations();
         }
 
 
@@ -66,13 +52,47 @@ public class GameLocations {
     // METHODS
     ///////////////////////////////////////////////
 
-    public void playerEntersRoom(){
-        this.hasPlayer = true;
+    //Uses random utility to get a random room coordinate x,y within the cave
+    //returns int[] of the location
+    public int[] getRandomLocation(){
+        int xVal = random.nextInt(6);
+        int yVal = random.nextInt(5);
+
+        return new int[]{xVal, yVal};
     }
 
-    public void playerExitsRoom(){
-        this.hasPlayer = false;
+    // Interates through all in game objects to see if 1+ is in room x,y
+    // Returns true if there is, false otherwise;
+    public boolean somethingThere(int x, int y){
+        for(int[][] type : locsTable){
+            for(int[] instance : type){
+                if(instance[0] == x && instance[1] == y) return true;
+            }
+        }
+        return false;
+    }
+
+    // Gets a new random location, checks if there is already something there
+    // Returns the random location if nothing is there, retries otherwise
+    private int[] getNovelLocation(){
+        int[] randLoc = getRandomLocation();
+        if(somethingThere(randLoc[0], randLoc[1])) return getNovelLocation();
+        return randLoc;
+    }
+
+    // Fills the location table with random, nonrepeating coordinates
+    // Returns this new table;
+    private int[][][] initializeLocations(){
+        int[][][] randLocs = new int[][][]{};
+        for(int type = 0; type < TYPES.length; type++){
+            int instanceNum = (type >= 2)? 2 : 1;
+            for(int instance = 0; instance < instanceNum; instance++){
+                randLocs[type][instance] = getNovelLocation();
+            }
+        }
+        return randLocs;
     }
 
 
 }
+
