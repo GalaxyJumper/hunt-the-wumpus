@@ -17,7 +17,7 @@ public class GameLocations {
     private final String[] TYPES = {"Player", "Wumpus", "Bat", "Pit"};
 
     private Random random = new Random();
-    private int[][][] locsTable;
+    private int[][] locsTable;
 
     
 
@@ -40,8 +40,6 @@ public class GameLocations {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
-    
-
         public GameLocations(){
             this.locsTable = initializeLocations();
         }
@@ -54,19 +52,17 @@ public class GameLocations {
 
     //Uses random utility to get a random room coordinate x,y within the cave
     //returns int[] of the location
-    public int[] getRandomLocation(){
-        int xVal = random.nextInt(6);
-        int yVal = random.nextInt(5);
-
-        return new int[]{xVal, yVal};
+    public int getRandomLocation(){
+        int val = random.nextInt(30);
+        return val;
     }
 
     // Interates through all in game objects to see if 1+ is in room x,y
     // Returns true if there is, false otherwise;
-    public boolean somethingThere(int x, int y){
-        for(int[][] type : locsTable){
-            for(int[] instance : type){
-                if(instance[0] == x && instance[1] == y) return true;
+    public boolean somethingThere(int roomNum){
+        for(int[] type : locsTable){
+            for(int instance : type){
+                if(instance == roomNum) return true;
             }
         }
         return false;
@@ -74,16 +70,16 @@ public class GameLocations {
 
     // Gets a new random location, checks if there is already something there
     // Returns the random location if nothing is there, retries otherwise
-    private int[] getNovelLocation(){
-        int[] randLoc = getRandomLocation();
-        if(somethingThere(randLoc[0], randLoc[1])) return getNovelLocation();
+    private int getNovelLocation(){
+        int randLoc = getRandomLocation();
+        if(somethingThere(randLoc)) return getNovelLocation();
         return randLoc;
     }
 
     // Fills the location table with random, nonrepeating coordinates
     // Returns this new table;
-    private int[][][] initializeLocations(){
-        int[][][] randLocs = new int[][][]{};
+    private int[][] initializeLocations(){
+        int[][] randLocs = new int[][]{};
         for(int type = 0; type < TYPES.length; type++){
             int instanceNum = (type >= 2)? 2 : 1;
             for(int instance = 0; instance < instanceNum; instance++){
