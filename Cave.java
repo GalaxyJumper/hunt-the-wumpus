@@ -31,7 +31,9 @@ public class Cave {
     }
 
     // check if move is valid
-    public boolean canMove(int[] curLoc, int[] newLoc){
+    public boolean canMove(int curLoc1, int newLoc1){
+        int[] curLoc = 1-2d(curLoc1);
+        int[] newLoc = 1-2d(newLoc1);
         boolean canMove = false;
         String[] curLocInfo = (map[curLoc[0]][curLoc[1]]).split(";"); // get list of valid moves
         String[] temp = new String[2];
@@ -51,6 +53,10 @@ public class Cave {
 
     public String[][] initialCave(){
         return map;
+    }
+
+    private int[] 1-2d(int oneDCoord){
+        return new int[]{oneDCoord / 6, oneDCoord % 6};
     }
 
     // i ain't sys-outing s***
