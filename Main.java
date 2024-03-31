@@ -14,7 +14,7 @@ public class Main {
         Trivia trivia = new Trivia();
          //Here's a little thing for testing Triva
         System.out.println(trivia.Triviahint());
-        System.out.println("Want to be close");
+        
         //bonjour 
         System.out.println("Your code works ~*,`");
        
