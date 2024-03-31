@@ -23,17 +23,20 @@ public class Cave {
         interpretFile(mapInterpreter);
     }
 
+    // get file info
     private void interpretFile(Scanner mapInterpreter){
         for (int i = 0; i < 30; i++){
             map[i / 6][i % 6] = mapInterpreter.next();
         }
     }
 
+    // check if move is valid
     public boolean canMove(int[] curLoc, int[] newLoc){
         boolean canMove = false;
-        String[] curLocInfo = (map[curLoc[0]][curLoc[1]]).split(";");
+        String[] curLocInfo = (map[curLoc[0]][curLoc[1]]).split(";"); // get list of valid moves
         String[] temp = new String[2];
         
+        // check if newLoc matches valid moves
         for (int i = 0; i < (map[curLoc[0]][curLoc[1]].split(";")).length; i++){
 
             temp = (curLocInfo[i]).split(",");
@@ -50,6 +53,7 @@ public class Cave {
         return map;
     }
 
+    // i ain't sys-outing s***
     public static void println(String string){
         System.out.println(string);
     }
