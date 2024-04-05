@@ -10,6 +10,7 @@ class Trivia{
     Scanner triv; //the scanner that reads the file ("TriviaQ.csv")
     File Hint; //the file we refer to
     Scanner h; //The scanner that reads the file ("TriviaT.csv")
+    Scanner hLength; //The scanner that reads the file ("TriviaT.csv"), for length
     //Values of the questions
     String genre =  ""; //Gets the genre
     boolean rightflag; //returns true = right and false = wrong lmao
@@ -25,6 +26,7 @@ public Trivia() throws FileNotFoundException{
     triv   =   new Scanner("trivia"); //the scanner that reads the file ("TriviaQ.csv")
     Hint   =   new File("TriviaT.csv"); //the file we refer to
     h      =   new Scanner(Hint); //The scanner that reads the file ("TriviaQ.csv")
+    hLength=   new Scanner(Hint);
 
 }
     // Methoods -----------------------
@@ -47,25 +49,52 @@ public boolean triviaRun(int amount, int right, String genre){
 }
     //Returns a hint
     //Hints - Tells the player useless or useful stuff.
+    /*
+     * 2darray[][]{
+     * {id, text, genre}, {id, text, genre}
+     * 
+     * }
+     */
 public String Triviahint(){
 System.out.println("This program works! - TriviaHint");
-    int filelengthT = 5;
-    int rand = (int)(Math.random() * (filelengthT - 0)+0);
-    System.out.println(rand);
+    String line;
+    String[][] fileParts = new String[5][3];
+    int filelengthT = 0;
+    int k = 0;
     String temp = " ";
-    /* 
-    if (h.hasNextLine()) {yy
-y
-        h.nextLine();
-     }
-*/
-     while(h.hasNextLine()){
-         String line = h.nextLine();
-         String[] fileParts = line.split(",");
-         temp = fileParts[1];
+    
+    if (h.hasNextLine()) {
+
+        
      }
 
-     hint = temp;
+     while(h.hasNextLine()){
+        /*
+         * 
+         */
+        while(hLength.hasNextLine()){
+            filelengthT++;
+            hLength.nextLine();
+        }
+         
+
+        // temp = fileParts[0][k];
+        for(int b = 0; b < fileParts.length; b++){
+            line = h.nextLine();
+            System.out.println(line);
+         for(int i = 0; i < fileParts[b].length; i++){
+            fileParts[b] = line.split(",");
+            System.out.println(fileParts[b][i]);
+         }
+        }
+         k++;
+     }
+    //int filelengthT = fileParts.length;
+    
+
+int randc = (int)(Math.random() * (filelengthT - 0)+0);
+
+     hint = fileParts[randc][1];
 
     //fancy algorhithm to determine which hint to give them go here. 
     //occurs when you want to get a hint
