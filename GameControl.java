@@ -24,7 +24,7 @@ public  class GameControl {
 
     // start-up
     public void initializeGUI(){
-
+        
     }
 
     public void startNewGame(){

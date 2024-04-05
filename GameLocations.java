@@ -7,14 +7,18 @@
 //tracking hazards and wumpus
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameLocations {
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
 
-    private boolean isPit;
-    private boolean isBat;
+    private Random rng = new Random();
+
+    private final int[][][] objectLocs = new int[4][][];
+    
+
 
     //ArrayList of pentagonal rooms that represent the map
     //Each one's location in the array is its assigned "number" (0-19 for a 20-sided dodecahedron)
@@ -30,8 +34,11 @@ public class GameLocations {
     ///////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////
+        
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
+
+    
 }
