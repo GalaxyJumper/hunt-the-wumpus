@@ -13,18 +13,36 @@ public class Cave {
 
     public Cave() {
         File maps = new File("maps.csv");
+        Scanner mapInterpreter = new Scanner(System.in);
         try {
-            Scanner mapInterpreter = new Scanner(maps);
+            mapInterpreter = new Scanner(maps);
         } catch(FileNotFoundException e) {
             print("lmao dumbass");
+            System.exit(0);
+        }
+        interpretFile(mapInterpreter);
+    }
+
+    // get file info
+    private void interpretFile(Scanner mapInterpreter){
+        for (int i = 0; i < 30; i++){
+            map[i / 6][i % 6] = mapInterpreter.next();
         }
     }
 
-    public boolean canMove(int[] curLoc, int[] newLoc){
+    // check if move is valid
+    public boolean canMove(int curLoc1, int newLoc1){
+        int[] curLoc = 1-2d(curLoc1);
+        int[] newLoc = 1-2d(newLoc1);
         boolean canMove = false;
+        String[] curLocInfo = (map[curLoc[0]][curLoc[1]]).split(";"); // get list of valid moves
         String[] temp = new String[2];
+        
+        // check if newLoc matches valid moves
         for (int i = 0; i < (map[curLoc[0]][curLoc[1]].split(";")).length; i++){
-            temp = ((map[curLoc[0]][curLoc[1]]).split(";"))[i].split(",");
+
+            temp = (curLocInfo[i]).split(",");
+
             if ((Integer.parseInt(temp[0]) == newLoc[0]) && (Integer.parseInt(temp[1]) == newLoc[1])){
                 canMove = true;
                 break;
@@ -37,6 +55,11 @@ public class Cave {
         return map;
     }
 
+    private int[] 1-2d(int oneDCoord){
+        return new int[]{oneDCoord / 6, oneDCoord % 6};
+    }
+
+    // i ain't sys-outing s***
     public static void println(String string){
         System.out.println(string);
     }
