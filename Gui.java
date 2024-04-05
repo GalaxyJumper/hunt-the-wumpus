@@ -44,23 +44,34 @@ public class Gui extends JPanel{
 
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
-        drawHex(100, 100, 100);
+        drawHexGrid(0, 0, 200);
     }
-    public void drawHex(int centerX, int centerY, int radius){
-        int lastX = centerX + radius;
-        int lastY = centerY;
-        int currentX = 0;
-        int currentY = 0;
+    public void drawHex(double centerX, double centerY, double radius){
+        double lastX = centerX + radius;
+        double lastY = centerY;
+        double currentX = 0;
+        double currentY = 0;
         for(int i = -1; i < 6; i++){
-            currentX = centerX + (int)(Math.cos((Math.PI/3) * i) * radius);
-            currentY = centerY + (int)(Math.sin((Math.PI/3) * i) * radius);
+            currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
+            currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
             g2d.setStroke(new BasicStroke(2));
-            g2d.drawLine(currentX, currentY, lastX, lastY);
+            g2d.drawLine((int)currentX, (int)currentY, (int)lastX, (int)lastY);
             lastX = currentX;
             lastY = currentY;
         }
     }
-
+    public void drawHexGrid(int startX, int startY, int radius){
+        //X = (even) startX + (3radius) * x
+        //    (odd)  (startX + (3radius) * x) + 1.5 radius
+        for(int i = 0; i < 6; i++){
+            double x = (i * (radius*1.5));
+            for(int k = 0; k < 5; k++){ 
+                double y = (k * (Math.sqrt(3) * radius));
+                drawHex(x, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ), radius);
+            }
+        }
+    
+    }
     //public void drawActionText(String[] text)
 
     //public void drawScene(String[] room)

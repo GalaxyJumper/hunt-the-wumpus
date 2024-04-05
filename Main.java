@@ -6,11 +6,11 @@ public class Main {
         Cave cave = new Cave();
         System.out.println(cave.canMove(14,13));
         Scanner scan = new Scanner(System.in);
-
+        //important anti error for codespaces
         Cave.println("Is this program running in Github Codepaces? (y/n)");
         boolean workingInCodespaces = scan.next().equals("y");
         if (!workingInCodespaces){ 
-            Gui gui = new Gui("HUNT THE WUMPUS", 960, 540); 
+            Gui gui = new Gui("HUNT THE WUMPUS", 2560, 1440); 
         }
 
         Trivia trivia = new Trivia();

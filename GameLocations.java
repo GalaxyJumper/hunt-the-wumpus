@@ -17,15 +17,9 @@ public class GameLocations {
     private final String[] TYPES = {"Player", "Wumpus", "Bat", "Pit"};
 
     private Random random = new Random();
+
     private int[][] locsTable;
-
     
-
-
-    
-    
-
-
     //ArrayList of hexagonal rooms that represent the map
     //Each one's location in the array is its assigned "number" (0-19 for a 20-sided dodecahedron)
     //Two of the locations are randomly chosen to be "pits" 
@@ -34,8 +28,6 @@ public class GameLocations {
     //GameControl will have a method to check when the Player moves into a new room if it is a "pit"
     //Or if it contains "Bats" with a boolean set to "true"
 
-
-
     ///////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////
@@ -43,8 +35,6 @@ public class GameLocations {
         public GameLocations(){
             this.locsTable = initializeLocations();
         }
-
-
 
     ///////////////////////////////////////////////
     // METHODS
@@ -91,10 +81,24 @@ public class GameLocations {
 
     //reads the first layer of the 3D array and parses that int into a string 
     //that tells you the type of hazard that exists in the room
-    public void getType(int x, int y){
-       // locsTable
+    public String getHazard(int room){
+        //Starts at one to skip player's location
+        for(int type = 1; type < locsTable.length; type++){
+            for(int inst = 0; inst < locsTable[type].length; inst++){
+                if(locsTable[type][inst] == room) return TYPES[type];
+            }
+        }
+        return null;
     }
 
+    //accesses and returns room number of the wumpus
+    public int getWumpusLoc(){
+        return locsTable[1][0];
+    }
+
+    public void setWumpusLoc(int room){
+        locsTable[1][0] = room;
+    }
 
 }
 
