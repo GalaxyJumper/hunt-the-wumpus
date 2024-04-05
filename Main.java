@@ -3,7 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 public class Main {
     public static void main (String[] args) throws HeadlessException, FileNotFoundException{
-        Cave.print(Cave.isValid(14,15));
+        Cave cave = new Cave();
+        System.out.println(cave.canMove(14,13));
         Scanner scan = new Scanner(System.in);
 
         Cave.println("Is this program running in Github Codepaces? (y/n)");
