@@ -49,23 +49,31 @@ public boolean triviaRun(int amount, int right, String genre){
     //Hints - Tells the player useless or useful stuff.
 public String Triviahint(){
 System.out.println("This program works! - TriviaHint");
-    int filelengthT = 5;
-    int rand = (int)(Math.random() * (filelengthT - 0)+0);
-    System.out.println(rand);
+    String line;
+    String[] fileParts;
+    int filelengthT = 0;
     String temp = " ";
-    /* 
-    if (h.hasNextLine()) {yy
-y
+    
+    if (h.hasNextLine()) {
+
         h.nextLine();
      }
-*/
-     while(h.hasNextLine()){
-         String line = h.nextLine();
-         String[] fileParts = line.split(",");
-         temp = fileParts[1];
-     }
 
-     hint = temp;
+     while(h.hasNextLine()){
+        
+         line = h.nextLine();
+         fileParts = line.split(",");
+         filelengthT = fileParts.length + 2;
+         temp = fileParts[1];
+         for(int i = 0; i < fileParts.length; i++){
+            System.out.println(fileParts[i]);
+         }
+     }
+    //int filelengthT = fileParts.length;
+    
+
+int rand = (int)(Math.random() * (filelengthT - 0)+0);
+     hint = fileParts[rand];
 
     //fancy algorhithm to determine which hint to give them go here. 
     //occurs when you want to get a hint
