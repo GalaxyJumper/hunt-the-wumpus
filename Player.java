@@ -19,6 +19,7 @@ public class Player{
     private int turnsTaken;
     private int coins;
     private int arrows;
+    private int score;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
