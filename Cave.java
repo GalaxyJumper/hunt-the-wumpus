@@ -51,6 +51,18 @@ public class Cave {
         return canMove;
     }
 
+    public int[] possibleMoves(int curLoc1){
+        int[] curLoc = oneToTwoD(curLoc1);
+        String[] curLocInfo = (map[curLoc[0]][curLoc[1]]).split(";"); // get list of valid moves
+        int[] possibleMoves = new int[curLocInfo.length];
+        for (int i = 0; i < curLocInfo.length; i++){
+            String[] temp1 = curLocInfo[i].split(",");
+            int[] temp2 = new int[]{Integer.parseInt(temp1[0]), Integer.parseInt(temp1[1])};
+            possibleMoves[i] = twoToOneD(temp2);
+        }
+        return possibleMoves;
+    }
+
     public String[][] initialCave(){
         return map;
     }
@@ -58,6 +70,10 @@ public class Cave {
     public int[] oneToTwoD(int oneDCoord){
         int[] twoD = new int[]{oneDCoord / 6, oneDCoord % 6};
         return twoD;
+    }
+
+    private int twoToOneD(int[] twoDCoords){
+        return twoDCoords[1] + 6 * twoDCoords[0];
     }
 
     // i ain't sys-outing s***

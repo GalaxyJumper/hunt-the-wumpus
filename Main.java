@@ -1,12 +1,9 @@
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+
 public class Main {
     public static void main (String[] args) throws HeadlessException, FileNotFoundException{
-        Cave cave = new Cave();
-        System.out.println(cave.canMove(14,13));
         Scanner scan = new Scanner(System.in);
-        //important anti error for codespaces
         Cave.println("Is this program running in Github Codepaces? (y/n)");
         boolean workingInCodespaces = scan.next().equals("y");
         if (!workingInCodespaces){ 
