@@ -39,6 +39,7 @@ public Trivia() throws FileNotFoundException{
 
     //Split this into multiple objects? Getters and setters
 public boolean triviaRun(int amount, int right, String genre){
+    
     String in;
     int filelengthT;
     System.out.println("This program works! - Triviarun");
@@ -58,9 +59,14 @@ public boolean triviaRun(int amount, int right, String genre){
 public String Triviahint(){
 System.out.println("This program works! - TriviaHint");
     String line;
-    String[][] fileParts = new String[5][3];
+  
     int filelengthT = 0;
     int k = 0;
+    while(h.hasNextLine()){
+        filelengthT++;
+    }
+    String[] fileParts = new String[filelengthT];
+    String[] hintList = new String[filelengthT];
     String temp = " ";
     
     if (h.hasNextLine()) {
@@ -72,12 +78,15 @@ System.out.println("This program works! - TriviaHint");
             hLength.nextLine();
         }
         // temp = fileParts[0][k];
-        for(int b = 0; b < fileParts.length; b++){
+        for(int b = 0; b < filelengthT; b++){
             line = h.nextLine();
             System.out.println(line);
-         for(int i = 0; i < fileParts[b].length; i++){
+         for(int i = 0; i < filelengthT; i++){
             fileParts[b] = line.split(",");
-            System.out.println(fileParts[b][i]);
+            System.out.println(fileParts[b]);
+         }
+         for(int h = 0; h < filelengthT; h++){
+            hintList[h] = fileParts[1];
          }
         }
          k++;
