@@ -64,20 +64,13 @@ System.out.println("This program works! - TriviaHint");
     String temp = " ";
     
     if (h.hasNextLine()) {
-
-        
      }
 
      while(h.hasNextLine()){
-        /*
-         * 
-         */
         while(hLength.hasNextLine()){
             filelengthT++;
             hLength.nextLine();
         }
-         
-
         // temp = fileParts[0][k];
         for(int b = 0; b < fileParts.length; b++){
             line = h.nextLine();
@@ -90,12 +83,8 @@ System.out.println("This program works! - TriviaHint");
          k++;
      }
     //int filelengthT = fileParts.length;
-    
-
 int randc = (int)(Math.random() * (filelengthT - 0)+0);
-
      hint = fileParts[randc][1];
-
     //fancy algorhithm to determine which hint to give them go here. 
     //occurs when you want to get a hint
     return hint;
