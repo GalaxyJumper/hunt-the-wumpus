@@ -99,6 +99,14 @@ public class GameLocations {
     public void setWumpusLoc(int room){
         locsTable[1][0] = room;
     }
-    
+
+    public int getPlayerLoc(){
+        return locsTable[0][0];
+    }
+
+    public void setPlayerLoc(int room){
+        locsTable[0][0] = room;
+    }
+
 }
 
