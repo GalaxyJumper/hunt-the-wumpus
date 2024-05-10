@@ -57,15 +57,17 @@ public boolean triviaRun(int amount, int right, String genre){
      * }
      */
 public String Triviahint(){
-System.out.println("This program works! - TriviaHint");
+    System.out.print("Works1 - Trivhint");
     String line;
   
     int filelengthT = 0;
     int k = 0;
-    while(h.hasNextLine()){
+    while(hLength.hasNextLine()){
         filelengthT++;
+        System.out.println("trhis happened");
+        hLength.nextLine();
     }
-    String[] fileParts = new String[filelengthT];
+    String[][] fileParts = new String[filelengthT][3];
     String[] hintList = new String[filelengthT];
     String temp = " ";
     
@@ -73,29 +75,30 @@ System.out.println("This program works! - TriviaHint");
      }
 
      while(h.hasNextLine()){
-        while(hLength.hasNextLine()){
-            filelengthT++;
-            hLength.nextLine();
-        }
+        //* */
+        
         // temp = fileParts[0][k];
         for(int b = 0; b < filelengthT; b++){
             line = h.nextLine();
             System.out.println(line);
-         for(int i = 0; i < filelengthT; i++){
+        for(int i = 0; i < filelengthT; i++){
             fileParts[b] = line.split(",");
             System.out.println(fileParts[b]);
          }
          for(int h = 0; h < filelengthT; h++){
-            hintList[h] = fileParts[1];
+            hintList[h] = fileParts[h][1];
          }
         }
-         k++;
+         
+         System.out.println("hi");
      }
     //int filelengthT = fileParts.length;
 int randc = (int)(Math.random() * (filelengthT - 0)+0);
-     hint = fileParts[randc][1];
+     hint = hintList[randc];
+     
     //fancy algorhithm to determine which hint to give them go here. 
     //occurs when you want to get a hint
+    System.out.print("Works - Trivhint");
     return hint;
 }    
 
