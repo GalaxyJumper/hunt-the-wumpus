@@ -8,7 +8,7 @@ public class Main {
         boolean workingInCodespaces = scan.next().equals("y");
 
         if (!workingInCodespaces){ 
-            Gui gui = new Gui("HUNT THE WUMPUS", 2560, 1440); 
+            Gui gui = new Gui("WHAT THE FUCKUS", 2560, 1440); 
         }
 
         Trivia trivia = new Trivia();

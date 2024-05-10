@@ -6,7 +6,7 @@ public class Gui extends JPanel{
     // CONSTRUCTOR(S)
     /////////////////////////////////////
     Graphics2D g2d;
-    public Gui(String name, int width, int height){
+    public Gui(String name, int width, int height, GameLocations locations){
         // Create a new Frame for everything to live in
         JFrame frame = new JFrame();
         // Debug message
@@ -41,7 +41,7 @@ public class Gui extends JPanel{
     /////////////////////////////////////
     // METHODS
     /////////////////////////////////////
-
+    //Draws things
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
         drawHexGrid(300, 100, 50, g2d);
@@ -69,7 +69,7 @@ public class Gui extends JPanel{
             for(int k = 0; k < 5; k++){ 
                 double y = (k * (Math.sqrt(3) * radius));
                 drawHex(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius, String.valueOf((k * 6) + i + 1));
-                
+                //draw the player
             }
         }
     
