@@ -44,9 +44,9 @@ public class Gui extends JPanel{
 
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
-        drawHexGrid(0, 0, 200);
+        drawHexGrid(300, 100, 50);
     }
-    public void drawHex(double centerX, double centerY, double radius){
+    public void drawHex(double centerX, double centerY, double radius, String number){
         double lastX = centerX + radius;
         double lastY = centerY;
         double currentX = 0;
@@ -59,6 +59,7 @@ public class Gui extends JPanel{
             lastX = currentX;
             lastY = currentY;
         }
+        g2d.drawString(number, (int)centerX, (int)centerY);
     }
     public void drawHexGrid(int startX, int startY, int radius){
         //X = (even) startX + (3radius) * x
@@ -67,7 +68,7 @@ public class Gui extends JPanel{
             double x = (i * (radius*1.5));
             for(int k = 0; k < 5; k++){ 
                 double y = (k * (Math.sqrt(3) * radius));
-                drawHex(x, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ), radius);
+                drawHex(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius, String.valueOf((k * 6) + i + 1));
             }
         }
     
