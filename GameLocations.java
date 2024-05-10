@@ -69,7 +69,10 @@ public class GameLocations {
     // Fills the location table with random, nonrepeating coordinates
     // Returns this new table;
     private int[][] initializeLocations(){
-        int[][] randLocs = new int[][]{};
+        int[][] randLocs = {{-1},
+                            {-1},
+                            {-1, -1},
+                            {-1, -1}};
         for(int type = 0; type < TYPES.length; type++){
             int instanceNum = (type >= 2)? 2 : 1;
             for(int instance = 0; instance < instanceNum; instance++){
@@ -90,6 +93,7 @@ public class GameLocations {
         }
         return null;
     }
+
 
     //accesses and returns room number of the wumpus
     public int getWumpusLoc(){
