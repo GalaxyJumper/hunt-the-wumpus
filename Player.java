@@ -9,11 +9,19 @@
 // 2/12/2024
 // Player Object
 
+//Make player a static class (singleton class)
+//Static variables have space in memory set aside
+//So all classes are referencing the same object 
+//and chainging it without needing to communicate with each other
+//I made a static player object in player
+
 public class Player{
     
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
+
+    private static Player player = new Player();
 
     private String name;
     private int turnsTaken;
@@ -35,8 +43,14 @@ public class Player{
     // METHODS
     ///////////////////////////////////////////////
 
-    public void move(){
+    public static Player getPlayer(){
+            return player;
+    }
 
+
+    public void move(){
+        //update location in GameLocations
+        //GameLocations communicates with GameControl to update location
     }
 
     public void shootArrow(){
@@ -44,7 +58,8 @@ public class Player{
     }
 
     public void buyArrows(){
-
+        this.coins--;
+        this.arrows++;
     }
  
     public void purchaseSecret(){
