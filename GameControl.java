@@ -27,7 +27,7 @@ public  class GameControl {
         Cave.println("Is this program running in Github Codepaces? (y/n)");
         boolean workingInCodespaces = scan.next().equals("y");
         if (!workingInCodespaces){ 
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440); 
+            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
 
         scan.close();
