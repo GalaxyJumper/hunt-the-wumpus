@@ -21,8 +21,6 @@ public class Player{
     // VARIABLES
     ///////////////////////////////////////////////
 
-    private static Player player = new Player();
-
     private String name;
     private int turnsTaken;
     private int coins;
@@ -43,21 +41,20 @@ public class Player{
     // METHODS
     ///////////////////////////////////////////////
 
-    public static Player getPlayer(){
-            return player;
+    public Player getPlayer(){
+        return this;
     }
 
 
     public void move(){
-        //update location in GameLocations
-        //GameLocations communicates with GameControl to update location
+        turnsTaken++;
     }
 
     public void shootArrow(){
-
+        this.arrows--;
     }
 
-    public void buyArrows(){
+    public void purchaseArrow(){
         this.coins--;
         this.arrows++;
     }
@@ -100,6 +97,10 @@ public class Player{
 
     public void setTurnsTaken(int turnsTaken) {
         this.turnsTaken = turnsTaken;
+    }
+
+    public String getName(){
+        return name;
     }
 
 }

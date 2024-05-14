@@ -14,14 +14,14 @@ public class GameLocations {
     // VARIABLES
     ///////////////////////////////////////////////
 
-    private final String[] TYPES = {"Player", "Wumpus", "Bat", "Pit"};
 
+    private final String[] TYPES = {"Player", "Wumpus", "Bat", "Pit"};
+    private Cave cave = new Cave();
     private Random random = new Random();
 
     private int[][] locsTable;
     
-    //ArrayList of hexagonal rooms that represent the map
-    //Each one's location in the array is its assigned "number" (0-19 for a 20-sided dodecahedron)
+    
     //Two of the locations are randomly chosen to be "pits" 
     //Two of the locations, aside from the two pits, are randomly chosen to be "bats"
     
@@ -40,8 +40,7 @@ public class GameLocations {
     // METHODS
     ///////////////////////////////////////////////
 
-    //Uses random utility to get a random room coordinate x,y within the cave
-    //returns int[] of the location
+    //Uses random utility to get a random room coordinate 0-30
     public int getRandomLocation(){
         int val = random.nextInt(30);
         return val;
