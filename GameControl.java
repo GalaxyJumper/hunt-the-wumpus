@@ -12,6 +12,9 @@ public  class GameControl {
     // VARIABLES
     ///////////////////////////////////////////////
 
+    private Player player;
+    private Trivia trivia;
+    private Wumpus wumpus;
     private boolean playerInTrap = false;
     private GameLocations gameLocs;
     private Cave cave;
