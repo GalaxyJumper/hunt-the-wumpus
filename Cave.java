@@ -63,11 +63,7 @@ public class Cave {
         return possibleMoves;
     }
 
-    public String[][] initialCave(){
-        return map;
-    }
-
-    public int[] oneToTwoD(int oneDCoord){
+    private int[] oneToTwoD(int oneDCoord){
         int[] twoD = new int[]{oneDCoord / 6, oneDCoord % 6};
         return twoD;
     }
