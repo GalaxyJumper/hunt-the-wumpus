@@ -19,4 +19,5 @@ The work
 - Kavya: Highschore manager
 - Avi: Professional idiot, Cave
 - Josh & Nick: Player, Gameloc, Gamecontrol
+- Toki: Wumpus, GameControl
 
