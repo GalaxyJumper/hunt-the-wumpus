@@ -19,6 +19,7 @@ public class GameLocations {
     private Cave cave = new Cave();
     private Random random = new Random();
 
+    // what is this exactly supposed to represtnt=twe
     private int[][] locsTable;
     
     

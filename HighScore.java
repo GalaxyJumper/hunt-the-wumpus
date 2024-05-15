@@ -102,7 +102,7 @@ public class HighScore {
         Scanner s = new Scanner(highScoreFile);
         //for 
         s.close();
-      
+        return players;
     }
 
     private void addPlayer(Player player){
