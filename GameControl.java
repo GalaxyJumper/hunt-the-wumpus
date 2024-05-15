@@ -29,7 +29,7 @@ public  class GameControl {
         Cave.println("Is this program running in Github Codepaces? (y/n)");
         boolean workingInCodespaces = scan.next().equals("y");
         if (!workingInCodespaces){ 
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440); 
+            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
 
         scan.close();
@@ -76,8 +76,10 @@ public  class GameControl {
     // Checks if the romm exists and if it does depletes arrow by one. the effects
     // are undecided in where they should go. Is the wumpus in the room? etc.
     public void shootArrow(){
+        // button pressed -> gui calls this method -> this executes
         if(isValid()){
             player.setArrows(player.getArrows()-1);
+            if(hitsWumpus()); //do something
         }
     }
 
@@ -111,7 +113,9 @@ public  class GameControl {
         this.playerInTrap = true;
     }
 
-
+    public boolean hitsWumpus(){
+        return true;
+    }
    
 
 
