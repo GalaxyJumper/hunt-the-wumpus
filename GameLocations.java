@@ -3,7 +3,7 @@
 // 2/12/2024
 // Game Locations Object
 
-//make an array representing each pentagonal room 
+//make an array representing each hexagonal room 
 //tracking hazards and wumpus
 
 import java.util.ArrayList;
