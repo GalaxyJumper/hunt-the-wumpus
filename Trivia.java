@@ -64,7 +64,6 @@ public String Triviahint(){
     int k = 0;
     while(hLength.hasNextLine()){
         filelengthT++;
-        System.out.println("trhis happened");
         hLength.nextLine();
     }
     String[][] fileParts = new String[filelengthT][3];

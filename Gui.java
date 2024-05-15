@@ -1,11 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.*;
 public class Gui extends JPanel{
+    //////////////////////////////////////
+    //VARAIBLES
+    //////////////////////////////////////
+    Graphics2D g2d;
+    boolean drawTriviaMenu, todo = false;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
-    /////////////////////////////////////
-    Graphics2D g2d;
+    ////////////////////////////////////
     public Gui(String name, int width, int height, GameLocations locations){
         // Create a new Frame for everything to live in
         JFrame frame = new JFrame();
@@ -41,12 +45,15 @@ public class Gui extends JPanel{
     /////////////////////////////////////
     // METHODS
     /////////////////////////////////////
-    //Draws things
+    
+    //Should run in a loop - gets called once every 17 ms
+    //Draws things based on 
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
         drawHexGrid(300, 100, 50, g2d);
+        
     }
-    public void drawHex(double centerX, double centerY, double radius, String number){
+    private void drawHex(double centerX, double centerY, double radius, String number){
         double lastX = centerX + radius;
         double lastY = centerY;
         double currentX = 0;
@@ -61,7 +68,7 @@ public class Gui extends JPanel{
         }
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
-    public void drawHexGrid(int startX, int startY, int radius, Graphics2D g2d){
+    private void drawHexGrid(int startX, int startY, int radius, Graphics2D g2d){
         //X = (even) startX + (3radius) * x
         //    (odd)  (startX + (3radius) * x) + 1.5 radius
         for(int i = 0; i < 6; i++){
@@ -74,26 +81,29 @@ public class Gui extends JPanel{
         }
     
     }
+    public void updateMapDisplay(int currentRoom){
 
-    //public void drawActionText(String[] text)
+    }
+    public void openTriviaWindow(){
+        
+    }
+    public void closeTriviaWindow(){
+        
+    }
+    //public void drawActionText(String[] text) LATER
 
-    //public void drawScene(String[] room)
+    //public void drawScene(String[] room) LATER
 
 
-    //public void drawPlayer(int x, y)
+    //public void drawPlayer(int x, y) LATER
     
-
-    //public void drawTriviaMenu(String question, String[] answers)
 
 
     //public void drawWumpus(int x, y)
 
 
     //public void drawObstacle(String[] room)
-    
 
-    //Returns an array of the current keys pressed.
-    //public boolean[] getInput()
 
 
 
