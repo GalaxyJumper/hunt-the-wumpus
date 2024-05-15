@@ -20,7 +20,7 @@ public  class GameControl {
     private GameLocations gameLocs;
     private Cave cave;
     private Gui gui;
-    private Player player;
+
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -62,7 +62,7 @@ public  class GameControl {
     }
 
     public void gameEnd(){
-        
+        //What are the game-ending conditions?    
     }
 
     // player input
@@ -87,7 +87,7 @@ public  class GameControl {
     }
 
     public void getStore(){
-
+        // wtf is a store?
     }
 
     public void buyArrows(int num){
@@ -117,6 +117,7 @@ public  class GameControl {
     }
 
     public boolean hitsWumpus(){
+        // If the arrow is shot into the room the wumpus is in.
         return true;
     }
    
