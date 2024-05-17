@@ -15,6 +15,8 @@ public class GameLocations {
     ///////////////////////////////////////////////
 
     //holds room location of all game types and instances
+    //first d is the types; e.g. player, wumpus, pit
+    //second d is intances - bat 1 or 2, ect.
     private int[][] locsTable;
 
     //maps the type of character to the locs table
@@ -27,8 +29,6 @@ public class GameLocations {
     //Two of the locations are randomly chosen to be "pits" 
     //Two of the locations, aside from the two pits, are randomly chosen to be "bats"
     
-    //GameControl will have a method to check when the Player moves into a new room if it is a "pit"
-    //Or if it contains "Bats" with a boolean set to "true"
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -80,29 +80,46 @@ public class GameLocations {
         return randLocs;
     }
 
-    //reads the first layer of the locTable and parses that int into a string 
-    //that tells you the type of hazard that exists in the room
-    public String getHazard(int room){
+    //tells you the type of hazard that exists in the room
+    //returns the string reprisentation of that hazard
+    public String[] getHazards(int room){
+        ArrayList<String> hazards = new ArrayList<String>();
         //Starts at one to skip player's location
         for(int type = 1; type < locsTable.length; type++){
             for(int inst = 0; inst < locsTable[type].length; inst++){
-                if(locsTable[type][inst] == room) return TYPES[type];
+                if(locsTable[type][inst] == room) hazards.add(TYPES[type]);
             }
         }
-        return null;
+        return hazards.toArray(new String[hazards.size()]);
     }
 
+    public String[] getHazards(){
+        ArrayList<String> hazards = new ArrayList<String>();
+        int playerLoc = getPlayerLoc();
+        for(int type = 1; type < locsTable.length; type++){
+            for(int inst = 0; inst < locsTable[type].length; inst++){
+                if(locsTable[type][inst] == playerLoc) hazards.add(TYPES[type]);
+            }
+        }
+        return hazards.toArray(new String[hazards.size()]);
+    }
+
+    //
     public String[] checkForHazards(int playerLoc){
         ArrayList<String> hazardsPresent = new ArrayList<String>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
         for(int room : adjacentRooms){
-            if(somethingThere(room)) hazardsPresent.add(getHazard(room));
+            if(somethingThere(room)){
+                for(String hazard : getHazards(room)){
+                    hazardsPresent.add(hazard);
+                }
+            }
         }
 
         return hazardsPresent.toArray(new String[hazardsPresent.size()]);
     }
 
-    //accesses and returns room number of the wumpus
+   
     public int getWumpusLoc(){
         return locsTable[1][0];
     }
@@ -118,11 +135,13 @@ public class GameLocations {
         return locsTable[0][0];
     }
 
-    public void setPlayerLoc(int room){
+    public boolean setPlayerLoc(int room){
         int playerPos = locsTable[0][0];
         if(cave.canMove(playerPos, room)){
             locsTable[0][0] = room;
+            return true;
         }
+        return false;
     }
 
 }
