@@ -51,11 +51,11 @@ public class GameLocations {
     // Interates through all in game objects to see if 1+ is in room x,y
     // Returns true if there is, false otherwise;
     public boolean somethingThere(int roomNum){
-        //for(int[] type : locsTable){
-        //    for(int instance : type){
-        //        if(instance == roomNum) return true;
-        //    }
-        //}
+        for(int[] type : locsTable){
+            for(int instance : type){
+               if(instance == roomNum) return true;
+            }
+        }
         return false;
     }
 
