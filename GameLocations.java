@@ -107,7 +107,8 @@ public class GameLocations {
     }
 
     // looks through all rooms surrounding the player and returns the hazards present in them
-    public String[] checkForHazards(int playerLoc){
+    public String[] checkForHazards(){
+        int playerLoc = getPlayerLoc();
         ArrayList<String> hazardsPresent = new ArrayList<String>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
         for(int room : adjacentRooms){
