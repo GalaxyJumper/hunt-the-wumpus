@@ -15,6 +15,8 @@ public class GameLocations {
     ///////////////////////////////////////////////
 
     //holds room location of all game types and instances
+    //first d is the types; e.g. player, wumpus, pit
+    //second d is intances - bat 1 or 2, ect.
     private int[][] locsTable;
 
     //maps the type of character to the locs table
@@ -27,8 +29,6 @@ public class GameLocations {
     //Two of the locations are randomly chosen to be "pits" 
     //Two of the locations, aside from the two pits, are randomly chosen to be "bats"
     
-    //GameControl will have a method to check when the Player moves into a new room if it is a "pit"
-    //Or if it contains "Bats" with a boolean set to "true"
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -51,11 +51,11 @@ public class GameLocations {
     // Interates through all in game objects to see if 1+ is in room x,y
     // Returns true if there is, false otherwise;
     public boolean somethingThere(int roomNum){
-        //for(int[] type : locsTable){
-        //    for(int instance : type){
-        //        if(instance == roomNum) return true;
-        //    }
-        //}
+        for(int[] type : locsTable){
+            for(int instance : type){
+               if(instance == roomNum) return true;
+            }
+        }
         return false;
     }
 
@@ -80,29 +80,49 @@ public class GameLocations {
         return randLocs;
     }
 
-    //reads the first layer of the locTable and parses that int into a string 
-    //that tells you the type of hazard that exists in the room
-    public String getHazard(int room){
+    // tells you the type of hazard(s) that exists in the room
+    // returns the string reprisentation of those hazards
+    public String[] getHazards(int room){
+        ArrayList<String> hazards = new ArrayList<String>();
         //Starts at one to skip player's location
         for(int type = 1; type < locsTable.length; type++){
             for(int inst = 0; inst < locsTable[type].length; inst++){
-                if(locsTable[type][inst] == room) return TYPES[type];
+                if(locsTable[type][inst] == room) hazards.add(TYPES[type]);
             }
         }
-        return null;
+        return hazards.toArray(new String[hazards.size()]);
     }
 
-    public String[] checkForHazards(int playerLoc){
+    //tells you the type of hazard(s) that exist in the room the player is in
+    // returns the string reprisentation of those hazards
+    public String[] getHazards(){
+        ArrayList<String> hazards = new ArrayList<String>();
+        int playerLoc = getPlayerLoc();
+        for(int type = 1; type < locsTable.length; type++){
+            for(int inst = 0; inst < locsTable[type].length; inst++){
+                if(locsTable[type][inst] == playerLoc) hazards.add(TYPES[type]);
+            }
+        }
+        return hazards.toArray(new String[hazards.size()]);
+    }
+
+    // looks through all rooms surrounding the player and returns the hazards present in them
+    public String[] checkForHazards(){
+        int playerLoc = getPlayerLoc();
         ArrayList<String> hazardsPresent = new ArrayList<String>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
         for(int room : adjacentRooms){
-            if(somethingThere(room)) hazardsPresent.add(getHazard(room));
+            if(somethingThere(room)){
+                for(String hazard : getHazards(room)){
+                    hazardsPresent.add(hazard);
+                }
+            }
         }
 
         return hazardsPresent.toArray(new String[hazardsPresent.size()]);
     }
 
-    //accesses and returns room number of the wumpus
+   
     public int getWumpusLoc(){
         return locsTable[1][0];
     }
@@ -118,11 +138,17 @@ public class GameLocations {
         return locsTable[0][0];
     }
 
-    public void setPlayerLoc(int room){
+    public boolean setPlayerLoc(int room){
         int playerPos = locsTable[0][0];
         if(cave.canMove(playerPos, room)){
             locsTable[0][0] = room;
+            return true;
         }
+        return false;
+    }
+
+    public Cave getCave(){
+        return this.cave;
     }
 
 }
