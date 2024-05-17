@@ -1,7 +1,7 @@
 /*
  * Keeps track of player inventory: Arrows and Gold Coins
- * Keeps track of how many truns the player has taken
- * Computes  the ending score of player
+ * Keeps track of how many turns the player has taken
+ * Computes the ending score of player
  */
 
 // Joshua Lennon
@@ -9,19 +9,11 @@
 // 2/12/2024
 // Player Object
 
-//Make player a static class (singleton class)
-//Static variables have space in memory set aside
-//So all classes are referencing the same object 
-//and chainging it without needing to communicate with each other
-//I made a static player object in player
-
 public class Player{
     
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
-
-    private static Player player = new Player();
 
     private String name;
     private int turnsTaken;
@@ -37,37 +29,58 @@ public class Player{
         this.arrows = 3;
         this.coins = 0;
         this.turnsTaken = 0;
+        this.score = 0;
     }
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
 
-    public static Player getPlayer(){
-            return player;
-    }
-
-
+    //This method will be called in gameControl to check the validity of a move
+    //and also update the location of the player on the CSV
     public void move(){
-        //update location in GameLocations
-        //GameLocations communicates with GameControl to update location
+        turnsTaken++;
     }
 
+    //This method will be called in gameControl to determine the validity of a shot
+    //And check if the wumpus is in the adjacent room
+    //If the wumpus is in the other room, gameControl will then call another method relating to a hit
     public void shootArrow(){
+        if (this.arrows > 0){
+            this.arrows--;
+        } else {
+            System.out.println("My quiver is empty!");
+        }
 
     }
 
-    public void buyArrows(){
+    //This method will be called in gameControl through an input in store.
+    //The effect is just exchanging a coin for an arrow
+    //We need more complex stuff in the GUI
+    public void purchaseArrow(){
         this.coins--;
         this.arrows++;
     }
  
+    //We need our trivia class to be fully complete for this method to work
+    //TBD
     public void purchaseSecret(){
 
     }
 
+    //Currently the score of a player is determined by multiplying coins by 10
+    //TBD
     public int calcScore(){
-        return 0;
+    this.score = this.coins * 10;
+        return this.score;
+    }
+
+////////////////////////////////////
+//GETTERS AND SETTERS
+////////////////////////////////////
+
+    public Player getPlayer(){
+        return this;
     }
 
     public int getArrows() {
@@ -100,6 +113,10 @@ public class Player{
 
     public void setTurnsTaken(int turnsTaken) {
         this.turnsTaken = turnsTaken;
+    }
+
+    public String getName(){
+        return name;
     }
 
 }
