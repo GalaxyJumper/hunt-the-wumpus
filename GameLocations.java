@@ -80,8 +80,8 @@ public class GameLocations {
         return randLocs;
     }
 
-    //tells you the type of hazard that exists in the room
-    //returns the string reprisentation of that hazard
+    // tells you the type of hazard(s) that exists in the room
+    // returns the string reprisentation of those hazards
     public String[] getHazards(int room){
         ArrayList<String> hazards = new ArrayList<String>();
         //Starts at one to skip player's location
@@ -93,6 +93,8 @@ public class GameLocations {
         return hazards.toArray(new String[hazards.size()]);
     }
 
+    //tells you the type of hazard(s) that exist in the room the player is in
+    // returns the string reprisentation of those hazards
     public String[] getHazards(){
         ArrayList<String> hazards = new ArrayList<String>();
         int playerLoc = getPlayerLoc();
@@ -104,7 +106,7 @@ public class GameLocations {
         return hazards.toArray(new String[hazards.size()]);
     }
 
-    //
+    // looks through all rooms surrounding the player and returns the hazards present in them
     public String[] checkForHazards(int playerLoc){
         ArrayList<String> hazardsPresent = new ArrayList<String>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
@@ -142,6 +144,10 @@ public class GameLocations {
             return true;
         }
         return false;
+    }
+
+    public Cave getCave(){
+        return this.cave;
     }
 
 }
