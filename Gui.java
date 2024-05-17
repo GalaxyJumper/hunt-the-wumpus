@@ -6,11 +6,13 @@ public class Gui extends JPanel{
     //VARAIBLES
     //////////////////////////////////////
     Graphics2D g2d;
-    boolean drawTriviaMenu, todo = false;
+    int width, height;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
     public Gui(String name, int width, int height, GameLocations locations){
+        this.width = width;
+        this.height = height;
         // Create a new Frame for everything to live in
         JFrame frame = new JFrame();
         // Debug message
@@ -50,33 +52,37 @@ public class Gui extends JPanel{
     //Draws things based on 
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
-        drawHexGrid(300, 100, 50, g2d);
+        drawMap(0, 0, this.width / 20, g2d, 10);
         
     }
-    private void drawHex(double centerX, double centerY, double radius, String number){
-        double lastX = centerX + radius;
-        double lastY = centerY;
+    private void drawHex(double centerX, double centerY, double radius, String number, Color color){
         double currentX = 0;
         double currentY = 0;
-        for(int i = -1; i < 6; i++){
+        int[] xPoints = new int[6];
+        int[] yPoints = new int[6];
+        for(int i = 0; i < 6; i++){
             currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
             currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
-            g2d.setStroke(new BasicStroke(2));
-            g2d.drawLine((int)currentX, (int)currentY, (int)lastX, (int)lastY);
-            lastX = currentX;
-            lastY = currentY;
+            xPoints[i] = (int)(currentX);
+            yPoints[i] = (int)(currentY);
         }
+        g2d.setColor(color);
+        g2d.fillPolygon(xPoints, yPoints, 6);
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
-    private void drawHexGrid(int startX, int startY, int radius, Graphics2D g2d){
+    private void drawMap(int startX, int startY, int radius, Graphics2D g2d, int playerLoc){
         //X = (even) startX + (3radius) * x
         //    (odd)  (startX + (3radius) * x) + 1.5 radius
+        Color currentColor = new Color(0, 0, 0);
         for(int i = 0; i < 6; i++){
             double x = (i * (radius*1.5));
             for(int k = 0; k < 5; k++){ 
                 double y = (k * (Math.sqrt(3) * radius));
-                drawHex(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius, String.valueOf((k * 6) + i + 1));
-                //draw the player
+                if(playerLoc == (k * 6) + i + 1){
+                    currentColor = new Color(0, 255, 0);
+                }
+                drawHex(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius, String.valueOf((k * 6) + i + 1), currentColor);
+                currentColor = new Color(20, 20, 20);
             }
         }
     
