@@ -27,7 +27,7 @@ class Trivia {
     public Trivia() throws FileNotFoundException {
         in = new Scanner(System.in); // Scans Usr imput
         trivia = new File("TriviaQ.csv"); // The file we refer to
-        triv = new Scanner("trivia"); // the scanner that reads the file ("TriviaQ.csv")
+        triv = new Scanner(trivia); // the scanner that reads the file ("TriviaQ.csv")
         Hint = new File("TriviaT.csv"); // the file we refer to
         h = new Scanner(Hint); // The scanner that reads the file ("TriviaQ.csv")
         hLength = new Scanner(Hint);
@@ -56,8 +56,10 @@ class Trivia {
     }
 
     public void compileTrivia() {
+        triv.nextLine(); //skips the topline identifier
         while (triv.hasNextLine()) {
             System.out.println(triv.nextLine());
+            System.out.println("-!");
         }
     }
 
@@ -77,15 +79,12 @@ class Trivia {
         int k = 0;
         while (hLength.hasNextLine()) {
             filelengthT++;
-            System.out.println("trhis happened");
             hLength.nextLine();
         }
         String[][] fileParts = new String[filelengthT][3];
         String[] hintList = new String[filelengthT];
         String temp = " ";
 
-        if (h.hasNextLine()) {
-        }
 
         while (h.hasNextLine()) {
             // * */
@@ -96,14 +95,13 @@ class Trivia {
                 System.out.println(line);
                 for (int i = 0; i < filelengthT; i++) {
                     fileParts[b] = line.split(",");
-                    System.out.println(fileParts[b]);
+                    
                 }
                 for (int h = 0; h < filelengthT; h++) {
                     hintList[h] = fileParts[h][1];
                 }
             }
 
-            System.out.println("hi");
         }
         // int filelengthT = fileParts.length;
         int randc = (int) (Math.random() * (filelengthT - 0) + 0);
