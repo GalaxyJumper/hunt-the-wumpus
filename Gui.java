@@ -68,6 +68,8 @@ public class Gui extends JPanel{
         }
         g2d.setColor(color);
         g2d.fillPolygon(xPoints, yPoints, 6);
+        g2d.setColor(new Color(255, 255, 255));
+        g2d.drawPolygon(xPoints, yPoints, 6);
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
     private void drawMap(int startX, int startY, int radius, Graphics2D g2d, int playerLoc){
@@ -80,9 +82,10 @@ public class Gui extends JPanel{
                 double y = (k * (Math.sqrt(3) * radius));
                 if(playerLoc == (k * 6) + i + 1){
                     currentColor = new Color(0, 255, 0);
+                } else {
+                    currentColor = new Color(20, 20, 20);
                 }
-                drawHex(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius, String.valueOf((k * 6) + i + 1), currentColor);
-                currentColor = new Color(20, 20, 20);
+                drawHex(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf((k * 6) + i + 1), currentColor);
             }
         }
     
