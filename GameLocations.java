@@ -53,8 +53,8 @@ public class GameLocations {
     public boolean somethingThere(int roomNum) {
 
         for (int type = 0; type < locsTable.length; type++) {
-            for (int inst = 0; inst < locsTable[type].length; inst++) {
-                if (locsTable[type][inst] == roomNum)
+            for (int instance = 0; instance < locsTable[type].length; instance++) {
+                if (locsTable[type][instance] == roomNum)
                     return true;
             }
         }
