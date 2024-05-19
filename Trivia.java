@@ -43,6 +43,18 @@ class Trivia {
     // based on which object
     // is calling Triviarun
 
+      public void compileTrivia() {
+        int i = 0;
+        triv.nextLine(); //skips the topline identifier
+        while (triv.hasNextLine()) {
+            
+            trivCompile.add(triv.nextLine());
+            System.out.println(triv.indexOf(i));
+            System.out.println("-!");
+            i++;
+        }
+    }
+
     // Split this into multiple objects? Getters and setters
     public boolean triviaRun(int amount, int right, String genre) {
 
@@ -55,13 +67,7 @@ class Trivia {
         return rightflag;
     }
 
-    public void compileTrivia() {
-        triv.nextLine(); //skips the topline identifier
-        while (triv.hasNextLine()) {
-            System.out.println(triv.nextLine());
-            System.out.println("-!");
-        }
-    }
+  
 
     // Returns a hint
     // Hints - Tells the player useless or useful stuff.
