@@ -127,16 +127,12 @@ public class GameLocations {
         return hazardsPresent.toArray(new String[hazardsPresent.size()]);
     }
 
-<<<<<<< HEAD
     public void moveWumpus(){
 
     }
 
    
     public int getWumpusLoc(){
-=======
-    public int getWumpusLoc() {
->>>>>>> f2f5f057abf108fba931ad4f012278722abb924c
         return locsTable[1][0];
     }
 
