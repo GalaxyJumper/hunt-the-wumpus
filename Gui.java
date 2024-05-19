@@ -7,6 +7,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JButton;
+
 public class Gui extends JPanel{
     //////////////////////////////////////
     //VARAIBLES
