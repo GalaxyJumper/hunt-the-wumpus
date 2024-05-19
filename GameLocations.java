@@ -33,28 +33,17 @@ public class GameLocations {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
-<<<<<<< HEAD
         public GameLocations(){
             this.locsTable = initializeLocations();
             this.cave = new Cave();
         }
-=======
-    public GameLocations() {
-        this.locsTable = initializeLocations();
-    }
->>>>>>> f2f5f057abf108fba931ad4f012278722abb924c
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
 
-<<<<<<< HEAD
     //Uses random utility to get a random room coordinate 0-29
     public int getRandomLocation(){
-=======
-    // Uses random utility to get a random room coordinate 0-30
-    public int getRandomLocation() {
->>>>>>> f2f5f057abf108fba931ad4f012278722abb924c
         int val = random.nextInt(30);
         return val;
     }
