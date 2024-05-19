@@ -18,26 +18,27 @@ class Trivia {
     Scanner triviaHintScanner; // The scanner that reads the file ("TriviaT.csv")
     Scanner triviaQuestionScanner; // the scanner that reads the file ("TriviaQ.csv")
 
-    Scanner hLength; // The scanner that reads the file ("TriviaT.csv"), for lengthFile trivia; //
-                     // The file we refer to
-
     // Values of the questions
     String genre = ""; // Gets the genre
     String hint; // gets the hint
     int amount; // amount requested
     int right; // amound needed to be right
-    ArrayList<String> triviaCompile = new ArrayList<String>();
+    ArrayList<String[]> triviaData = new ArrayList<String[]>();
     // 0 - lore, 1 - misc 2 - actions 3 - chem 4 - ect ill update this later
+    ArrayList<String[]> hintData = new ArrayList<String[]>();
+    // 0 - id, 1 - hint 2 - type
 
     // CONSTRUCTOR --------------------
     public Trivia() throws FileNotFoundException {
         in = new Scanner(System.in); // Scans Usr imput
-        triviaFile = new File("TriviaQuestions.csv"); // The file we refer to
         triviaQuestionScanner = new Scanner(triviaFile); // the scanner that reads the file ("TriviaQ.csv")
-        hintFile = new File("TriviaHints.csv"); // the file we refer to
         triviaHintScanner = new Scanner(hintFile); // The scanner that reads the file ("TriviaQ.csv")
-        hLength = new Scanner(hintFile);
-        compileTrivia();
+
+        triviaFile = new File("TriviaQuestions.csv"); // The file we refer to
+        hintFile = new File("TriviaHints.csv"); // the file we refer to
+
+        triviaData = compile(triviaQuestionScanner);
+        hintData = compile(triviaHintScanner);
     }
     // Methoods -----------------------
 
@@ -49,32 +50,43 @@ class Trivia {
     // based on which object
     // is calling Triviarun
 
-    public void compileTrivia() {
-        int i = 0;
-        triviaQuestionScanner.nextLine(); // skips the topline identifier
-        while (triviaQuestionScanner.hasNextLine()) {
+    public ArrayList<String[]> compile(Scanner scn) {
+        ArrayList<String[]> fileParts = new ArrayList<String[]>();
 
-            triviaCompile.add(triviaQuestionScanner.nextLine());
-            System.out.println(triviaCompile.get(i));
-            System.out.println("-!");
-            i++;
+        while (scn.hasNextLine()) {
+            String line = scn.nextLine();
+            System.out.println(line);
+            String[] data = line.split(",");
+            fileParts.add(data);
         }
+        return fileParts;
+    }
+
+    public String randomTrivia(ArrayList<String[]> data, int index) {
+        // int filelengthT = fileParts.length;
+        int randc = (int) (Math.random() * (data.size()));
+        hint = data.get(randc)[index];
+
+        // fancy algorhithm to determine which hint to give them go here.
+        // occurs when you want to get a hint
+        System.out.print("Works - Trivhint");
+        return hint;
+
     }
 
     // Split this into multiple objects? Getters and setters
     public boolean triviaRun(int amount, int right, String genre) {
 
-        String currentRow = "";
-        int filelength = trivCompile.size() - 1;
+        String[] currentRow;
+        int filelength = triviaCompile.size() - 1;
         int qCount = amount;
-        while(qCount > 0 ){
-            int randq = (int) (Math.random()*filelength);
-            currentRow = trivCompile.get(randq);
-            String[] cutUp = currentRow.split(",");
-            qCount =- 1;
-            String currentQ = cutUp[1];
-            String[] currenntA = cutUp[2].split("|");
-            String currentK = cutUp[3];
+        while (qCount > 0) {
+            int randq = (int) (Math.random() * filelength);
+            currentRow = triviaCompile.get(randq);
+            qCount = -1;
+            String currentQ = currentRow[1];
+            String[] currenntA = currentRow[2].split("|");
+            String currentK = currentRow[3];
             System.out.println("works - triviarun");
         }
         System.out.println("This program works! - Triviarun");
@@ -92,45 +104,5 @@ class Trivia {
      * 
      * }
      */
-    public String Triviahint() {
-        System.out.print("Works1 - Trivhint");
-        String line;
-
-        int filelengthT = 0;
-        int k = 0;
-        while (hLength.hasNextLine()) {
-            filelengthT++;
-            hLength.nextLine();
-        }
-        String[][] fileParts = new String[filelengthT][3];
-        String[] hintList = new String[filelengthT];
-        String temp = " ";
-
-        while (triviaHintScanner.hasNextLine()) {
-            // * */
-
-            // temp = fileParts[0][k];
-            for (int b = 0; b < filelengthT; b++) {
-                line = triviaHintScanner.nextLine();
-                System.out.println(line);
-                for (int i = 0; i < filelengthT; i++) {
-                    fileParts[b] = line.split(",");
-
-                }
-                for (int h = 0; h < filelengthT; h++) {
-                    hintList[h] = fileParts[h][1];
-                }
-            }
-
-        }
-        // int filelengthT = fileParts.length;
-        int randc = (int) (Math.random() * (filelengthT - 0) + 0);
-        hint = hintList[randc];
-
-        // fancy algorhithm to determine which hint to give them go here.
-        // occurs when you want to get a hint
-        System.out.print("Works - Trivhint");
-        return hint;
-    }
 
 }
