@@ -73,7 +73,7 @@ public class GameLocations {
     // Fills the location table with random, nonrepeating rooms
     // Returns this new table;
     private int[][] initializeLocations() {
-        int[][] randLocs = { new int[1], new int[1], new int[2], new int[2] };
+        int[][] randLocs = this.locsTable;
         for (int type = 0; type < TYPES.length; type++) {
             int instanceNum = (type >= 2) ? 2 : 1;
             for (int instance = 0; instance < instanceNum; instance++) {
