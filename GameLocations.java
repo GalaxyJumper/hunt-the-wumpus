@@ -17,7 +17,7 @@ public class GameLocations {
     // holds room location of all game types and instances
     // first d is the types; e.g. player, wumpus, pit
     // second d is intances - bat 1 or 2, ect.
-    private int[][] locsTable;
+    private int[][] locsTable = { new int[1], new int[1], new int[2], new int[2] };
 
     // maps the type of character to the locs table
     private final String[] TYPES = { "Player", "Wumpus", "Bat", "Pit" };
