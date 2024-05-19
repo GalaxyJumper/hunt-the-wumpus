@@ -16,5 +16,8 @@ public class Main {
         //bonjour 
         Cave.println("Your code works ~*,`");
        
+        //simulate wumpus. 3/5
+        boolean right = trivia.triviaRun(5, 3, null);
+        
     }
 }
