@@ -1,3 +1,5 @@
+//Lincon
+//Nick
 
 //imports
 import java.util.ArrayList;
@@ -8,29 +10,33 @@ import java.io.FileNotFoundException;
 
 class Trivia {
     // PROPERTIES --------------------
-    Scanner in; // Scans Usr imput
-    File trivia; // The file we refer to
-    Scanner triv; // the scanner that reads the file ("TriviaQ.csv")
-    File Hint; // the file we refer to
-    Scanner h; // The scanner that reads the file ("TriviaT.csv")
-    Scanner hLength; // The scanner that reads the file ("TriviaT.csv"), for length
+
+    File triviaFile; // Trivia stores all of our trivia questions in a CSV format
+    File hintFile; // Hint gives you a mix of useless info and valuable locations
+
+    Scanner in; // Scans User imput
+    Scanner triviaHintScanner; // The scanner that reads the file ("TriviaT.csv")
+    Scanner triviaQuestionScanner; // the scanner that reads the file ("TriviaQ.csv")
+
+    Scanner hLength; // The scanner that reads the file ("TriviaT.csv"), for lengthFile trivia; //
+                     // The file we refer to
+
     // Values of the questions
     String genre = ""; // Gets the genre
-    boolean rightFlag; // returns true = right and false = wrong lmao
     String hint; // gets the hint
     int amount; // amount requested
     int right; // amound needed to be right
-    ArrayList<String> trivCompile = new ArrayList<String>();
+    ArrayList<String> triviaCompile = new ArrayList<String>();
     // 0 - lore, 1 - misc 2 - actions 3 - chem 4 - ect ill update this later
 
     // CONSTRUCTOR --------------------
     public Trivia() throws FileNotFoundException {
         in = new Scanner(System.in); // Scans Usr imput
-        trivia = new File("TriviaQ.csv"); // The file we refer to
-        triv = new Scanner(trivia); // the scanner that reads the file ("TriviaQ.csv")
-        Hint = new File("TriviaT.csv"); // the file we refer to
-        h = new Scanner(Hint); // The scanner that reads the file ("TriviaQ.csv")
-        hLength = new Scanner(Hint);
+        triviaFile = new File("TriviaQuestions.csv"); // The file we refer to
+        triviaQuestionScanner = new Scanner(triviaFile); // the scanner that reads the file ("TriviaQ.csv")
+        hintFile = new File("TriviaHints.csv"); // the file we refer to
+        triviaHintScanner = new Scanner(hintFile); // The scanner that reads the file ("TriviaQ.csv")
+        hLength = new Scanner(hintFile);
         compileTrivia();
     }
     // Methoods -----------------------
@@ -43,13 +49,13 @@ class Trivia {
     // based on which object
     // is calling Triviarun
 
-      public void compileTrivia() {
+    public void compileTrivia() {
         int i = 0;
-        triv.nextLine(); //skips the topline identifier
-        while (triv.hasNextLine()) {
-            
-            trivCompile.add(triv.nextLine());
-            System.out.println(trivCompile.get(i));
+        triviaQuestionScanner.nextLine(); // skips the topline identifier
+        while (triviaQuestionScanner.hasNextLine()) {
+
+            triviaCompile.add(triviaQuestionScanner.nextLine());
+            System.out.println(triviaCompile.get(i));
             System.out.println("-!");
             i++;
         }
@@ -75,10 +81,8 @@ class Trivia {
 
         // WEIOUIL HEOIHLHASO DJADASDCFEFSDC
         // 1 -
-        return rightFlag;
+        return true;
     }
-
-  
 
     // Returns a hint
     // Hints - Tells the player useless or useful stuff.
@@ -102,17 +106,16 @@ class Trivia {
         String[] hintList = new String[filelengthT];
         String temp = " ";
 
-
-        while (h.hasNextLine()) {
+        while (triviaHintScanner.hasNextLine()) {
             // * */
 
             // temp = fileParts[0][k];
             for (int b = 0; b < filelengthT; b++) {
-                line = h.nextLine();
+                line = triviaHintScanner.nextLine();
                 System.out.println(line);
                 for (int i = 0; i < filelengthT; i++) {
                     fileParts[b] = line.split(",");
-                    
+
                 }
                 for (int h = 0; h < filelengthT; h++) {
                     hintList[h] = fileParts[h][1];
