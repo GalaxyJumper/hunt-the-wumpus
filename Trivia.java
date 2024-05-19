@@ -78,11 +78,11 @@ class Trivia {
     public boolean triviaRun(int amount, int right, String genre) {
 
         String[] currentRow;
-        int filelength = triviaCompile.size() - 1;
+        int filelength = triviaData.size() - 1;
         int qCount = amount;
         while (qCount > 0) {
             int randq = (int) (Math.random() * filelength);
-            currentRow = triviaCompile.get(randq);
+            currentRow = triviaData.get(randq);
             qCount = -1;
             String currentQ = currentRow[1];
             String[] currenntA = currentRow[2].split("|");
