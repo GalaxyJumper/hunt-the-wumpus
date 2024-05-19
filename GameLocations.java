@@ -33,17 +33,17 @@ public class GameLocations {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
-        public GameLocations(){
-            this.locsTable = initializeLocations();
-            this.cave = new Cave();
-        }
+    public GameLocations() {
+        this.locsTable = initializeLocations();
+        this.cave = new Cave();
+    }
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
 
-    //Uses random utility to get a random room coordinate 0-29
-    public int getRandomLocation(){
+    // Uses random utility to get a random room coordinate 0-29
+    public int getRandomLocation() {
         int val = random.nextInt(30);
         return val;
     }
@@ -71,11 +71,11 @@ public class GameLocations {
 
     // Fills the location table with random, nonrepeating rooms
     // Returns this new table;
-    private int[][] initializeLocations(){
-        int[][] randLocs = {{-1}, {-1}, {-1, -1}, {-1, -1}};
-        for(int type = 0; type < TYPES.length; type++){
-            int instanceNum = (type >= 2)? 2 : 1;
-            for(int instance = 0; instance < instanceNum; instance++){
+    private int[][] initializeLocations() {
+        int[][] randLocs = { new int[1], new int[1], new int[2], new int[2] };
+        for (int type = 0; type < TYPES.length; type++) {
+            int instanceNum = (type >= 2) ? 2 : 1;
+            for (int instance = 0; instance < instanceNum; instance++) {
                 randLocs[type][instance] = getNovelLocation();
             }
         }
@@ -127,12 +127,11 @@ public class GameLocations {
         return hazardsPresent.toArray(new String[hazardsPresent.size()]);
     }
 
-    public void moveWumpus(){
+    public void moveWumpus() {
 
     }
 
-   
-    public int getWumpusLoc(){
+    public int getWumpusLoc() {
         return locsTable[1][0];
     }
 
