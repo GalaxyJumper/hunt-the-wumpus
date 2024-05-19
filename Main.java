@@ -18,3 +18,12 @@ public class Main {
        
     }
 }
+
+
+/*
+ * This is a general idea for the whole mechanism of this game:
+ * The gui has a bunch of buttons and input thingys
+ * When those are pressed, it sends a signal to GameControl to do whatever was defined by the button
+ * GameControl does the method that the Gui's button is calling
+ * Repeat.
+ */
