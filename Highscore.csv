@@ -1,8 +1,8 @@
-name,score,cave,turns,coins,arrows,win
-josh,0,null,0,0,3,0
-nick,0,null,0,0,3,0
-lincoln,0,null,0,0,3,0
-avi,0,null,0,0,3,0
-kavya,0,null,0,0,3,0
-oliver,0,null,0,0,3,0
-shivansh,0,null,0,0,3,0
+name,score,cave
+josh,0,null
+nick,0,null
+lincoln,0,null 
+avi,0,null
+kavya,0,null 
+oliver,0,null 
+shivansh,0,null 
