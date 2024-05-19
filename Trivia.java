@@ -49,7 +49,7 @@ class Trivia {
         while (triv.hasNextLine()) {
             
             trivCompile.add(triv.nextLine());
-            System.out.println(triv.indexOf(i));
+            System.out.println(trivCompile.get(i));
             System.out.println("-!");
             i++;
         }
@@ -58,8 +58,14 @@ class Trivia {
     // Split this into multiple objects? Getters and setters
     public boolean triviaRun(int amount, int right, String genre) {
 
-        String in;
-        int filelengthT;
+        String currentQ = "";
+        int filelength = trivCompile.size() - 1;
+        int qCount = amount;
+        while(qCount > 0 ){
+            int randq = (int) (Math.random()*filelength);
+            System.out.println(randq);
+            qCount =- 1;
+        }
         System.out.println("This program works! - Triviarun");
 
         // WEIOUIL HEOIHLHASO DJADASDCFEFSDC
