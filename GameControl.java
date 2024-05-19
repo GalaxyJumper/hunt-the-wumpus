@@ -8,7 +8,9 @@
 //taking in inputs for all classes and running the game
 //connecting the ui to the game itself
 import java.util.Scanner;
+import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
 
 public  class GameControl {
     ///////////////////////////////////////////////
@@ -21,7 +23,7 @@ public  class GameControl {
     ///////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////
-    public GameControl(){
+    public GameControl() throws FontFormatException, IOException{
         gameLocs = new GameLocations();
         Scanner scan = new Scanner(System.in);
 

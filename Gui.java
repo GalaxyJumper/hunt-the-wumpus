@@ -1,6 +1,11 @@
 import javax.swing.*;
+
+import javafx.scene.control.ColorPicker;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 public class Gui extends JPanel{
     //////////////////////////////////////
@@ -8,12 +13,12 @@ public class Gui extends JPanel{
     //////////////////////////////////////
     Graphics2D g2d;
     int width, height;
-    int mapStartX = 150;
-    int mapStartY = 50;
+    int mapStartX = 350;
+    int mapStartY = 75;
     int mapRoomSize; // = width / 40;
     GameLocations gameLocs;
     int playerLoc;
-
+    Font calibri;
     // Drawing variables
 
     // {How long into the animation, location}
@@ -23,34 +28,44 @@ public class Gui extends JPanel{
     String[] triviaQuestion = new String[5];
     // {total # of Qs, # of Qs right}
     int[] triviaScoreData = new int[2];
+    // How transparent is the dimming on the menu?
+    int dimRectTransparency = -1;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
-    public Gui(String name, int width, int height, GameLocations locations){
+    public Gui(String name, int width, int height, GameLocations locations) throws FontFormatException, IOException{
         this.width = width;
         this.height = height;
         this.gameLocs = locations;
         this.mapRoomSize = width / 40;
+
+        //Create Calibri as a usable font
+        File calibriFile = new File("calibri.ttf");
+        calibri = Font.createFont(Font.TRUETYPE_FONT, calibriFile).deriveFont(12f);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(calibri);
+
         // Create a new Frame for everything to live in
         JFrame frame = new JFrame();
         // Debug message
         System.out.println("New display instantiated with dimensions " + width + "x" + height);
         // Set display size
         this.setPreferredSize(new Dimension(width, height));
+        frame.setPreferredSize(new Dimension(width, height));
         // Set default close operation (end program once the window is closed)
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // for later 
         // frame.addKeyListener();
-
         //Put this panel into its frame so it can be displayed
         frame.add(this);
-        //Make the screen fit around the panel so that there is no overlap
+        //Make frame fit into the screen
         frame.pack();
         //Make the window visible and set its name to the given name
         frame.setTitle(name);
         frame.setVisible(true);
         this.move(23);
         this.failMove(2);
+        this.openTriviaMenu(new String[]{"hello"}, height);
     }
     
     public Gui(String name){
@@ -72,15 +87,25 @@ public class Gui extends JPanel{
     //Draws things based on 
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
+        
         //Antialiasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 RenderingHints.VALUE_ANTIALIAS_ON); 
         //Background + map
+        g2d.setColor(new Color(10, 10, 10));
+        g2d.setFont(calibri);
         g2d.fillRect(0, 0, width, height);
         drawMap(mapStartX, mapStartY, mapRoomSize, g2d, playerLoc);
 
         if(failMoveHex[0] != -1 && failMoveHex[1] != -1){
             drawFailMoveHex(failMoveHex[0], failMoveHex[1]);
+        }
+        if(dimRectTransparency != -1){
+            g2d.setColor(new Color(0, 0, 0, dimRectTransparency));
+            g2d.fillRect(0, 0, width, height);
+        }
+        if(triviaScoreData[0] != -1){
+            drawTriviaMenu(new String[] {"hi"}, triviaScoreData, g2d);
         }
         
     }
@@ -204,13 +229,27 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         failMoveHex[0] = -1;
         failMoveHex[1] = -1;
     }
-    public void openTriviaWindow(String[] triviaQuestion, int numQuestions){
-        
+    private void drawTriviaMenu(String[] question, int[] scoreData, Graphics2D g2d){
+        g2d.setColor(new Color(31, 31, 31));
+        g2d.fillRect(this.width / 2 - 300, this.height / 2 - 100, 600, 200);
+    }
+    public void openTriviaMenu(String[] triviaQuestion, int numQuestions){
+        this.triviaQuestion = triviaQuestion;
+        triviaScoreData[0] = numQuestions;
+        long animationStart = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
+        while(now - animationStart < 500){
+            now = System.currentTimeMillis();
+            dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
+            repaint();
+        }
+        triviaScoreData[0] = numQuestions;
+        triviaScoreData[1] = 0;
     }
     public void nextTriviaQuestion(boolean correct){
         
     }
-    public void closeTriviaWindow(){
+    public void closeTriviaMenu(){
         
     }
     //public void drawActionText(String[] text) LATER
