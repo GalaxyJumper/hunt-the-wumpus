@@ -2,7 +2,7 @@
 
 public class Wumpus {
     // fields
-    private int location;
+    
     
 
     // Contructors
@@ -11,8 +11,4 @@ public class Wumpus {
     }
 
     // methods
-
-    public int getLocation(){
-        return this.location;
-    }
 }
