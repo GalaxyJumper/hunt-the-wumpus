@@ -19,6 +19,10 @@ public class Gui extends JPanel{
     // {How long into the animation, location}
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
+    // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
+    String[] triviaQuestion = new String[5];
+    // {total # of Qs, # of Qs right}
+    int[] triviaScoreData = new int[2];
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -200,7 +204,10 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         failMoveHex[0] = -1;
         failMoveHex[1] = -1;
     }
-    public void openTriviaWindow(){
+    public void openTriviaWindow(String[] triviaQuestion, int numQuestions){
+        
+    }
+    public void nextTriviaQuestion(boolean correct){
         
     }
     public void closeTriviaWindow(){
