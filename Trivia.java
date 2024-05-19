@@ -16,7 +16,7 @@ class Trivia {
     Scanner hLength; // The scanner that reads the file ("TriviaT.csv"), for length
     // Values of the questions
     String genre = ""; // Gets the genre
-    boolean rightflag; // returns true = right and false = wrong lmao
+    boolean rightFlag; // returns true = right and false = wrong lmao
     String hint; // gets the hint
     int amount; // amount requested
     int right; // amound needed to be right
@@ -58,19 +58,24 @@ class Trivia {
     // Split this into multiple objects? Getters and setters
     public boolean triviaRun(int amount, int right, String genre) {
 
-        String currentQ = "";
+        String currentRow = "";
         int filelength = trivCompile.size() - 1;
         int qCount = amount;
         while(qCount > 0 ){
             int randq = (int) (Math.random()*filelength);
-            System.out.println(randq);
+            currentRow = trivCompile.get(randq);
+            String[] cutUp = currentRow.split(",");
             qCount =- 1;
+            String currentQ = cutUp[1];
+            String[] currenntA = cutUp[2].split("|");
+            String currentK = cutUp[3];
+            System.out.println("works - triviarun");
         }
         System.out.println("This program works! - Triviarun");
 
         // WEIOUIL HEOIHLHASO DJADASDCFEFSDC
         // 1 -
-        return rightflag;
+        return rightFlag;
     }
 
   
