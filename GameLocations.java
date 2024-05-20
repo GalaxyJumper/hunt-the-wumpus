@@ -102,18 +102,18 @@ public class GameLocations {
     public String[] getHazards() {
         ArrayList<String> hazards = new ArrayList<String>();
         int playerLoc = getPlayerLoc();
-        for (int type = 1; type < locsTable.length; type++) {
-            for (int inst = 0; inst < locsTable[type].length; inst++) {
-                if (locsTable[type][inst] == playerLoc)
-                    hazards.add(TYPES[type]);
+        //Starts at one to skip player location
+        for(int type = 1; type < locsTable.length; type++){
+            for(int inst = 0; inst < locsTable[type].length; inst++){
+                if(locsTable[type][inst] == playerLoc) hazards.add(TYPES[type]);
             }
         }
         return hazards.toArray(new String[hazards.size()]);
     }
 
-    // looks through all rooms surrounding the player and returns the hazards
-    // present in them
-    public String[] checkForHazards() {
+    // looks through all rooms surrounding the player 
+    // return string array of all the hazards present in them
+    public String[] checkForHazards(){
         int playerLoc = getPlayerLoc();
         ArrayList<String> hazardsPresent = new ArrayList<String>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
@@ -128,19 +128,39 @@ public class GameLocations {
         return hazardsPresent.toArray(new String[hazardsPresent.size()]);
     }
 
-    public void moveWumpus() {
+    // picks a random room from the possible rooms to move to
+    // moves the wumpus to that room
+    // returns the Wumpus' new location
+    public int moveWumpus() {
+        int[] possibleLocs = this.cave.possibleMoves(getWumpusLoc());
+        int rand = random.nextInt(possibleLocs.length);
+        int loc = possibleLocs[rand];
+        setWumpusLoc(loc);
+        return loc;
+    }
 
+    // makes the Wumpus move randomly 2-4 times after being "injured"
+    // return's their final position
+    public int fleeingWumpus() {
+        int spacesRan = random.nextInt(2, 5);
+        int loc = getWumpusLoc();
+        for(int i = 0; i < spacesRan; i++){
+            loc = moveWumpus();
+        }
+        return loc;
     }
 
     public int getWumpusLoc() {
         return locsTable[1][0];
     }
 
-    public void setWumpusLoc(int room) {
+    public boolean setWumpusLoc(int room) {
         int wumpusPos = locsTable[1][0];
         if (cave.canMove(wumpusPos, room)) {
             locsTable[1][0] = room;
+            return true;
         }
+        return false;
     }
 
     public int getPlayerLoc() {
