@@ -43,15 +43,8 @@ class Trivia {
     }
     // Methoods -----------------------
 
-    // Takes the trivia question and all of its properties
-    // the MAIN function of trivia.
-    // then, asks them for an answer and returns a flag wether their answer is right
-    // or not.
-    // Using this flag, they can determine to give the reward or the consequence
-    // based on which object
-    // is calling Triviarun
 
-    public ArrayList<String[]> compile(Scanner scn) {
+    public ArrayList<String[]> compile(Scanner scn) { //compiles files into respective arraylists. Used for convinient pulling from an array.
         ArrayList<String[]> fileParts = new ArrayList<String[]>();
         scn.nextLine();
         while (scn.hasNextLine()) {
@@ -63,7 +56,7 @@ class Trivia {
         return fileParts;
     }
 
-    public String randomTrivia(ArrayList<String[]> data, int index) {
+    public String randomTrivia(ArrayList<String[]> data, int index) { //Grabs a random hint
         // int filelengthT = fileParts.length;
         int randc = (int) (Math.random() * (data.size()));
         hint = data.get(randc)[index];
@@ -76,7 +69,7 @@ class Trivia {
     }
 
     // Split this into multiple objects? Getters and setters
-    public boolean triviaRun(int amount, int right, String genre) {
+    public boolean triviaRun(int amount, int right, String genre) { //Runs the questioning process
 
         String[] currentRow;
         int filelength = triviaData.size() - 1;
@@ -110,18 +103,7 @@ class Trivia {
         }
         System.out.println("This program works! - Triviarun");
         //gui.closeTriviaMenu(boolean win);
-        // WEIOUIL HEOIHLHASO DJADASDCFEFSDC
-        // 1 -
         return true;
     }
-
-    // Returns a hint
-    // Hints - Tells the player useless or useful stuff.
-    /*
-     * 2darray[][]{
-     * {id, text, genre}, {id, text, genre}
-     * 
-     * }
-     */
 
 }
