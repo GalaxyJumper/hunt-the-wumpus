@@ -3,8 +3,6 @@
 //02/12/24
 //Scores Object
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -38,8 +36,6 @@ public class HighScore {
   // checks if the current player has a high score, updates data table, and
   // displays data table
   public void endOfGame(Player player) throws FileNotFoundException {
-    endOfGameCheck(player);
-    if (endOfGameCheck(player) != -1)
       endOfGameUpdate(player);
     displayTable();
   }
@@ -81,35 +77,15 @@ public class HighScore {
     return length;
   }
 
-  // checks if player has a high score
-  private int endOfGameCheck(Player player) throws FileNotFoundException {
-    Scanner s = new Scanner(highScoreFile);
-    for (int i = 0; s.hasNextLine(); i++) {
-      String line = s.nextLine();
-      String[] pLine = line.split(",");
-      int score = Integer.parseInt(pLine[1]);
-      if (score < player.calcScore())
-        return i;
-    }
-    s.close();
-    return -1;
+  // checks if player has a high score and updates array accordingy
+  private void endOfGameUpdate(Player player) throws FileNotFoundException {
+    for( int i = players.length-1; i >= 0; i-- ){
+      if (players.get(i).calcScore() <= player.calcScore) {
+        players.set(i, player);
+      }
+  }
   }
 
-  // updates data table with player information
-  public void endOfGameUpdate(Player player) {
-  }
-
-  // removes a player line from file
-  private Player[] removePlayer(Player[] players, Player player) throws FileNotFoundException {
-    Scanner s = new Scanner(highScoreFile);
-    // for
-    s.close();
-    return players;
-  }
-
-  private void addPlayer(Player player) {
-
-  }
 
   // displays data table
   public void displayTable() {
