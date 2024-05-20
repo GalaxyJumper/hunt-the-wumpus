@@ -33,6 +33,8 @@ public class Player{
         this.score = 0;
     }
 
+
+    //ignore this constructor, used for highscore only!
     public Player(String[] pLine){
         name = pLine[0];
         score = Integer.parseInt(pLine[1]); 
@@ -47,7 +49,7 @@ public class Player{
     //This method will be called in gameControl to check the validity of a move
     //and also update the location of the player on the CSV
     public void move(){
-        turnsTaken++;
+        coins++;
     }
 
     //This method will be called in gameControl to determine the validity of a shot
@@ -76,10 +78,9 @@ public class Player{
 
     }
 
-    //Currently the score of a player is determined by multiplying coins by 10
-    //TBD
-    public int calcScore(){
-    this.score = this.coins * 10;
+    //yay calculates score
+    public int calcScore(boolean wumpusKilled){
+        this.score = 100- turnsTaken + coins + (5 * arrows) + ((wumpusKilled)? 50 : 0);
         return this.score;
     }
 
@@ -117,6 +118,10 @@ public class Player{
 
     public int getTurnsTaken() {
         return turnsTaken;
+    }
+
+    public void addTurnsTaken() {
+        this.turnsTaken++;
     }
 
     public void setTurnsTaken(int turnsTaken) {
