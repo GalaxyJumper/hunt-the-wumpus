@@ -17,17 +17,13 @@ import javax.swing.JFileChooser;
 public class HighScore {
   /// Properties
   File highScoreFile;
+  ArrayList<player> players;
 
   /// Constructors
   public HighScore() throws FileNotFoundException {
 
     highScoreFile = new File("Highscore.csv");
-    // Player[] players = putPlayersIntoArray(highScoreFile);
-
-    // File HighScore = new File("Highscore.csv");
-    // BufferedWriter bw = new BufferedWriter(fw);
-    // BufferedReader br = new BufferedReader(fw);
-    // Filewriter fw = new FileWriter("Highscore.csv",true);
+    players = putPlayersIntoArray();
 
   }
 
@@ -36,40 +32,40 @@ public class HighScore {
   // checks if the current player has a high score, updates data table, and
   // displays data table
   public void endOfGame(Player player) throws FileNotFoundException {
-      endOfGameUpdate(player);
+    endOfGameUpdate(player);
+    updateFile();
     displayTable();
   }
 
   // adds all players into array
-  /*
-   * public static Player[] putPlayersIntoArray(File f) throws
-   * FileNotFoundException {
-   * 
-   * //makes a list of players using the length of the file
-   * Player[] players = new Player[lengthOfFile(f) - 1];
-   * 
-   * Scanner s = new Scanner(f);
-   * 
-   * //advances this to the row without all the ttles
-   * String line = s.nextLine();
-   * 
-   * for (int i = 0; s.hasNextLine(); i++) {
-   * //makes an array for each line
-   * line = s.nextLine();
-   * String[] pLine = line.split(",");
-   * 
-   * //assigns the players their properties using the array made before
-   * players[i] = new Player(pLine);
-   * }
-   * 
-   * 
-   * return players;
-   * }
-   */
+  
+  public static Player[] putPlayersIntoArray() throws FileNotFoundException {
+   
+   //makes a list of players using the length of the file
+   ArrayList<Player> players = new Player[lengthOfFile() - 1];
+   
+   Scanner s = new Scanner(highScoreFile);
+   
+   //advances this to the row without all the ttles
+   String line = s.nextLine();
+    
+    for (int i = 0; s.hasNextLine(); i++) {
+      //makes an array for each line
+      line = s.nextLine();
+      String[] pLine = line.split(",");
+   
+      //assigns the players their properties using the array made before
+      players.add( new Player(pLine));
+   }
+   
+   
+   return players;
+ }
+  
 
-  public static int lengthOfFile(File f) throws FileNotFoundException {
+  public static int lengthOfFile() throws FileNotFoundException {
     int length = 0;
-    Scanner fileScanner = new Scanner(f);
+    Scanner fileScanner = new Scanner(highScoreFile);
     for (int i = 0; fileScanner.hasNextLine(); i++) {
       String line = fileScanner.nextLine();
       length++;
@@ -83,7 +79,7 @@ public class HighScore {
       if (players.get(i).calcScore() <= player.calcScore) {
         players.set(i, player);
       }
-  }
+    }
   }
 
 
@@ -91,8 +87,12 @@ public class HighScore {
   public void displayTable() {
   };
 
-}
+  public void updateFile(){
+    FileWriter fw = new FileWriter(highScoreFile);
+    for (Player p: players){
+      fw.write(p.toString() + " \n");
+    }
 
-// constructor makes a file, puts all the players of the file into an array
-// checks if that player is higher than any of them. if it is, it returns the
-// lowest score
+  }
+
+}
