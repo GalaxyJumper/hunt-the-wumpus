@@ -128,19 +128,39 @@ public class GameLocations {
         return hazardsPresent.toArray(new String[hazardsPresent.size()]);
     }
 
-    public void moveWumpus() {
+    // picks a random room from the possible rooms to move to
+    // moves the wumpus to that room
+    // returns the Wumpus' new location
+    public int moveWumpus() {
+        int[] possibleLocs = this.cave.possibleMoves(getWumpusLoc());
+        int rand = random.nextInt(possibleLocs.length);
+        int loc = possibleLocs[rand];
+        setWumpusLoc(loc);
+        return loc;
+    }
 
+    // makes the Wumpus move randomly 2-4 times after being "injured"
+    // return's their final position
+    public int fleeingWumpus() {
+        int spacesRan = random.nextInt(2, 5);
+        int loc = getWumpusLoc();
+        for(int i = 0; i < spacesRan; i++){
+            loc = moveWumpus();
+        }
+        return loc;
     }
 
     public int getWumpusLoc() {
         return locsTable[1][0];
     }
 
-    public void setWumpusLoc(int room) {
+    public boolean setWumpusLoc(int room) {
         int wumpusPos = locsTable[1][0];
         if (cave.canMove(wumpusPos, room)) {
             locsTable[1][0] = room;
+            return true;
         }
+        return false;
     }
 
     public int getPlayerLoc() {

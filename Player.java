@@ -119,6 +119,10 @@ public class Player{
         return turnsTaken;
     }
 
+    public void addTurnsTaken() {
+        this.turnsTaken++;
+    }
+
     public void setTurnsTaken(int turnsTaken) {
         this.turnsTaken = turnsTaken;
     }
