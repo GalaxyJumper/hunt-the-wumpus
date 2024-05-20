@@ -31,11 +31,12 @@ class Trivia {
     // CONSTRUCTOR --------------------
     public Trivia() throws FileNotFoundException {
         in = new Scanner(System.in); // Scans Usr imput
-        triviaQuestionScanner = new Scanner(triviaFile); // the scanner that reads the file ("TriviaQ.csv")
-        triviaHintScanner = new Scanner(hintFile); // The scanner that reads the file ("TriviaQ.csv")
 
         triviaFile = new File("TriviaQuestions.csv"); // The file we refer to
         hintFile = new File("TriviaHints.csv"); // the file we refer to
+
+        triviaQuestionScanner = new Scanner(triviaFile); // the scanner that reads the file ("TriviaQ.csv")
+        triviaHintScanner = new Scanner(hintFile); // The scanner that reads the file ("TriviaQ.csv")
 
         triviaData = compile(triviaQuestionScanner);
         hintData = compile(triviaHintScanner);
@@ -52,7 +53,7 @@ class Trivia {
 
     public ArrayList<String[]> compile(Scanner scn) {
         ArrayList<String[]> fileParts = new ArrayList<String[]>();
-
+        scn.nextLine();
         while (scn.hasNextLine()) {
             String line = scn.nextLine();
             System.out.println(line);
@@ -79,17 +80,18 @@ class Trivia {
 
         String[] currentRow;
         int filelength = triviaData.size() - 1;
-        int qCount = amount;
+        int qCount = 5;
         //gui.openTriviaMenu();
         while (qCount > 0) {
             int randq = (int) (Math.random() * filelength);
             currentRow = triviaData.get(randq);
             //gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions, numRequired}, boolean correct);
-            qCount = -1;
+            qCount -= 1;
             String currentQ = currentRow[1];
-            String[] currenntA = currentRow[2].split("|");
+            String[] currentA = currentRow[2].split("~");
             String currentK = currentRow[3];
             
+
             System.out.println("works - triviarun");
         }
         System.out.println("This program works! - Triviarun");
