@@ -102,18 +102,18 @@ public class GameLocations {
     public String[] getHazards() {
         ArrayList<String> hazards = new ArrayList<String>();
         int playerLoc = getPlayerLoc();
-        for (int type = 1; type < locsTable.length; type++) {
-            for (int inst = 0; inst < locsTable[type].length; inst++) {
-                if (locsTable[type][inst] == playerLoc)
-                    hazards.add(TYPES[type]);
+        //Starts at one to skip player location
+        for(int type = 1; type < locsTable.length; type++){
+            for(int inst = 0; inst < locsTable[type].length; inst++){
+                if(locsTable[type][inst] == playerLoc) hazards.add(TYPES[type]);
             }
         }
         return hazards.toArray(new String[hazards.size()]);
     }
 
-    // looks through all rooms surrounding the player and returns the hazards
-    // present in them
-    public String[] checkForHazards() {
+    // looks through all rooms surrounding the player 
+    // return string array of all the hazards present in them
+    public String[] checkForHazards(){
         int playerLoc = getPlayerLoc();
         ArrayList<String> hazardsPresent = new ArrayList<String>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
