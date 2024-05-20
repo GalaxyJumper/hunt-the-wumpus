@@ -116,6 +116,11 @@ public class Player{
         this.coins = coins;
     }
 
+    // figure this out later.
+    public int calcScore(){
+        return -1;
+    }
+
     public int getTurnsTaken() {
         return turnsTaken;
     }
