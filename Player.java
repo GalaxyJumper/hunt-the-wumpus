@@ -34,7 +34,7 @@ public class Player{
     }
 
     public Player(String[] pLine){
-        name = pline[0];
+        name = pLine[0];
         score = Integer.parseInt(pLine[1]); 
         cave = pLine[2];
 
