@@ -15,11 +15,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
 
 public class HighScore {
-  /// Properties
+ 
+  /// Properties//////
   File highScoreFile;
   ArrayList<player> players;
 
-  /// Constructors
+  /// Constructors////
   public HighScore() throws FileNotFoundException {
 
     highScoreFile = new File("Highscore.csv");
@@ -27,18 +28,15 @@ public class HighScore {
 
   }
 
-  /// Method
+  /// Methods///
 
-  // checks if the current player has a high score, updates data table, and
-  // displays data table
+  // checks if the current player has a high score, updates data table
   public void endOfGame(Player player) throws FileNotFoundException {
     endOfGameUpdate(player);
     updateFile();
-    displayTable();
   }
 
   // adds all players into array
-  
   public static Player[] putPlayersIntoArray() throws FileNotFoundException {
    
    //makes a list of players using the length of the file
@@ -82,11 +80,7 @@ public class HighScore {
     }
   }
 
-
-  // displays data table
-  public void displayTable() {
-  };
-
+  //updates the file with the current list of players
   public void updateFile(){
     FileWriter fw = new FileWriter(highScoreFile);
     for (Player p: players){
