@@ -47,7 +47,7 @@ public class Player{
     //This method will be called in gameControl to check the validity of a move
     //and also update the location of the player on the CSV
     public void move(){
-        turnsTaken++;
+        coins++;
     }
 
     //This method will be called in gameControl to determine the validity of a shot
