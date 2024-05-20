@@ -21,10 +21,10 @@ public class Gui extends JPanel{
     // {How long into the animation, location}
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
-    // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[5];
-    // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
-    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1,};
+    // "Question?", "Genre", "Answer 1", "Answer 2", "answer 3", "Answer 4"
+    String[] triviaQuestion = new String[6];
+    // {total # of Qs, number of correct answers required, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
+    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
     // How transparent is the dimming on the menu?
     int dimRectTransparency = -1;
     /////////////////////////////////////
@@ -104,7 +104,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.fillRect(0, 0, width, height);
         }
         if(triviaScoreData[0] != -1){
-            drawTriviaMenu(new String[] {"hi"}, new int[] {5, 1, 2, 1, 0, 0}, g2d);
+            drawTriviaMenu(new String[] {"Chicago is a ______", "Geography", "State", "County", "City", "Continent"}, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
         
     }
@@ -251,30 +251,44 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         //Lighter border
         g2d.setColor(new Color(43, 43, 43));
         g2d.fillRect(menuX, menuY + menuHeight / 10, menuWidth, menuHeight / 60);
-
-        //Question accuracy bubbles
+        //Bottom border
+        g2d.setColor(new Color(43, 43, 43));
+        g2d.fillRect(menuX, menuY + menuHeight * 59 / 60, menuWidth, menuHeight / 60);
+        //Question bubbles
         for(int i = 0; i < scoreData[0]; i++){
 
             int bubbleX = (menuX + menuWidth) - (60 * (scoreData[0] - i));
             int bubbleY = (menuY + (menuHeight / 10 - scoreBubbleSize) / 2);
 
             //Question unanswered
-            if(scoreData[i + 1] == 0){
+            if(scoreData[i + 2] == 0){
                 g2d.setColor(new Color(220, 220, 220));
                 g2d.drawOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
             //Question correct
-            else if(scoreData[i + 1] == 1){
+            else if(scoreData[i + 2] == 1){
                 g2d.setColor(new Color(0, 220, 0));
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
             //Question incorrect
-            else if(scoreData[i + 1] == 2){
+            else if(scoreData[i + 2] == 2){
                 g2d.setColor(new Color(255, 165, 0));
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
         }
-        
+        // "Trivia - X out of Y (Category)"
+        g2d.setFont(calibri.deriveFont((float)40));
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", menuX + 20, menuY + 60);
+        // Question
+        g2d.setFont(calibri.deriveFont((float)60));
+        g2d.drawString(question[0], menuX + 30, menuY + menuHeight / 5);
+        // Answers
+        g2d.setFont(calibri.deriveFont((float)40));
+        String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
+        for(int i = 0; i < 4; i ++){
+            g2d.drawString(answerLabels[i] + question[i + 2], menuX + 50, (menuY + menuHeight / 3) + i * menuHeight/8);
+        }
     }
 
     public void openTriviaMenu(String[] triviaQuestion, int numQuestions){
