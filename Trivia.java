@@ -80,17 +80,20 @@ class Trivia {
         String[] currentRow;
         int filelength = triviaData.size() - 1;
         int qCount = amount;
+        //gui.openTriviaMenu();
         while (qCount > 0) {
             int randq = (int) (Math.random() * filelength);
             currentRow = triviaData.get(randq);
+            //gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions, numRequired}, boolean correct);
             qCount = -1;
             String currentQ = currentRow[1];
             String[] currenntA = currentRow[2].split("|");
             String currentK = currentRow[3];
+            
             System.out.println("works - triviarun");
         }
         System.out.println("This program works! - Triviarun");
-
+        //gui.closeTriviaMenu(boolean win);
         // WEIOUIL HEOIHLHASO DJADASDCFEFSDC
         // 1 -
         return true;
