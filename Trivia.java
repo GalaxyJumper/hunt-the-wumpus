@@ -81,18 +81,32 @@ class Trivia {
         String[] currentRow;
         int filelength = triviaData.size() - 1;
         int qCount = 5;
+        int correct = 0;
         //gui.openTriviaMenu();
         while (qCount > 0) {
             int randq = (int) (Math.random() * filelength);
             currentRow = triviaData.get(randq);
-            //gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions, numRequired}, boolean correct);
+            
             qCount -= 1;
             String currentQ = currentRow[1];
             String[] currentA = currentRow[2].split("~");
             String currentK = currentRow[3];
             
+            //terminal work
+            System.out.println(currentQ);
+            System.out.print("Make sure to put down a singular letter! (lowercase, if you like to get answers right) ");
+            String playerA = in.next(); //remove when migrating to gui! (RMG)
+            // String playerAnswer = gameControl.getNextTriviaInput();  
+            if(playerA.equals(currentK)){
+                System.out.println();
+                System.out.println("Correct!");
+                correct += 1;
+                boolean guiCorrect = true; 
 
+            }
+           //gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions, numRequired}, boolean correct);
             System.out.println("works - triviarun");
+          
         }
         System.out.println("This program works! - Triviarun");
         //gui.closeTriviaMenu(boolean win);
