@@ -20,6 +20,7 @@ public class Player{
     private int coins;
     private int arrows;
     private int score;
+    private String cave;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -30,6 +31,13 @@ public class Player{
         this.coins = 0;
         this.turnsTaken = 0;
         this.score = 0;
+    }
+
+    public Player(String[] pLine){
+        name = pline[0];
+        score = Integer.parseInt(pLine[1]); 
+        cave = pLine[2];
+
     }
 
     ///////////////////////////////////////////////
@@ -117,6 +125,10 @@ public class Player{
 
     public String getName(){
         return name;
+    }
+
+    public String toString() {
+    return name + "," + score + "," + cave;
     }
 
 }
