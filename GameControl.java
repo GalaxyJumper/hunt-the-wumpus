@@ -2,7 +2,7 @@
 // Nick Lennon (less cringe)
 // Aviral Mishra (the cool one)
 // Toki
-// 2/12/2024lkjh
+// 2/12/2024
 // Game Control Object
 
 //taking in inputs for all classes and running the game
@@ -77,11 +77,11 @@ public  class GameControl {
 
     // player input
     public void move(int playerInput){
-        /**if (gameLocs.setPlayerLoc())
+        if (gameLocs.setPlayerLoc(playerInput))
             gui.move(playerInput);
         else
-            gui.failMove();
-        **/
+            gui.failMove(playerInput);
+        
     }
 
     public void shootArrow(){

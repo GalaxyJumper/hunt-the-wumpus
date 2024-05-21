@@ -1,22 +1,17 @@
 import javax.swing.*;
-
-import javafx.scene.control.ColorPicker;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JButton;
-
 public class Gui extends JPanel{
     //////////////////////////////////////
     //VARAIBLES
     //////////////////////////////////////
     Graphics2D g2d;
     int width, height;
-    int mapStartX = 350;
-    int mapStartY = 75;
+    int mapStartX = 0;
+    int mapStartY = 70;
     int mapRoomSize; // = width / 40;
     GameLocations gameLocs;
     int playerLoc;
@@ -26,10 +21,10 @@ public class Gui extends JPanel{
     // {How long into the animation, location}
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
-    // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[5];
-    // {total # of Qs, # of Qs right}
-    int[] triviaScoreData = new int[2];
+    // "Question?", "Genre", "Answer 1", "Answer 2", "answer 3", "Answer 4"
+    String[] triviaQuestion = new String[6];
+    // {total # of Qs, number of correct answers required, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
+    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
     // How transparent is the dimming on the menu?
     int dimRectTransparency = -1;
     /////////////////////////////////////
@@ -39,7 +34,9 @@ public class Gui extends JPanel{
         this.width = width;
         this.height = height;
         this.gameLocs = locations;
-        this.mapRoomSize = width / 40;
+        this.mapRoomSize = width / 20;
+        this.mapStartX = (int)(mapRoomSize * 12) / 2;
+        this.mapStartY = 200;
 
         //Create Calibri as a usable font
         File calibriFile = new File("calibri.ttf");
@@ -107,7 +104,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.fillRect(0, 0, width, height);
         }
         if(triviaScoreData[0] != -1){
-            drawTriviaMenu(new String[] {"hi"}, triviaScoreData, g2d);
+            drawTriviaMenu(new String[] {"Chicago is a ______", "Geography", "State", "County", "City", "Continent"}, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
         
     }
@@ -143,6 +140,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawPolygon(xPoints, yPoints, 6);
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
+
     private void drawHex(double centerX, double centerY, double radius, Color color){
         double currentX = 0;
         double currentY = 0;
@@ -158,6 +156,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(color);
         g2d.drawPolygon(xPoints, yPoints, 6);
     }
+
     private void fillHex(double centerX, double centerY, double radius, Color color){
         double currentX = 0;
         double currentY = 0;
@@ -173,6 +172,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(color);
         g2d.fillPolygon(xPoints, yPoints, 6);
     }
+
     private void drawMap(int startX, int startY, int radius, Graphics2D g2d, int playerLoc){
         //X = (even) startX + (3radius) * x
         //    (odd)  (startX + (3radius) * x) + 1.5 radius
@@ -182,7 +182,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         int[] possibleMovesInt = cave.possibleMoves(playerLoc);
         ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
         for(int i : possibleMovesInt) possibleMoves.add(i);
-        //COlumn
+        //Column
         for(int i = 0; i < 6; i++){
             double x = (i * (radius*1.5));
             //Row
@@ -202,8 +202,10 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 drawRoom(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
             }
         }
+        g2d.drawOval(startX, startY, 50, 50);
     
     }
+
     private void drawFailMoveHex(int millis, int loc){
         int x = loc % 6;
         int y = loc / 6;
@@ -214,11 +216,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         fillHex(drawX, drawY, mapRoomSize - 2, currentColor);
         
     }
+
     public void move(int whereTo){
         playerLoc = whereTo;
         this.repaint();
 
     }
+
     public void failMove(int whereTo){
         long animationStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
@@ -231,22 +235,78 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         failMoveHex[0] = -1;
         failMoveHex[1] = -1;
     }
+
     private void drawTriviaMenu(String[] question, int[] scoreData, Graphics2D g2d){
+        int menuWidth = (this.width / 2);
+        int menuHeight = (this.height * 2 / 3);
+        int menuX = (this.width - menuWidth) / 2;
+        int menuY = (this.height - menuHeight) / 2;
+        int scoreBubbleSize = 30;
+        //Base menu background
         g2d.setColor(new Color(31, 31, 31));
-        g2d.fillRect(this.width / 2 - 300, this.height / 2 - 100, 600, 200);
+        g2d.fillRect(menuX, menuY, menuWidth, menuHeight);
+        //Top darker section
+        g2d.setColor(new Color(24, 24, 24));
+        g2d.fillRect(menuX, menuY, menuWidth, menuHeight / 10);
+        //Lighter border
+        g2d.setColor(new Color(43, 43, 43));
+        g2d.fillRect(menuX, menuY + menuHeight / 10, menuWidth, menuHeight / 60);
+        //Bottom border
+        g2d.setColor(new Color(43, 43, 43));
+        g2d.fillRect(menuX, menuY + menuHeight * 59 / 60, menuWidth, menuHeight / 60);
+        //Question bubbles
+        for(int i = 0; i < scoreData[0]; i++){
+
+            int bubbleX = (menuX + menuWidth) - (60 * (scoreData[0] - i));
+            int bubbleY = (menuY + (menuHeight / 10 - scoreBubbleSize) / 2);
+
+            //Question unanswered
+            if(scoreData[i + 2] == 0){
+                g2d.setColor(new Color(220, 220, 220));
+                g2d.drawOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
+            }
+            //Question correct
+            else if(scoreData[i + 2] == 1){
+                g2d.setColor(new Color(0, 220, 0));
+                g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
+            }
+            //Question incorrect
+            else if(scoreData[i + 2] == 2){
+                g2d.setColor(new Color(255, 165, 0));
+                g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
+            }
+        }
+        // "Trivia - X out of Y (Category)"
+        g2d.setFont(calibri.deriveFont((float)40));
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", menuX + 20, menuY + 60);
+        // Question
+        g2d.setFont(calibri.deriveFont((float)60));
+        g2d.drawString(question[0], menuX + 30, menuY + menuHeight / 5);
+        // Answers
+        g2d.setFont(calibri.deriveFont((float)40));
+        String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
+        for(int i = 0; i < 4; i ++){
+            g2d.drawString(answerLabels[i] + question[i + 2], menuX + 50, (menuY + menuHeight / 3) + i * menuHeight/8);
+        }
     }
+
     public void openTriviaMenu(String[] triviaQuestion, int numQuestions){
-        this.triviaQuestion = triviaQuestion;
-        triviaScoreData[0] = numQuestions;
         long animationStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
         while(now - animationStart < 500){
             now = System.currentTimeMillis();
             dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
+            if(now - animationStart > 250){
+                this.triviaQuestion = triviaQuestion;
+                triviaScoreData[0] = numQuestions;
+            }
             repaint();
+
         }
-        triviaScoreData[0] = numQuestions;
-        triviaScoreData[1] = 0;
+        
+        
+        
     }
     public void nextTriviaQuestion(boolean correct){
         
