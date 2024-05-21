@@ -129,7 +129,7 @@ public class GameLocations {
     }
 
     public void moveWumpus() {
-
+        
     }
 
     public int getWumpusLoc() {
