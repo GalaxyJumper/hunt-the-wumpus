@@ -1,5 +1,5 @@
 //Lincon
-//Nick
+//shivansh
 
 //imports
 import java.util.ArrayList;
@@ -21,6 +21,10 @@ class Trivia {
     // Values of the questions
     String genre = ""; // Gets the genre
     String hint; // gets the hint
+    String question;
+    ArrayList<String[]> answer = new ArrayList<String[]>();
+    String pQuestion;
+    String key;
     int amount; // amount requested
     int right; // amound needed to be right
     ArrayList<String[]> triviaData = new ArrayList<String[]>();
@@ -43,8 +47,8 @@ class Trivia {
     }
     // Methoods -----------------------
 
-
-    public ArrayList<String[]> compile(Scanner scn) { //compiles files into respective arraylists. Used for convinient pulling from an array.
+    public ArrayList<String[]> compile(Scanner scn) { // compiles files into respective arraylists. Used for convinient
+                                                      // pulling from an array.
         ArrayList<String[]> fileParts = new ArrayList<String[]>();
         scn.nextLine();
         while (scn.hasNextLine()) {
@@ -56,7 +60,7 @@ class Trivia {
         return fileParts;
     }
 
-    public String randomTrivia(ArrayList<String[]> data, int index) { //Grabs a random hint
+    public String randomTrivia(ArrayList<String[]> data, int index) { // Grabs a random hint
         // int filelengthT = fileParts.length;
         int randc = (int) (Math.random() * (data.size()));
         hint = data.get(randc)[index];
@@ -69,41 +73,54 @@ class Trivia {
     }
 
     // Split this into multiple objects? Getters and setters
-    public boolean triviaRun(int amount, int right, String genre) { //Runs the questioning process
+    public boolean triviaRun(int amount, int right, String genre) { // Runs the questioning process
 
-        String[] currentRow;
         int filelength = triviaData.size() - 1;
-        int qCount = 5;
+        int qCount = 5; // replace with int amount later, 5 is a testing variable.
         int correct = 0;
-        //gui.openTriviaMenu();
+        // gui.openTriviaMenu();
         while (qCount > 0) {
-            int randq = (int) (Math.random() * filelength);
-            currentRow = triviaData.get(randq);
-            
-            qCount -= 1;
-            String currentQ = currentRow[1];
-            String[] currentA = currentRow[2].split("~");
-            String currentK = currentRow[3];
-            
-            //terminal work
-            System.out.println(currentQ);
-            System.out.print("Make sure to put down a singular letter! (lowercase, if you like to get answers right) ");
-            String playerA = in.next(); //remove when migrating to gui! (RMG)
-            // String playerAnswer = gameControl.getNextTriviaInput();  
-            if(playerA.equals(currentK)){
-                System.out.println();
-                System.out.println("Correct!");
-                correct += 1;
-                boolean guiCorrect = true; 
+            newQnAnK();
 
-            }
-           //gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions, numRequired}, boolean correct);
+            qCount -= 1;
+            String currentQ = question;
+            ArrayList<String> currentA = new ArrayList<String>();
+            for (int i = 1; i < answer.size(); i++) {
+            currentA.add(answer.get(i)[i]); // red flag
+        }
+            String currentK = key;
+
+            // terminal work
+            System.out.println(currentQ);
+            System.out.println(currentA);
+            System.out.println(currentK);
+            System.out.println("-");
+            // gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions,
+            // numRequired}, boolean correct);
             System.out.println("works - triviarun");
-          
+
         }
         System.out.println("This program works! - Triviarun");
-        //gui.closeTriviaMenu(boolean win);
+        // gui.closeTriviaMenu(boolean win);
         return true;
+    }
+
+    // Smaller functions for assisting in being able to grab things such as
+    // questions
+    public String[] getQandA() {
+        String[] QandA = new String[5];
+        QandA[0] = question;
+        for (int i = 1; i < answer.size(); i++) {
+            QandA[i] = answer.get(i)[0];
+        }
+        return QandA;
+    }
+
+    public void newQnAnK() {
+        int rand = (int) (Math.random() * triviaData.size() - 1);
+        this.question = triviaData.get(rand)[1];
+        this.answer.add((triviaData.get(rand)[2]).split("~"));
+        this.key = triviaData.get(rand)[3];
     }
 
 }
