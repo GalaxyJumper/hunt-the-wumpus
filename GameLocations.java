@@ -142,11 +142,13 @@ public class GameLocations {
     // makes the Wumpus move randomly 2-4 times after being "injured"
     // return's their final position
     public int fleeingWumpus() {
+        int origin = getWumpusLoc();
         int spacesRan = random.nextInt(2, 5);
         int loc = getWumpusLoc();
         for(int i = 0; i < spacesRan; i++){
             loc = moveWumpus();
         }
+        if(origin == loc) return fleeingWumpus();
         return loc;
     }
 
@@ -174,6 +176,22 @@ public class GameLocations {
             return true;
         }
         return false;
+    }
+
+    public int getBatLoc(int inst){
+        return this.locsTable[2][inst];
+    }
+
+    public int getRandomBatLoc(){
+        return this.locsTable[2][new Random().nextInt(2)];
+    }
+
+    public int getPitLoc(int inst){
+        return this.locsTable[3][inst];
+    }
+
+    public int getRandomPitLoc(){
+        return this.locsTable[3][new Random().nextInt(2)];
     }
 
     public Cave getCave() {

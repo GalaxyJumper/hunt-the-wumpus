@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-public class Gui extends JPanel{
+public class Gui extends JPanel implements MouseListener{
     //////////////////////////////////////
     //VARAIBLES
     //////////////////////////////////////
@@ -16,17 +16,21 @@ public class Gui extends JPanel{
     GameLocations gameLocs;
     int playerLoc;
     Font calibri;
+
     // Drawing variables
 
     // {How long into the animation, location}
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
-    // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[5];
-    // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
-    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1,};
+    // "Question?", "Genre", "Answer 1", "Answer 2", "answer 3", "Answer 4"
+    String[] triviaQuestion = new String[6];
+    // {total # of Qs, number of correct answers required, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
+    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
     // How transparent is the dimming on the menu?
     int dimRectTransparency = -1;
+
+    // Input variables
+    boolean inTriviaMenu = false;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -54,7 +58,10 @@ public class Gui extends JPanel{
         // Set default close operation (end program once the window is closed)
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // for later 
-        // frame.addKeyListener();
+        this.addMouseListener(this);
+
+
+
         //Put this panel into its frame so it can be displayed
         frame.add(this);
         //Make frame fit into the screen
@@ -65,6 +72,7 @@ public class Gui extends JPanel{
         this.move(23);
         this.failMove(2);
         this.openTriviaMenu(new String[]{"hello"}, height);
+        this.closeTriviaMenu();
     }
     
     public Gui(String name){
@@ -103,8 +111,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setColor(new Color(0, 0, 0, dimRectTransparency));
             g2d.fillRect(0, 0, width, height);
         }
-        if(triviaScoreData[0] != -1){
-            drawTriviaMenu(new String[] {"hi"}, new int[] {5, 1, 2, 1, 0, 0}, g2d);
+        if(inTriviaMenu){
+            drawTriviaMenu(new String[] {"Chicago is a ______", "Geography", "State", "County", "City", "Continent"}, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
         
     }
@@ -202,7 +210,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 drawRoom(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
             }
         }
-        g2d.drawOval(startX, startY, 50, 50);
     
     }
 
@@ -251,35 +258,50 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         //Lighter border
         g2d.setColor(new Color(43, 43, 43));
         g2d.fillRect(menuX, menuY + menuHeight / 10, menuWidth, menuHeight / 60);
-
-        //Question accuracy bubbles
+        //Bottom border
+        g2d.setColor(new Color(43, 43, 43));
+        g2d.fillRect(menuX, menuY + menuHeight * 59 / 60, menuWidth, menuHeight / 60);
+        //Question bubbles
         for(int i = 0; i < scoreData[0]; i++){
 
             int bubbleX = (menuX + menuWidth) - (60 * (scoreData[0] - i));
             int bubbleY = (menuY + (menuHeight / 10 - scoreBubbleSize) / 2);
 
             //Question unanswered
-            if(scoreData[i + 1] == 0){
+            if(scoreData[i + 2] == 0){
                 g2d.setColor(new Color(220, 220, 220));
                 g2d.drawOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
             //Question correct
-            else if(scoreData[i + 1] == 1){
+            else if(scoreData[i + 2] == 1){
                 g2d.setColor(new Color(0, 220, 0));
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
             //Question incorrect
-            else if(scoreData[i + 1] == 2){
+            else if(scoreData[i + 2] == 2){
                 g2d.setColor(new Color(255, 165, 0));
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
         }
-        
+        // "Trivia - X out of Y (Category)"
+        g2d.setFont(calibri.deriveFont((float)40));
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", menuX + 20, menuY + 60);
+        // Question
+        g2d.setFont(calibri.deriveFont((float)60));
+        g2d.drawString(question[0], menuX + 30, menuY + menuHeight / 5);
+        // Answers
+        g2d.setFont(calibri.deriveFont((float)40));
+        String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
+        for(int i = 0; i < 4; i ++){
+            g2d.drawString(answerLabels[i] + question[i + 2], menuX + 50, (menuY + menuHeight / 3) + i * menuHeight/8);
+        }
     }
 
     public void openTriviaMenu(String[] triviaQuestion, int numQuestions){
         long animationStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
+        inTriviaMenu = true;
         while(now - animationStart < 500){
             now = System.currentTimeMillis();
             dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
@@ -298,24 +320,43 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         
     }
     public void closeTriviaMenu(){
-        
+        inTriviaMenu = false;
+        dimRectTransparency = -1;
+        triviaQuestion = new String[6];
     }
-    //public void drawActionText(String[] text) LATER
+    ////////////////////////////////////////////////
+    // MOUSE METHODS
+    ////////////////////////////////////////////////
+    public void mouseClicked(MouseEvent e){
+        System.out.println("GUI: Player clicked");
+        double mouseX = e.getX();
+        double mouseY = e.getY();
+        if(!inTriviaMenu){
+            double mapLeftEdge = mapStartX - mapRoomSize;
+            double mapTopEdge = mapStartY - mapRoomSize;
+            double mapRoomHeight = mapRoomSize * (2 / Math.sqrt(3));
+            if(mouseX < mapLeftEdge || mouseX > mapLeftEdge + 9.5 * mapRoomSize){
+                return;
+            }
+            if(mouseY < mapTopEdge || mouseY > 11 * mapRoomHeight){
+                return;
+            }
+            
+        } else {
+            
+        }
+    }
+    public void mousePressed(MouseEvent e){
 
-    //public void drawScene(String[] room) LATER
+    }
+    public void mouseEntered(MouseEvent e){
 
+    }
+    public void mouseExited(MouseEvent e){
 
-    //public void drawPlayer(int x, y) LATER
-    
+    }
+    public void mouseReleased(MouseEvent e){
 
-
-    //public void drawWumpus(int x, y)
-
-
-    //public void drawObstacle(String[] room)
-
-
-
-
+    }
     
 }
