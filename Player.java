@@ -116,21 +116,12 @@ public class Player{
         this.coins = coins;
     }
 
-    // figure this out later.
-    public int calcScore(){
-        return -1;
-    }
-
     public int getTurnsTaken() {
         return turnsTaken;
     }
 
     public void addTurnsTaken() {
         this.turnsTaken++;
-    }
-
-    public void setTurnsTaken(int turnsTaken) {
-        this.turnsTaken = turnsTaken;
     }
 
     public String getName(){
