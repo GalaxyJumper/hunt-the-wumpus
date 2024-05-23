@@ -1,4 +1,7 @@
 //Toki
+
+import java.io.File;
+
 public class SoundManager {
     /*
      * I assume the general purpose for this class is to play sounds

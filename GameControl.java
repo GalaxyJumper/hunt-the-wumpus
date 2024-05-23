@@ -54,7 +54,6 @@ public  class GameControl {
         trivia = new Trivia();
         
         if (!GraphicsEnvironment.isHeadless()){ 
-            //                                   2560 X 1440 - DO NOT CHANGE
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
 

@@ -328,7 +328,32 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     // MOUSE METHODS
     ////////////////////////////////////////////////
     public void mouseClicked(MouseEvent e){
-        System.out.println("Player clicked");
+        System.out.println("GUI: Player clicked");
+        double mouseX = e.getX();
+        double mouseY = e.getY();
+        if(!inTriviaMenu){
+            double mapLeftEdge = mapStartX - (mapRoomSize);
+            double mapTopEdge = mapStartY - (mapRoomSize);
+            double mapRoomHeight = (mapRoomSize) * Math.sqrt(3);
+            // 
+            int mapInputX = (int)((mouseX - mapLeftEdge) / (1.5 * mapRoomSize));
+            int mapInputY = (int)((mouseY - mapTopEdge - (mapInputX % 2 * (0.5 * mapRoomHeight))) / (mapRoomHeight));
+            if(mouseX < mapLeftEdge || mouseX > mapLeftEdge + 9.5 * mapRoomSize){
+                return;
+            }
+            if(mouseY < mapTopEdge || mouseY > 11 * mapRoomHeight){
+                return;
+            }
+            else {
+                double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 2));
+                double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + mapRoomHeight;
+                drawHex(hitBoxX, hitBoxY, 3, new Color(255, 255, 255));
+                repaint();
+            }
+
+        } else {
+            
+        }
     }
     public void mousePressed(MouseEvent e){
 

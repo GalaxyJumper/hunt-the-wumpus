@@ -75,7 +75,7 @@ public class Player{
     //We need our trivia class to be fully complete for this method to work
     //TBD
     public void purchaseSecret(){
-
+        coins--;
     }
 
     //yay calculates score
@@ -116,11 +116,6 @@ public class Player{
         this.coins = coins;
     }
 
-    // figure this out later.
-    public int calcScore(){
-        return -1;
-    }
-
     public int getTurnsTaken() {
         return turnsTaken;
     }
@@ -129,17 +124,18 @@ public class Player{
         this.turnsTaken++;
     }
 
-    public void setTurnsTaken(int turnsTaken) {
-        this.turnsTaken = turnsTaken;
-    }
-
     public String getName(){
         return name;
+    }
+
+    public int getScore(){
+        return score;
     }
 
     public String toString() {
     return name + "," + score + "," + cave;
     }
+
 
 }
 
