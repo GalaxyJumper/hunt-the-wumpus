@@ -38,7 +38,10 @@ public class Player{
     public Player(String[] pLine){
         name = pLine[0];
         score = Integer.parseInt(pLine[1]); 
-        cave = pLine[2];
+        turnsTaken = Integer.parseInt(pLine[2]);
+        coins = Integer.parseInt(pLine[3]);
+        arrows = Integer.parseInt(pLine[4]);
+        cave = pLine[5];
 
     }
 
@@ -133,7 +136,7 @@ public class Player{
     }
 
     public String toString() {
-    return name + "," + score + "," + cave;
+    return name + "," + score + "," + turnsTaken + "," + coins + "," + arrows + "," + cave;
     }
 
 
