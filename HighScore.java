@@ -30,6 +30,7 @@ public class HighScore {
   public void endOfGame(Player player) throws IOException{
     endOfGameUpdate(player);
     updateFile();
+    System.out.println("Done");
   }
 
   // adds all players into array
@@ -41,7 +42,7 @@ public class HighScore {
    Scanner s = new Scanner(highScoreFile);
    
    //advances this to the row without all the ttles
-   String line = s.nextLine();
+    String line;
     
     while (s.hasNextLine()) {
       //makes an array for each line

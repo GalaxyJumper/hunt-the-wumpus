@@ -19,6 +19,12 @@ public class Main {
         // simulate wumpus. 3/5
         boolean right = trivia.triviaRun(5, 3, null);
 
+        //Player player = new Player();
+
+        //HighScore highscore = new HighScore();
+        //highscore.endOfGame(player);
+
+
     }
 }
 
