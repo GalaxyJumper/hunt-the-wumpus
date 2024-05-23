@@ -16,9 +16,9 @@ public class Gui extends JPanel implements MouseListener{
     GameLocations gameLocs;
     int playerLoc;
     Font calibri;
-
+    Cave cave;
     // Drawing variables
-
+    ArrayList<Integer> exploredRooms = new ArrayList<Integer> ();
     // {How long into the animation, location}
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
@@ -41,7 +41,7 @@ public class Gui extends JPanel implements MouseListener{
         this.mapRoomSize = width / 20;
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
-
+        this.cave = gameLocs.getCave();
         //Create Calibri as a usable font
         File calibriFile = new File("calibri.ttf");
         calibri = Font.createFont(Font.TRUETYPE_FONT, calibriFile).deriveFont(12f);
@@ -70,9 +70,9 @@ public class Gui extends JPanel implements MouseListener{
         frame.setTitle(name);
         frame.setVisible(true);
         this.move(23);
-        this.failMove(2);
-        this.openTriviaMenu(new String[]{"hello"}, height);
-        this.closeTriviaMenu();
+        //this.failMove(2);
+        //this.openTriviaMenu(new String[]{"hello"}, height);
+        //this.closeTriviaMenu();
     }
     
     public Gui(String name){
@@ -185,10 +185,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         //X = (even) startX + (3radius) * x
         //    (odd)  (startX + (3radius) * x) + 1.5 radius
         Color currentColor = new Color(0, 0, 0);
-        Cave cave = gameLocs.getCave();
+        
 
         int[] possibleMovesInt = cave.possibleMoves(playerLoc);
         ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
+        ArrayList<Integer> exploredRoomsTemp = exploredRooms;
         for(int i : possibleMovesInt) possibleMoves.add(i);
         //Column
         for(int i = 0; i < 6; i++){
@@ -203,7 +204,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 } else if(possibleMoves.size() > 0 && possibleMoves.get(0) == currentRoomNum){
                     currentColor = new Color(60, 60, 60);
                     possibleMoves.remove(0);
-                } else {
+                } else if(exploredRoomsTemp.size() > 0 && exploredRoomsTemp.get(0) == currentRoomNum){
+                    currentColor = new Color(60, 60, 60);
+                    exploredRoomsTemp.remove(0);
+                } 
+                else {
                     currentColor = new Color(20, 20, 20);
                 }
                 
@@ -225,6 +230,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     public void move(int whereTo){
+        int[] possibleMoves = cave.possibleMoves(playerLoc);
+        for(int i : possibleMoves){
+            exploredRooms.add(i);
+        }
+        exploredRooms.add(playerLoc);
         playerLoc = whereTo;
         this.repaint();
 
@@ -298,7 +308,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
     }
 
-    public void openTriviaMenu(String[] triviaQuestion, int numQuestions){
+    public void openTriviaMenu(String[][] triviaQuestions){
         long animationStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
         inTriviaMenu = true;
@@ -306,8 +316,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             now = System.currentTimeMillis();
             dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
             if(now - animationStart > 250){
-                this.triviaQuestion = triviaQuestion;
-                triviaScoreData[0] = numQuestions;
+                //this.triviaQuestion = triviaQuestion;
+                //triviaScoreData[0] = numQuestions;
             }
             repaint();
 
@@ -346,9 +356,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             }
             else {
                 double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 2));
-                double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + mapRoomHeight;
-                drawHex(hitBoxX, hitBoxY, 3, new Color(255, 255, 255));
-                repaint();
+                double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 20;
+                System.out.println("Mouse Pos: " + mouseX + ", " + mouseY);
+                System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
+                if(mouseY > (mouseX - hitBoxX) / Math.sqrt(3)){
+                    System.out.println("Hit top triangle");
+                    
+                }
             }
 
         } else {
