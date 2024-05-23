@@ -29,7 +29,8 @@ public  class GameControl {
 
         
         if (!GraphicsEnvironment.isHeadless()){ 
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
+            gui = new Gui("HUNT THE WUMPUS", 920, 800, gameLocs);
+            //gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
 
         scan.close();
