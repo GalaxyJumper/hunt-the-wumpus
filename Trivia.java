@@ -125,5 +125,11 @@ class Trivia {
         System.out.println(answer.get(0)[1]);
         System.out.println(key);
     }
+    public boolean isCorrect(String pAnswer){
+        if(pAnswer.equals(this.key)){
+                return true;
+           }  
+        return false; //CHANGE WHEN LOGIC IMPLANTED
+    }
 
 }
