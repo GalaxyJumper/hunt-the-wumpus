@@ -53,7 +53,7 @@ public  class GameControl {
         Scanner scan = new Scanner(System.in);
         trivia = new Trivia();
         
-        if (!GraphicsEnvironment.isHeadless()){ 
+        if (!GraphicsEnvironment.isHeadless()){
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
 
