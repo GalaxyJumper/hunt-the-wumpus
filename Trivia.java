@@ -85,15 +85,15 @@ class Trivia {
             qCount -= 1;
             String currentQ = question;
             ArrayList<String> currentA = new ArrayList<String>();
-            for (int i = 1; i < answer.size(); i++) {
-            currentA.add(answer.get(i)[i]); // red flag
+            for (int i = 0; i < 1; i++) {
+                for (int k = 0; k <  (answer.get(i)).length; k++){
+                    currentA.add(answer.get(i)[k]);
+                }
+             // red flag
         }
             String currentK = key;
 
             // terminal work
-            System.out.println(currentQ);
-            System.out.println(currentA);
-            System.out.println(currentK);
             System.out.println("-");
             // gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions,
             // numRequired}, boolean correct);
@@ -121,6 +121,9 @@ class Trivia {
         this.question = triviaData.get(rand)[1];
         this.answer.add((triviaData.get(rand)[2]).split("~"));
         this.key = triviaData.get(rand)[3];
+        System.out.println(question);
+        System.out.println(answer.get(0)[1]);
+        System.out.println(key);
     }
 
 }
