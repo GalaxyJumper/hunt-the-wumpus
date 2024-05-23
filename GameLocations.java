@@ -46,7 +46,7 @@ public class GameLocations {
         return val;
     }
 
-    // Interates through all in game objects to see if 1+ is in room x,y
+    // Interates through all in game types to see if 1+ is in room x,y
     // Returns true if there is, false otherwise;
     public boolean somethingThere(int roomNum) {
 
@@ -186,7 +186,7 @@ public class GameLocations {
     }
 
     public int getRandomBatLoc(){
-        return this.locsTable[2][new Random().nextInt(2)];
+        return this.locsTable[2][random.nextInt(2)];
     }
 
     public int getPitLoc(int inst){
@@ -194,7 +194,7 @@ public class GameLocations {
     }
 
     public int getRandomPitLoc(){
-        return this.locsTable[3][new Random().nextInt(2)];
+        return this.locsTable[3][random.nextInt(2)];
     }
 
     public Cave getCave() {
