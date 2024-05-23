@@ -129,7 +129,7 @@ class Trivia {
         if(pAnswer.equals(this.key)){
                 return true;
            }  
-        return false; //CHANGE WHEN LOGIC IMPLANTED
+        return false; 
     }
 
 }
