@@ -139,6 +139,14 @@ public class Player{
     return name + "," + score + "," + turnsTaken + "," + coins + "," + arrows + "," + cave;
     }
 
+    public String getCave(){
+        return cave;
+    }
+
+    public void setCave(String cave){
+        this.cave = cave;
+    }
+
 
 }
 
