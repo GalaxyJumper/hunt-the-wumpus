@@ -1,5 +1,5 @@
-id,text,genre
-00,This_is_a_test_hint,lore
-01,twistedgarden,lore
-02,antarticreinforcement,lore
-03,buddyholly,lore
+id,text
+00,This_is_a_test_hint
+01,twistedgarden
+02,antarticreinforcement
+03,buddyholly

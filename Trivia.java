@@ -19,7 +19,7 @@ class Trivia {
     Scanner triviaQuestionScanner; // the scanner that reads the file ("TriviaQ.csv")
 
     // Values of the questions
-    String genre = ""; // Gets the genre
+
     String hint; // gets the hint
     String question;
     ArrayList<String[]> answer = new ArrayList<String[]>();
@@ -27,6 +27,7 @@ class Trivia {
     String key;
     int amount; // amount requested
     int right; // amound needed to be right
+    boolean isCorrect;
     ArrayList<String[]> triviaData = new ArrayList<String[]>();
     // 0 - lore, 1 - misc 2 - actions 3 - chem 4 - ect ill update this later
     ArrayList<String[]> hintData = new ArrayList<String[]>();
@@ -73,7 +74,7 @@ class Trivia {
     }
 
     // Split this into multiple objects? Getters and setters
-    public boolean triviaRun(int amount, int right, String genre) { // Runs the questioning process
+    public boolean triviaRun(int amount, int right) { // Runs the questioning process
 
         int filelength = triviaData.size() - 1;
         int qCount = 5; // replace with int amount later, 5 is a testing variable.
@@ -81,38 +82,24 @@ class Trivia {
         // gui.openTriviaMenu();
         while (qCount > 0) {
             newQnAnK();
-
+            //gui.
             qCount -= 1;
-            String currentQ = question;
-            ArrayList<String> currentA = new ArrayList<String>();
-            for (int i = 0; i < 1; i++) {
-                for (int k = 0; k < (answer.get(i)).length; k++) {
-                    currentA.add(answer.get(i)[k]);
-
-                }
-            }
-            String currentK = key;
-
-            // terminal work
-            System.out.println("-");
-            // gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions,
-            // numRequired}, boolean correct);
-
         }
         System.out.println("This program works! - Triviarun");
         // gui.closeTriviaMenu(boolean win);
-        return true;
+        return false;
     }
 
     // Smaller functions for assisting in being able to grab things such as
     // questions
-    public String[] getQandA() {
-        String[] QandA = new String[5];
-        QandA[0] = question;
-        for (int i = 1; i < answer.size(); i++) {
-            QandA[i] = answer.get(i)[0];
+    public String[] getQandAandK() {
+        String[] QandAandK = new String[6];
+        QandAandK[0] = this.question;
+        for (int i = 1; i < this.answer.size(); i++) {
+            QandAandK[i] = this.answer.get(i)[0];
         }
-        return QandA;
+        QandAandK[5] = this.key;
+        return QandAandK;
     }
 
     public void newQnAnK() {
@@ -127,8 +114,10 @@ class Trivia {
     }
     public boolean isCorrect(String pAnswer){
         if(pAnswer.equals(this.key)){
+                this.isCorrect = true;
                 return true;
            }  
+        this.isCorrect = false;
         return false; //CHANGE WHEN LOGIC IMPLANTED
     }
 
