@@ -86,18 +86,17 @@ class Trivia {
             String currentQ = question;
             ArrayList<String> currentA = new ArrayList<String>();
             for (int i = 0; i < 1; i++) {
-                for (int k = 0; k <  (answer.get(i)).length; k++){
+                for (int k = 0; k < (answer.get(i)).length; k++) {
                     currentA.add(answer.get(i)[k]);
+
                 }
-             // red flag
-        }
+            }
             String currentK = key;
 
             // terminal work
             System.out.println("-");
             // gui.nextQuestion(new String{q, g, a1-4}, new int[] {numQuestions,
             // numRequired}, boolean correct);
-            System.out.println("works - triviarun");
 
         }
         System.out.println("This program works! - Triviarun");
@@ -117,8 +116,9 @@ class Trivia {
     }
 
     public void newQnAnK() {
-        int rand = (int) (Math.random() * triviaData.size() - 1);
+        int rand = (int) (Math.random() * triviaData.size());
         this.question = triviaData.get(rand)[1];
+        this.answer.clear();
         this.answer.add((triviaData.get(rand)[2]).split("~"));
         this.key = triviaData.get(rand)[3];
         System.out.println(question);
