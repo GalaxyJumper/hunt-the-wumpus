@@ -19,10 +19,11 @@ public class Main {
         // simulate wumpus. 3/5
         boolean right = trivia.triviaRun(5, 3, null);
 
-        Player player = new Player();
 
-        HighScore highscore = new HighScore();
-        highscore.endOfGame(player);
+        //making sure highscore works! (should add a null player to the highscore csv)
+        Player player = new Player();
+        HighScore highscore = new HighScore(player);
+        highscore.endOfGame();
 
 
     }
