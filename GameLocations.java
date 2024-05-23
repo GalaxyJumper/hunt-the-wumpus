@@ -152,7 +152,15 @@ public class GameLocations {
         return loc;
     }
 
-    public int getWumpusLoc() {
+    // A bat transfers the player to a random location in the cave
+    // Returns the player's new location
+    public int batTransport() {
+        int rand = getRandomLocation();
+        setPlayerLoc(rand);
+        return rand;
+    }
+
+    public int getWumpusLoc(){
         return locsTable[1][0];
     }
 
