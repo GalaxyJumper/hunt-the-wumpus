@@ -16,26 +16,24 @@ public class GameLocations {
 
     // holds room location of all game types and instances
     // first d is the types; e.g. player, wumpus, pit
-    // second d is intances - bat 1 or 2, ect.
-    private int[][] locsTable = { new int[1], new int[1], new int[2], new int[2] };
+    // second d is intances - bat 0 or 1, ect.
+    private final int[][] locsTable = { new int[1], new int[1], new int[2], new int[2] };
 
-    // maps the type of character to the locs table
+    // maps the type name to the locs table
     private final String[] TYPES = { "Player", "Wumpus", "Bat", "Pit" };
 
     private Cave cave;
-    private Random random = new Random();
-
-    // Two of the locations are randomly chosen to be "pits"
-    // Two of the locations, aside from the two pits, are randomly chosen to be
-    // "bats"
+    private Random random;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
     public GameLocations() {
-        this.locsTable = initializeLocations();
         this.cave = new Cave();
+        this.random = new Random();
+        initializeLocations();
+        
     }
 
     ///////////////////////////////////////////////
@@ -71,16 +69,13 @@ public class GameLocations {
     }
 
     // Fills the location table with random, nonrepeating rooms
-    // Returns this new table;
-    private int[][] initializeLocations() {
-        int[][] randLocs = this.locsTable;
+    private void initializeLocations() {
         for (int type = 0; type < TYPES.length; type++) {
             int instanceNum = (type >= 2) ? 2 : 1;
             for (int instance = 0; instance < instanceNum; instance++) {
-                randLocs[type][instance] = getNovelLocation();
+                this.locsTable[type][instance] = getNovelLocation();
             }
         }
-        return randLocs;
     }
 
     // tells you the type of hazard(s) that exists in the room
