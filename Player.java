@@ -137,6 +137,10 @@ public class Player{
         return name;
     }
 
+    public int getScore(){
+        return score;
+    }
+
     public String toString() {
     return name + "," + score + "," + cave;
     }
