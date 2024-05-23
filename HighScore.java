@@ -70,9 +70,12 @@ public class HighScore {
 
   // checks if player has a high score and updates array accordingy
   private void endOfGameUpdate(Player player) throws FileNotFoundException {
-    for( int i = players.size() -1; i >= 0; i-- ){
-      if (players.get(i).calcScore() <= player.calcScore()) {
-        players.set(i, player);
+    if(players.size() < 10) players.add(player);
+    else{
+      for( int i = players.size() -1; i >= 0; i-- ){
+        if (players.get(i).calcScore() <= player.calcScore()) {
+          players.set(i, player);
+        }
       }
     }
   }

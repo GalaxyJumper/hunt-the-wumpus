@@ -75,7 +75,7 @@ public class Player{
     //We need our trivia class to be fully complete for this method to work
     //TBD
     public void purchaseSecret(){
-
+        coins--;
     }
 
     //yay calculates score
@@ -140,6 +140,7 @@ public class Player{
     public String toString() {
     return name + "," + score + "," + cave;
     }
+
 
 }
 
