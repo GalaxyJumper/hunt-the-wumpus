@@ -97,6 +97,7 @@ public  class GameControl {
                 return;
             }
         }
+        gameLocs.moveWumpus(player.getTurnsTaken());
     }
 
     // 0 - 29 (inclusive) + true location receiving arrow
@@ -134,6 +135,7 @@ public  class GameControl {
             questionType = playerInput;
             triviaTime();
         }
+        gameLocs.moveWumpus(player.getTurnsTaken());
     }
 
     public void triviaTime(){
@@ -147,6 +149,7 @@ public  class GameControl {
             // questions[i] = trivia.getQandAandK();
         }
         // gui.openTriviaMenu(questions);
+        
     }
 
     public void updateNumRight(){
