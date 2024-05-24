@@ -74,12 +74,14 @@ public class HighScore {
 
   // checks if player has a high score and updates array accordingy
   private void endOfGameUpdate() throws FileNotFoundException {
+    
     //if there are less than 10 players in the csv, then the new player is automatically added to the csv
     if(players.size() < 10) players.add(player);
     else{
       for( int i = players.size() -1; i >= 0; i-- ){
         if (players.get(i).getScore() <= player.getScore()) {
           players.set(i, player);
+          break;
         }
       }
     }

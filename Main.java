@@ -21,7 +21,8 @@ public class Main {
 
 
         //making sure highscore works! (should add a null player to the highscore csv)
-        Player player = new Player();
+        String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
+        Player player = new Player(test);
         HighScore highscore = new HighScore(player);
         highscore.endOfGame();
 
