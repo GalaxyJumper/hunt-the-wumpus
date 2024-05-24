@@ -14,9 +14,11 @@ public class GameLocations {
     // VARIABLES
     ///////////////////////////////////////////////
 
-    // holds room location of all game types and instances
+    // holds room location of all game instances
     // first d is the types; e.g. player, wumpus, pit
     // second d is intances - bat 0 or 1, ect.
+    // There is one play, one wumpus, two bats, and two pits
+    // Wumpus and Player have moving ability in the game
     private final int[][] locsTable = { new int[1], new int[1], new int[2], new int[2] };
 
     // maps the type name to the locs table
@@ -29,8 +31,8 @@ public class GameLocations {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
 
-    public GameLocations() {
-        this.cave = new Cave();
+    public GameLocations(Cave cave) {
+        this.cave = cave;
         this.random = new Random();
         initializeLocations();
         
