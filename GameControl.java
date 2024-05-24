@@ -65,11 +65,6 @@ public  class GameControl {
     // METHODS
     ///////////////////////////////////////////////
 
-    // start-up
-    public void getCave(){
-        
-    }
-
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
         if (gameLocs.setPlayerLoc(playerInput)){
@@ -115,15 +110,24 @@ public  class GameControl {
                 // gui.updateTurnCounter(player.getTurnsTaken());
                 String[] hazards = gameLocs.getHazards(playerInput);
                 boolean wumpusShot = false;
+                boolean missed = false;
                 for (String hazard : hazards){
                     if (hazard.equals("Wumpus")){
-                        wumpusShot = true;
+                        if (Math.random() < 0.5)
+                            wumpusShot = true;
+                        else {
+                            missed = true;
+                        }
                         break;
                     }
                 }
                 if (wumpusShot){
                     // gui.drawSplashText("You Won!", new Color(0,255,0));
                     gameEnd();
+                } else if (missed) {
+                    // gui.drawSplashText("You Missed!", new Color(255,255,0));
+                } else {
+                    // gui.drawSplashText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
                 }
             }
         } else {
@@ -203,6 +207,8 @@ public  class GameControl {
     }
 
     public void gameEnd(){
+        // String[][] leaderboardInfo = scores.endOfGame();
+        // gui.displayLeaderboard(leaderboardInfo);
         System.exit(0);
     }
 }
