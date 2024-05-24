@@ -10,7 +10,7 @@
 // Player Object
 
 public class Player{
-    
+
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
@@ -21,6 +21,7 @@ public class Player{
     private int arrows;
     private int score;
     private String cave;
+    private boolean wumpusKilled;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -31,6 +32,7 @@ public class Player{
         this.coins = 0;
         this.turnsTaken = 0;
         this.score = 0;
+        this.wumpusKilled = false;
     }
 
 
@@ -88,7 +90,7 @@ public class Player{
 
     //yay calculates score
     public int calcScore(boolean wumpusKilled){
-        this.score = 100- turnsTaken + coins + (5 * arrows) + ((wumpusKilled)? 50 : 0);
+        this.score = 100 - turnsTaken + coins + (5 * arrows) + ((wumpusKilled)? 50 : 0);
         return this.score;
     }
 
@@ -152,6 +154,13 @@ public class Player{
         this.cave = cave;
     }
 
+    public boolean getWumpusKilled(){
+        return this.wumpusKilled;
+    }
+
+    public void setWumpusKilled(boolean b){
+        this.wumpusKilled = b;
+    }
 
 }
 
