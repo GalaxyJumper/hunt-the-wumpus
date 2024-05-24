@@ -78,7 +78,7 @@ class Trivia {
 
     // Smaller functions for assisting in being able to grab things such as
     // questions
-    public String[] getQandAandK() {
+    public String[] getQnAnK() {
         String[] QandAandK = new String[6];
         QandAandK[0] = this.question;
         for (int i = 1; i < this.answer.size(); i++) {
