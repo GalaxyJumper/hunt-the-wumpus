@@ -7,21 +7,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args)
             throws HeadlessException, FileNotFoundException, FontFormatException, IOException {
-        System.setProperty("sun.java2d.uiScale", "1.0");
+                System.setProperty("sun.java2d.uiScale", "0.7");
         GameControl freak = new GameControl();
-
+        
         Trivia trivia = new Trivia();
         // Here's a little thing for testing Triva
 
         // bonjour
         Cave.println("Your code works ~*,`");
 
-        // simulate wumpus. 3/5
-        boolean right = trivia.triviaRun(5, 3, null);
-
 
         //making sure highscore works! (should add a null player to the highscore csv)
-        Player player = new Player();
+        String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
+        Player player = new Player(test);
         HighScore highscore = new HighScore(player);
         highscore.endOfGame();
 
