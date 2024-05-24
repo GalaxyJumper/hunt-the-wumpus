@@ -3,6 +3,7 @@
 import java.io.File;
 
 public class SoundManager {
+    private File f;
     /*
      * I assume the general purpose for this class is to play sounds
      * when something happens. Most likely going to be used by GameControl.
@@ -17,6 +18,6 @@ public class SoundManager {
       Then can use File to use them or something.
       */
     public SoundManager(){
-    
+        
     }
 }
