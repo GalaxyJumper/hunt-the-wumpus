@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args)
             throws HeadlessException, FileNotFoundException, FontFormatException, IOException {
-
+                System.setProperty("sun.java2d.uiScale", "0.7");
         GameControl freak = new GameControl();
-
+        
         Trivia trivia = new Trivia();
         // Here's a little thing for testing Triva
 

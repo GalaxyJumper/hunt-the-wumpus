@@ -7,7 +7,6 @@
 
 //taking in inputs for all classes and running the game
 //connecting the ui to the game itself
-import java.util.Scanner;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
@@ -22,6 +21,8 @@ public  class GameControl {
     private Gui gui;
     private Player player;
     private Trivia trivia;
+    private HighScore scores;
+    private Cave cave;
 
     private final String[] secrets = {
         "",
@@ -49,16 +50,15 @@ public  class GameControl {
     // CONSTRUCTORS
     ///////////////////////////////////////////////
     public GameControl() throws FontFormatException, IOException{
+        cave = new Cave();
         player = new Player();
-        gameLocs = new GameLocations();
-        Scanner scan = new Scanner(System.in);
+        gameLocs = new GameLocations(cave);
         trivia = new Trivia();
+        scores = new HighScore(player);
         
         if (!GraphicsEnvironment.isHeadless()){
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
-
-        scan.close();
     }
 
     ///////////////////////////////////////////////
