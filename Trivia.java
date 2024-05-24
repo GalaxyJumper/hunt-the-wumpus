@@ -78,33 +78,23 @@ class Trivia {
 
     // Smaller functions for assisting in being able to grab things such as
     // questions
+
+
     public String[] getQnAnK() {
-        String[] QandAandK = new String[6];
+        int rand = (int) (Math.random() * triviaData.size());
+        this.question = triviaData.get(rand)[1];
+        this.answer.clear();
+        this.answer.add((triviaData.get(rand)[2]).split("~"));
+        this.key = triviaData.get(rand)[3];
+
+        //----------------------------------
+           String[] QandAandK = new String[6];
         QandAandK[0] = this.question;
         for (int i = 1; i < this.answer.size(); i++) {
             QandAandK[i] = this.answer.get(i)[0];
         }
         QandAandK[5] = this.key;
         return QandAandK;
-    }
-
-    public void newQnAnK() {
-        int rand = (int) (Math.random() * triviaData.size());
-        this.question = triviaData.get(rand)[1];
-        this.answer.clear();
-        this.answer.add((triviaData.get(rand)[2]).split("~"));
-        this.key = triviaData.get(rand)[3];
-        System.out.println(question);
-        System.out.println(answer.get(0)[1]);
-        System.out.println(key);
-    }
-    public boolean isCorrect(String pAnswer){
-        if(pAnswer.equals(this.key)){
-                this.isCorrect = true;
-                return true;
-           }  
-        this.isCorrect = false;
-        return false; //CHANGE WHEN LOGIC IMPLANTED
     }
 
 }
