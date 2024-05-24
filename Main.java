@@ -16,9 +16,6 @@ public class Main {
         // bonjour
         Cave.println("Your code works ~*,`");
 
-        // simulate wumpus. 3/5
-        boolean right = trivia.triviaRun(5, 3);
-
 
         //making sure highscore works! (should add a null player to the highscore csv)
         Player player = new Player();
