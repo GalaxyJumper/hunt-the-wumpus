@@ -6,7 +6,11 @@ public class Wumpus {
     
 
     // Constructos
-    public Wumpus(){
+    public Wumpus(int n){
+        this.health = n;
+    }
+
+    public Wumpus() {
         this.health = 4;
     }
 
