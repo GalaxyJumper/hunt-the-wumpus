@@ -71,8 +71,13 @@ public class Player{
     //The effect is just exchanging a coin for an arrow
     //We need more complex stuff in the GUI
     public void purchaseArrow(){
-        this.coins--;
-        this.arrows++;
+        if(this.coins != 0){
+            this.coins--;
+            this.arrows++;
+        } else {
+            System.out.println("You don't have enough coins!");
+        }
+        
     }
  
     //We need our trivia class to be fully complete for this method to work
