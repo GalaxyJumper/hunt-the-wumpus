@@ -73,22 +73,8 @@ class Trivia {
 
     }
 
-    // Split this into multiple objects? Getters and setters
-    public boolean triviaRun(int amount, int right) { // Runs the questioning process
 
-        int filelength = triviaData.size() - 1;
-        int qCount = 5; // replace with int amount later, 5 is a testing variable.
-        int correct = 0;
-        // gui.openTriviaMenu();
-        while (qCount > 0) {
-            newQnAnK();
-            //gui.
-            qCount -= 1;
-        }
-        System.out.println("This program works! - Triviarun");
-        // gui.closeTriviaMenu(boolean win);
-        return false;
-    }
+ 
 
     // Smaller functions for assisting in being able to grab things such as
     // questions
