@@ -230,11 +230,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     public void move(int whereTo){
-        int[] possibleMoves = cave.possibleMoves(playerLoc);
-        for(int i : possibleMoves){
-            exploredRooms.add(i);
-        }
-        exploredRooms.add(playerLoc);
         playerLoc = whereTo;
         this.repaint();
 
@@ -326,7 +321,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         
         
     }
-    public void nextTriviaQuestion(boolean correct){
+    public void nextTriviaQuestion(boolean lastQCorrect){
         
     }
     public void closeTriviaMenu(){
@@ -334,6 +329,16 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         dimRectTransparency = -1;
         triviaQuestion = new String[6];
     }
+    // Pirated from Avi's cave class
+    private int[] oneToTwoD(int oneDCoord){
+        int[] twoD = new int[]{oneDCoord / 6, oneDCoord % 6};
+        return twoD;
+    }
+
+    private int twoToOneD(int y, int x){
+        return x + (6 * y);
+    }
+    
     ////////////////////////////////////////////////
     // MOUSE METHODS
     ////////////////////////////////////////////////
@@ -341,13 +346,37 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         System.out.println("GUI: Player clicked");
         double mouseX = e.getX();
         double mouseY = e.getY();
+
+
+
+        /////////// MAP INPUT ////////////
+        /* 
+         * Uses a tiling grid of rectangles to represent hexagons. 
+         * Each extends from the very left edge of the hexagon to the second-rightmost vertex.
+         * Each rectangle overlaps with two neighboring hexagons - the ones to the top and bottom left of this hexagon, like so:
+         *  _____
+         * |/    |_____|
+         * |\____|/    |
+         * |/    |\____|
+         * |\____|/    |
+         * 
+         * This way each of the bounding boxes looks like this:
+         *  ____________                     
+         * | /          |                  
+         * |/           |                  
+         * |\           |
+         * |_\__________|
+         * By checking both of the triangles we can figure out whether the mouse is in this hexagon or one of its neighbors.
+        */
         if(!inTriviaMenu){
             double mapLeftEdge = mapStartX - (mapRoomSize);
             double mapTopEdge = mapStartY - (mapRoomSize);
             double mapRoomHeight = (mapRoomSize) * Math.sqrt(3);
-            // 
+            
             int mapInputX = (int)((mouseX - mapLeftEdge) / (1.5 * mapRoomSize));
             int mapInputY = (int)((mouseY - mapTopEdge - (mapInputX % 2 * (0.5 * mapRoomHeight))) / (mapRoomHeight));
+
+            int roomNumClicked = 99;
             if(mouseX < mapLeftEdge || mouseX > mapLeftEdge + 9.5 * mapRoomSize){
                 return;
             }
@@ -355,14 +384,43 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 return;
             }
             else {
-                double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 2));
-                double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 20;
+                double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
+                double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 15;
                 System.out.println("Mouse Pos: " + mouseX + ", " + mouseY);
                 System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
-                if(mouseY > (mouseX - hitBoxX) / Math.sqrt(3)){
-                    System.out.println("Hit top triangle");
+                if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
                     
+                    //Special case - the room at the triangle's location will be at a different Y than this hexagon.
+                    if(mapInputX == 0){
+                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) + 5) % 30;
+                    }
+
+                    else {
+                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5)) % 30;
+                    }
+
+                    if(roomNumClicked < 0){
+                        roomNumClicked += 30;
+                    }
+
+                    System.out.println(roomNumClicked);
                 }
+                else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
+                    System.out.println("Hit top triangle");
+                
+                    roomNumClicked = (twoToOneD(mapInputY, mapInputX) - ((mapInputX % 2 == 0)? 7 : 1)) % 30;
+
+                    if(roomNumClicked < 0){
+                        roomNumClicked += 30;
+                    }
+                    
+                    System.out.println(roomNumClicked);
+                    
+                } else {
+                    roomNumClicked = twoToOneD(mapInputY, mapInputX);
+                    System.out.println(roomNumClicked);
+                }
+                this.move(roomNumClicked);
             }
 
         } else {
