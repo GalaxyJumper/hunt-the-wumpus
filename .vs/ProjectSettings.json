@@ -1,3 +1,6 @@
 {
-  "CurrentProjectSetting": null
+  "java.project.referencedLibraries":[
+    "lib/**/*.jar",
+    "D:\\Random Things I Felt Like Making or Doing\\hunt-the-wumpus\\.vs\\json-simple-1.1.1.jar"
+  ]
 }
