@@ -10,7 +10,13 @@ public class SoundManager {
      * and have a method that'll iterate over the list
      * to find the correct sfx for whatever the GControl needed.
      */
-    public SoundManager(){
 
+     /*
+      * I need to find a way to make a bunch of sound files
+      Prefereably by ripping them off youtube. 
+      Then can use File to use them or something.
+      */
+    public SoundManager(){
+    
     }
 }
