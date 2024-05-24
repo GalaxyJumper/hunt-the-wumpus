@@ -73,7 +73,7 @@ public class Player{
     //The effect is just exchanging a coin for an arrow
     //We need more complex stuff in the GUI
     public void purchaseArrow(){
-        if(this.coins != 0){
+        if(this.coins > 0){
             this.coins--;
             this.arrows++;
         } else {
