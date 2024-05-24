@@ -148,17 +148,18 @@ public  class GameControl {
         for (int i = 0; i < 5; i++){
             // questions[i] = trivia.getQandAandK();
         }
-        // gui.openTriviaMenu(questions);
+        //boolean[] correctAnswers = gui.openTriviaMenu(questions);
         
-    }
-
-    public void updateNumRight(){
-        numRight++;
-    }
-
-    public void allQuestionsAsked(){
-        triviaAction(numRight > 3);
-        numRight = 0;
+        int numRight = 0;
+        for (int i = 0; i < 5; i++){
+            if (correctAnswers[i])
+                numRight++;
+            if (numRight >= 3){
+                triviaAction(true);
+                return;
+            }
+        }
+        triviaAction(false);
     }
 
     // response is "A", "B", "C", or "D"
