@@ -1,16 +1,30 @@
 // Toki
 
 public class Wumpus {
-    // fields
+    // Fields and Properties
     private int health;
     
 
-    // Contructors
+    // Constructos
     public Wumpus(){
         this.health = 4;
     }
 
-    // methods
+    // Methods
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Getters and Setters
     public int getHealth(){
         return this.health;
     }
