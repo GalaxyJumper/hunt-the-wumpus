@@ -128,7 +128,7 @@ public class GameLocations {
     // picks a random room from the possible rooms to move to
     // moves the wumpus to that room
     // returns the Wumpus' new location
-    public int moveWumpus() {
+    public int moveWumpus(int turnNum) {
         int[] possibleLocs = this.cave.possibleMoves(getWumpusLoc());
         int rand = random.nextInt(possibleLocs.length);
         int loc = possibleLocs[rand];
