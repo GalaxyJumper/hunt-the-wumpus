@@ -13,9 +13,6 @@ public class Main {
         Trivia trivia = new Trivia();
         // Here's a little thing for testing Triva
 
-        // bonjour
-        Cave.println("Your code works ~*,`");
-
 
         //making sure highscore works! (should add a null player to the highscore csv)
         String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
@@ -23,7 +20,8 @@ public class Main {
         HighScore highscore = new HighScore(player);
         highscore.endOfGame();
 
-
+        // This should always run at the end of main!!!!
+        Cave.println("Your code works ~*,`");
     }
 }
 
