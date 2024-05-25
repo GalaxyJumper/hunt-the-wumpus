@@ -19,23 +19,30 @@ public class Gui extends JPanel implements MouseListener{
     Font calibri;
     Cave cave;
     int trivChoice = -1;
+    boolean disableClicks = false;
     // Drawing variables
     ArrayList<Integer> exploredRooms = new ArrayList<Integer> ();
     // {How long into the animation, location}
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
-    // "Question?", "Genre", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[6];
-    // {total # of Qs, number of correct answers required, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
-    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
-    // How transparent is the dimming on the menu?
+    // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
+    String[] triviaQuestion = new String[5];
+    // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
+    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1};
+    // How transparent is the dimming in the background of Trivia?
     int dimRectTransparency = -1;
-    //
+    // Which question this rectangle is highlighting. 0-3 inclusive when hovering over a Q, -1 otherwise
     int selectRectPos = -1;
-    
+    // Transistion rectangle animation variable
+    int nextQTransitionDim = -1;
+    // Dim of the rectangle that will tell you if you got the Q right or wrong
+    int correctAnsRectDim = -1;
+    // Which answer was selected (0-3) and whether it was right (1) or wrong (0). -1 otherwise.
+    int[] selectedAnswerData = new int[] {-1, -1};
     int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
     boolean inTriviaMenu = false;
+    String b = new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -143,7 +150,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double currentY = 0;
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
-        double doorScale = 0.3;
         for(int i = 0; i < 6; i++){
             currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
             currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
@@ -163,7 +169,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double currentY = 0;
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
-        double doorScale = 0.3;
         for(int i = 0; i < 6; i++){
             currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
             currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
@@ -179,7 +184,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double currentY = 0;
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
-        double doorScale = 0.3;
         for(int i = 0; i < 6; i++){
             currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
             currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
@@ -301,23 +305,36 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setFont(calibri.deriveFont((float)40));
         g2d.setColor(Color.WHITE);
         g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", triviaMenuX + 20, triviaMenuY + 60);
+        
+        
         // Question
+        int qTransparency = (nextQTransitionDim == 0)? 31 : 220;
+        g2d.setColor(new Color(qTransparency, qTransparency, qTransparency));
         g2d.setFont(calibri.deriveFont((float)60));
         g2d.drawString(question[0], triviaMenuX + 30, triviaMenuY + triviaMenuHeight / 5);
 
-        //
+        // Rectangle highlighting the curent answer hovered over
         if(selectRectPos != -1){
             int rectHeight = ((triviaMenuHeight * 3/4) - (triviaMenuHeight * 7/30)) / 4;
             int realY = triviaMenuY + (triviaMenuHeight / 4) + rectHeight * selectRectPos;
             g2d.setColor(new Color(43, 43, 43));
             g2d.fillRect(triviaMenuX, realY, triviaMenuWidth, rectHeight);
         }
-
-
-
-
+        // Rectangle giving feedback on right/wrong answer
+        if(correctAnsRectDim != -1){
+            int rectHeight = ((triviaMenuHeight * 3/4) - (triviaMenuHeight * 7/30)) / 4;
+            int realY = triviaMenuY + (triviaMenuHeight / 4) + rectHeight * selectedAnswerData[0];
+            int correct = selectedAnswerData[1];
+            
+            g2d.setColor((correct == 1)? 
+                new Color(10, 125, 25, correctAnsRectDim)
+              : new Color(125, 25, 10, correctAnsRectDim)
+              );
+            g2d.fillRect(triviaMenuX, realY,  triviaMenuWidth, rectHeight);
+        }
         // Answers
-        g2d.setColor(new Color(220, 220, 220));
+        int textTransparency = (nextQTransitionDim == -1)? 255 : nextQTransitionDim;
+        g2d.setColor(new Color(220, 220, 220, textTransparency));
         g2d.setFont(calibri.deriveFont((float)40));
         String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
         for(int i = 0; i < 4; i ++){
@@ -327,7 +344,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         //g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
 
-    public void openTriviaMenu(String[][] triviaQuestions){
+    public void openTriviaMenu(String[][] question){
         long animationStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
         inTriviaMenu = true;
@@ -335,8 +352,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             now = System.currentTimeMillis();
             dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
             if(now - animationStart > 250){
-                //this.triviaQuestion = triviaQuestion;
-                //triviaScoreData[0] = numQuestions;
+                this.triviaQuestion = question[0];
             }
             repaint();
 
@@ -345,8 +361,39 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         
         
     }
-    public void nextTriviaQuestion(boolean lastQCorrect){
-        
+    public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion){
+        selectedAnswerData[1] = lastQCorrect? 1 : 0;
+        long animStart = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
+        disableClicks = true;
+        while(now - animStart <= 700){
+            now = System.currentTimeMillis();
+            correctAnsRectDim = (int)(700 - (now - animStart));
+            correctAnsRectDim = (correctAnsRectDim > 255)? 255 : correctAnsRectDim; 
+            this.repaint();
+        }
+        animStart = System.currentTimeMillis();
+        now = System.currentTimeMillis();
+        nextQTransitionDim = 0;
+        this.triviaQuestion = nextQuestion;
+        // Update bubbles
+        while(now - animStart <= 400){
+            //Do nothing (delay)
+            now = System.currentTimeMillis();
+            this.repaint();
+        }
+        animStart = System.currentTimeMillis();
+        now = System.currentTimeMillis();
+        nextQTransitionDim = 1;
+        while(now - animStart <= 700){
+            nextQTransitionDim = (int)(255 * (now - animStart) / 700);
+
+            now = System.currentTimeMillis();
+            this.repaint();
+        }
+        disableClicks = false;
+        nextTriviaChoice();
+
     }
     public void closeTriviaMenu(){
         inTriviaMenu = false;
@@ -354,11 +401,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         triviaQuestion = new String[6];
     }
     // Pirated from Avi's cave class
-    private int[] oneToTwoD(int oneDCoord){
-        int[] twoD = new int[]{oneDCoord / 6, oneDCoord % 6};
-        return twoD;
-    }
-
     private int twoToOneD(int y, int x){
         return x + (6 * y);
     }
@@ -392,78 +434,80 @@ RenderingHints.VALUE_ANTIALIAS_ON);
          * |_\__________|
          * By checking both of the triangles we can figure out whether the mouse is in this hexagon or one of its neighbors.
         */
-        if(!inTriviaMenu){
-            double mapLeftEdge = mapStartX - (mapRoomSize);
-            double mapTopEdge = mapStartY - (mapRoomSize);
-            double mapRoomHeight = (mapRoomSize) * Math.sqrt(3);
-            
-            int mapInputX = (int)((mouseX - mapLeftEdge) / (1.5 * mapRoomSize));
-            int mapInputY = (int)((mouseY - mapTopEdge - (mapInputX % 2 * (0.5 * mapRoomHeight))) / (mapRoomHeight));
-
-            int roomNumClicked = 99;
-            if(mouseX < mapLeftEdge || mouseX > mapLeftEdge + 9.5 * mapRoomSize){
-                return;
-            }
-            if(mouseY < mapTopEdge || mouseY > 5.5 * mapRoomHeight){
-                return;
-            }
-            else {
-                double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
-                double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 15;
-                System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
-                if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
-                    
-                    //Special case - the room at the triangle's location will be at a different Y than this hexagon.
-                    if(mapInputX == 0){
-                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) + 5) % 30;
-                    }
-
-                    else {
-                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5)) % 30;
-                    }
-
-                    if(roomNumClicked < 0){
-                        roomNumClicked += 30;
-                    }
-
-                    System.out.println(roomNumClicked);
-                }
-                else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
-                    System.out.println("Hit top triangle");
+        if(!disableClicks){
+            if(!inTriviaMenu){
+                double mapLeftEdge = mapStartX - (mapRoomSize);
+                double mapTopEdge = mapStartY - (mapRoomSize);
+                double mapRoomHeight = (mapRoomSize) * Math.sqrt(3);
                 
-                    roomNumClicked = (twoToOneD(mapInputY, mapInputX) - ((mapInputX % 2 == 0)? 7 : 1)) % 30;
+                int mapInputX = (int)((mouseX - mapLeftEdge) / (1.5 * mapRoomSize));
+                int mapInputY = (int)((mouseY - mapTopEdge - (mapInputX % 2 * (0.5 * mapRoomHeight))) / (mapRoomHeight));
 
-                    if(roomNumClicked < 0){
-                        roomNumClicked += 30;
-                    }
-                    
-                    System.out.println(roomNumClicked);
-                    
-                } else {
-                    roomNumClicked = twoToOneD(mapInputY, mapInputX);
-                    System.out.println(roomNumClicked);
+                int roomNumClicked = 99;
+                if(mouseX < mapLeftEdge || mouseX > mapLeftEdge + 9.5 * mapRoomSize){
+                    return;
                 }
-                gameControl.turn(roomNumClicked);
-                this.move(roomNumClicked);
+                if(mouseY < mapTopEdge || mouseY > 5.5 * mapRoomHeight){
+                    return;
+                }
+                else {
+                    double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
+                    double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 15;
+                    System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
+                    if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
+                        
+                        //Special case - the room at the triangle's location will be at a different Y than this hexagon.
+                        if(mapInputX == 0){
+                            roomNumClicked = (twoToOneD(mapInputY, mapInputX) + 5) % 30;
+                        }
+
+                        else {
+                            roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5)) % 30;
+                        }
+
+                        if(roomNumClicked < 0){
+                            roomNumClicked += 30;
+                        }
+
+                        System.out.println(roomNumClicked);
+                    }
+                    else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
+                        System.out.println("Hit top triangle");
+                    
+                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) - ((mapInputX % 2 == 0)? 7 : 1)) % 30;
+
+                        if(roomNumClicked < 0){
+                            roomNumClicked += 30;
+                        }
+                        
+                        System.out.println(roomNumClicked);
+                        
+                    } else {
+                        roomNumClicked = twoToOneD(mapInputY, mapInputX);
+                        System.out.println(roomNumClicked);
+                    }
+                    gameControl.turn(roomNumClicked);
+                    this.move(roomNumClicked);
+                }
+
             }
+            else if (inTriviaMenu) { 
+                System.out.println(triviaMenuX);
+                System.out.println(triviaMenuX + triviaMenuWidth);
+                System.out.println(triviaMenuY + triviaMenuHeight / 4);
+                System.out.println(triviaMenuY + (triviaMenuHeight * 23 / 30));
+                if(mouseX > triviaMenuX && 
+                mouseX < triviaMenuX + triviaMenuWidth &&
+                mouseY > triviaMenuY + triviaMenuHeight / 4 
+                && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 )){
+                    
+                    double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
 
-        }
-         else if (inTriviaMenu) { 
-            System.out.println(triviaMenuX);
-            System.out.println(triviaMenuX + triviaMenuWidth);
-            System.out.println(triviaMenuY + triviaMenuHeight / 4);
-            System.out.println(triviaMenuY + (triviaMenuHeight * 23 / 30));
-            if(mouseX > triviaMenuX && 
-               mouseX < triviaMenuX + triviaMenuWidth &&
-               mouseY > triviaMenuY + triviaMenuHeight / 4 
-               && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 )){
-                
-                double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+                    double answerHitboxHeight = answerSelectionHeight / 4;
 
-                double answerHitboxHeight = answerSelectionHeight / 4;
-
-                int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
-                trivChoice = answerSelected;
+                    int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
+                    trivChoice = answerSelected;
+                }
             }
         }
     }
@@ -495,6 +539,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         int temp = trivChoice;
         trivChoice = -1;
         selectRectPos = -1;
+        selectedAnswerData[0] = temp;
+        this.nextTriviaQuestion(true, new String[] {"bruh"});
         return temp;
     }
     

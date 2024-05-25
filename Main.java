@@ -12,7 +12,8 @@ public class Main {
         
         Trivia trivia = new Trivia();
         // Here's a little thing for testing Triva
-
+        
+        
 
         //making sure highscore works! (should add a null player to the highscore csv)
         String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
