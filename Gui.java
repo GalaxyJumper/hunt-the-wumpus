@@ -14,9 +14,11 @@ public class Gui extends JPanel implements MouseListener{
     int mapStartY = 70;
     int mapRoomSize; // = width / 40;
     GameLocations gameLocs;
+    GameControl gameControl;
     int playerLoc;
     Font calibri;
     Cave cave;
+    int trivMenuClickX, trivMenuClickY = -1;
     // Drawing variables
     ArrayList<Integer> exploredRooms = new ArrayList<Integer> ();
     // {How long into the animation, location}
@@ -28,23 +30,25 @@ public class Gui extends JPanel implements MouseListener{
     int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
     // How transparent is the dimming on the menu?
     int dimRectTransparency = -1;
-
+    
+    int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
     boolean inTriviaMenu = false;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
-    public Gui(String name, int width, int height, GameLocations locations) throws FontFormatException, IOException{
+    public Gui(String name, int width, int height, GameLocations locations, GameControl gameControl) throws FontFormatException, IOException{
         this.width = width;
         this.height = height;
         this.gameLocs = locations;
+        this.gameControl = gameControl;
         this.mapRoomSize = width / 20;
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
         this.cave = gameLocs.getCave();
         //Create Calibri as a usable font
         File calibriFile = new File("calibri.ttf");
-        calibri = Font.createFont(Font.TRUETYPE_FONT, calibriFile).deriveFont(12f);
+        calibri = Font.createFont(Font.TRUETYPE_FONT, calibriFile).deriveFont(30f);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(calibri);
 
@@ -70,9 +74,11 @@ public class Gui extends JPanel implements MouseListener{
         frame.setTitle(name);
         frame.setVisible(true);
         this.move(23);
-        //this.failMove(2);
-        //this.openTriviaMenu(new String[]{"hello"}, height);
-        //this.closeTriviaMenu();
+        this.failMove(2);
+        this.openTriviaMenu(new String[][] {{"bruh"}, {"bruh"}});
+        //this.closeTriviaMenu(); 
+        new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+        new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
     
     public Gui(String name){
@@ -123,7 +129,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
      * Radius: distance from center to any vertex.
      * number: Which number to label the room.
      * Color: What color to draw the room.
-     * doors: Which sides to label as doors.
+     * 
      *          1_
      *      2 /    \ 0
      *      3 \ __ / 5
@@ -249,28 +255,28 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     private void drawTriviaMenu(String[] question, int[] scoreData, Graphics2D g2d){
-        int menuWidth = (this.width / 2);
-        int menuHeight = (this.height * 2 / 3);
-        int menuX = (this.width - menuWidth) / 2;
-        int menuY = (this.height - menuHeight) / 2;
+        triviaMenuWidth = (this.width / 2);
+        triviaMenuHeight = (this.height * 2 / 3);
+        triviaMenuX = (this.width - triviaMenuWidth) / 2;
+        triviaMenuY = (this.height - triviaMenuHeight) / 2;
         int scoreBubbleSize = 30;
         //Base menu background
         g2d.setColor(new Color(31, 31, 31));
-        g2d.fillRect(menuX, menuY, menuWidth, menuHeight);
+        g2d.fillRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight);
         //Top darker section
         g2d.setColor(new Color(24, 24, 24));
-        g2d.fillRect(menuX, menuY, menuWidth, menuHeight / 10);
+        g2d.fillRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 10);
         //Lighter border
         g2d.setColor(new Color(43, 43, 43));
-        g2d.fillRect(menuX, menuY + menuHeight / 10, menuWidth, menuHeight / 60);
+        g2d.fillRect(triviaMenuX, triviaMenuY + triviaMenuHeight / 10, triviaMenuWidth, triviaMenuHeight / 60);
         //Bottom border
         g2d.setColor(new Color(43, 43, 43));
-        g2d.fillRect(menuX, menuY + menuHeight * 59 / 60, menuWidth, menuHeight / 60);
+        g2d.fillRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 59 / 60, triviaMenuWidth, triviaMenuHeight / 60);
         //Question bubbles
         for(int i = 0; i < scoreData[0]; i++){
 
-            int bubbleX = (menuX + menuWidth) - (60 * (scoreData[0] - i));
-            int bubbleY = (menuY + (menuHeight / 10 - scoreBubbleSize) / 2);
+            int bubbleX = (triviaMenuX + triviaMenuWidth) - (60 * (scoreData[0] - i));
+            int bubbleY = (triviaMenuY + (triviaMenuHeight / 10 - scoreBubbleSize) / 2);
 
             //Question unanswered
             if(scoreData[i + 2] == 0){
@@ -291,16 +297,18 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         // "Trivia - X out of Y (Category)"
         g2d.setFont(calibri.deriveFont((float)40));
         g2d.setColor(Color.WHITE);
-        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", menuX + 20, menuY + 60);
+        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", triviaMenuX + 20, triviaMenuY + 60);
         // Question
         g2d.setFont(calibri.deriveFont((float)60));
-        g2d.drawString(question[0], menuX + 30, menuY + menuHeight / 5);
+        g2d.drawString(question[0], triviaMenuX + 30, triviaMenuY + triviaMenuHeight / 5);
         // Answers
         g2d.setFont(calibri.deriveFont((float)40));
         String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
         for(int i = 0; i < 4; i ++){
-            g2d.drawString(answerLabels[i] + question[i + 2], menuX + 50, (menuY + menuHeight / 3) + i * menuHeight/8);
+            g2d.drawString(answerLabels[i] + question[i + 2], triviaMenuX + 50, (triviaMenuY + triviaMenuHeight / 3) + i * triviaMenuHeight/8);
         }
+        g2d.drawRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 4);
+        g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
 
     public void openTriviaMenu(String[][] triviaQuestions){
@@ -343,10 +351,10 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     // MOUSE METHODS
     ////////////////////////////////////////////////
     public void mouseClicked(MouseEvent e){
-        System.out.println("GUI: Player clicked");
+        System.out.print("GUI: Player clicked");
         double mouseX = e.getX();
         double mouseY = e.getY();
-
+        System.out.println(" at " + mouseX + ", " + mouseY);
 
 
         /////////// MAP INPUT ////////////
@@ -355,10 +363,10 @@ RenderingHints.VALUE_ANTIALIAS_ON);
          * Each extends from the very left edge of the hexagon to the second-rightmost vertex.
          * Each rectangle overlaps with two neighboring hexagons - the ones to the top and bottom left of this hexagon, like so:
          *  _____
-         * |/    |_____|
-         * |\____|/    |
-         * |/    |\____|
-         * |\____|/    |
+         * |/    |\____|/
+         * |\____|/    |\
+         * |/    |\____|/
+         * |\____|/    |\
          * 
          * This way each of the bounding boxes looks like this:
          *  ____________                     
@@ -380,13 +388,12 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             if(mouseX < mapLeftEdge || mouseX > mapLeftEdge + 9.5 * mapRoomSize){
                 return;
             }
-            if(mouseY < mapTopEdge || mouseY > 11 * mapRoomHeight){
+            if(mouseY < mapTopEdge || mouseY > 5.5 * mapRoomHeight){
                 return;
             }
             else {
                 double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
                 double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 15;
-                System.out.println("Mouse Pos: " + mouseX + ", " + mouseY);
                 System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
                 if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
                     
@@ -420,11 +427,27 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     roomNumClicked = twoToOneD(mapInputY, mapInputX);
                     System.out.println(roomNumClicked);
                 }
+                gameControl.turn(roomNumClicked);
                 this.move(roomNumClicked);
             }
 
-        } else {
-            
+        } else if (inTriviaMenu) { 
+            System.out.println(triviaMenuX);
+            System.out.println(triviaMenuX + triviaMenuWidth);
+            System.out.println(triviaMenuY + triviaMenuHeight / 4);
+            System.out.println(triviaMenuY + (triviaMenuHeight * 23 / 30));
+            if(mouseX > triviaMenuX && 
+               mouseX < triviaMenuX + triviaMenuWidth &&
+               mouseY > triviaMenuY + triviaMenuHeight / 4 
+               && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 )){
+                
+                double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+
+                double answerHitboxHeight = answerSelectionHeight / 4;
+
+                int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
+                System.out.println(answerSelected);
+            }
         }
     }
     public void mousePressed(MouseEvent e){

@@ -57,7 +57,7 @@ public  class GameControl {
         scores = new HighScore(player);
         
         if (!GraphicsEnvironment.isHeadless()){
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
+            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs, this); 
         }
     }
 
@@ -148,7 +148,7 @@ public  class GameControl {
         for (int i = 0; i < 5; i++){
             // questions[i] = trivia.getQandAandK();
         }
-        //boolean[] correctAnswers = gui.openTriviaMenu(questions);
+        boolean[] correctAnswers = {true, true, true, true, true};
         
         int numRight = 0;
         for (int i = 0; i < 5; i++){
