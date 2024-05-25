@@ -18,7 +18,7 @@ public class Gui extends JPanel implements MouseListener{
     int playerLoc;
     Font calibri;
     Cave cave;
-    int trivMenuClickX, trivMenuClickY = -1;
+    int trivChoice = -1;
     // Drawing variables
     ArrayList<Integer> exploredRooms = new ArrayList<Integer> ();
     // {How long into the animation, location}
@@ -30,6 +30,8 @@ public class Gui extends JPanel implements MouseListener{
     int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
     // How transparent is the dimming on the menu?
     int dimRectTransparency = -1;
+    //
+    int selectRectPos = -1;
     
     int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
@@ -77,6 +79,7 @@ public class Gui extends JPanel implements MouseListener{
         this.failMove(2);
         this.openTriviaMenu(new String[][] {{"bruh"}, {"bruh"}});
         //this.closeTriviaMenu(); 
+        System.out.println(this.nextTriviaChoice() + " was the choice");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -301,14 +304,27 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         // Question
         g2d.setFont(calibri.deriveFont((float)60));
         g2d.drawString(question[0], triviaMenuX + 30, triviaMenuY + triviaMenuHeight / 5);
+
+        //
+        if(selectRectPos != -1){
+            int rectHeight = ((triviaMenuHeight * 3/4) - (triviaMenuHeight * 7/30)) / 4;
+            int realY = triviaMenuY + (triviaMenuHeight / 4) + rectHeight * selectRectPos;
+            g2d.setColor(new Color(43, 43, 43));
+            g2d.fillRect(triviaMenuX, realY, triviaMenuWidth, rectHeight);
+        }
+
+
+
+
         // Answers
+        g2d.setColor(new Color(220, 220, 220));
         g2d.setFont(calibri.deriveFont((float)40));
         String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
         for(int i = 0; i < 4; i ++){
             g2d.drawString(answerLabels[i] + question[i + 2], triviaMenuX + 50, (triviaMenuY + triviaMenuHeight / 3) + i * triviaMenuHeight/8);
         }
-        g2d.drawRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 4);
-        g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
+        //g2d.drawRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 4);
+        //g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
 
     public void openTriviaMenu(String[][] triviaQuestions){
@@ -431,7 +447,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 this.move(roomNumClicked);
             }
 
-        } else if (inTriviaMenu) { 
+        }
+         else if (inTriviaMenu) { 
             System.out.println(triviaMenuX);
             System.out.println(triviaMenuX + triviaMenuWidth);
             System.out.println(triviaMenuY + triviaMenuHeight / 4);
@@ -446,10 +463,55 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 double answerHitboxHeight = answerSelectionHeight / 4;
 
                 int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
-                System.out.println(answerSelected);
+                trivChoice = answerSelected;
             }
         }
     }
+    
+    public int nextTriviaChoice(){
+        double mouseX, mouseY;
+        
+        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+
+        double answerHitboxHeight = answerSelectionHeight / 4;
+
+        while(trivChoice == -1){
+            mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
+            mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+            
+            if(mouseX > triviaMenuX && 
+               mouseX < triviaMenuX + triviaMenuWidth &&
+               mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)
+               && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)){
+                
+
+                int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)) / answerHitboxHeight);
+                selectRectPos = answerHovered;
+            } else {
+                selectRectPos = -1;
+            }
+            this.repaint();
+        }
+        int temp = trivChoice;
+        trivChoice = -1;
+        selectRectPos = -1;
+        return temp;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public void mousePressed(MouseEvent e){
 
     }
