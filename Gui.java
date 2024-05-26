@@ -351,7 +351,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             
             g2d.setColor((correct == 1)? 
                 new Color(10, 125, 25, correctAnsRectDim)
-              : new Color(125, 25, 10, correctAnsRectDim)
+              : new Color(110, 35, 30, correctAnsRectDim)
               );
             g2d.fillRect(triviaMenuX, realY,  triviaMenuWidth, rectHeight);
         }
@@ -389,9 +389,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         long animStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
         disableClicks = true;
-        while(now - animStart <= 700){
+        while(now - animStart <= 1000){
             now = System.currentTimeMillis();
-            correctAnsRectDim = (int)(700 - (now - animStart));
+            correctAnsRectDim = (int)(1000 - (now - animStart));
             correctAnsRectDim = (correctAnsRectDim > 255)? 255 : correctAnsRectDim; 
             this.repaint();
         }
