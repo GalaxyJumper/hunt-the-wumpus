@@ -2,7 +2,6 @@ import java.awt.FontFormatException;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args)
@@ -15,7 +14,7 @@ public class Main {
         
         
 
-        //making sure highscore works! (should add a null player to the highscore csv)
+        //making sure highscore works! 
         String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
         Player player = new Player(test);
         HighScore highscore = new HighScore(player);
