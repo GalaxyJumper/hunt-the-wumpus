@@ -17,6 +17,7 @@ public class Gui extends JPanel implements MouseListener{
     GameControl gameControl;
     int playerLoc;
     Font calibri;
+    Font inconsolata;
     Cave cave;
     int trivChoice = -1;
     boolean disableClicks = false;
@@ -42,6 +43,10 @@ public class Gui extends JPanel implements MouseListener{
     int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
     boolean inTriviaMenu = false;
+    String[] actionText = new String[] {"Entered room 23.", "Survived a Wumpus attack.", "You smell a foul stench.", "Gary requires attention.", "I am getting tired."};
+    int[] actionTextFades = {255, 255, 255, 255, 255};
+
+
     String b = new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     /////////////////////////////////////
     // CONSTRUCTOR(S)
@@ -60,8 +65,11 @@ public class Gui extends JPanel implements MouseListener{
         calibri = Font.createFont(Font.TRUETYPE_FONT, calibriFile).deriveFont(30f);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(calibri);
-
-        // Create a new Frame for everything to live in
+        //Create Inconsolata as a usable font
+        File inconsolataFile = new File("inconsolata.regular.ttf");
+        inconsolata = Font.createFont(Font.TRUETYPE_FONT, inconsolataFile).deriveFont(30f);
+        ge.registerFont(inconsolata);
+        // Create a new Frame  for everything to live in
         JFrame frame = new JFrame();
         // Debug message
         System.out.println("New display instantiated with dimensions " + width + "x" + height);
@@ -98,7 +106,7 @@ public class Gui extends JPanel implements MouseListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // for later frame.addKeyListener();
         frame.add(this);
-        frame.pack();
+        //frame.pack();
         frame.setTitle(name);
         frame.setVisible(true);
     }
@@ -110,7 +118,6 @@ public class Gui extends JPanel implements MouseListener{
     //Draws things based on 
     public void paint(Graphics g){
         g2d = (Graphics2D)g;
-        
         //Antialiasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 RenderingHints.VALUE_ANTIALIAS_ON); 
@@ -123,6 +130,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         if(failMoveHex[0] != -1 && failMoveHex[1] != -1){
             drawFailMoveHex(failMoveHex[0], failMoveHex[1]);
         }
+        drawActionText(g2d);
         if(dimRectTransparency != -1){
             g2d.setColor(new Color(0, 0, 0, dimRectTransparency));
             g2d.fillRect(0, 0, width, height);
@@ -130,6 +138,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         if(inTriviaMenu){
             drawTriviaMenu(new String[] {"Chicago is a ______", "Geography", "State", "County", "City", "Continent"}, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
+        
         
     }
     /*
@@ -261,6 +270,20 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         failMoveHex[1] = -1;
     }
 
+    private void drawActionText(Graphics2D g2d){
+        g2d.setFont(inconsolata.deriveFont(30f));
+        
+        for(int i = 0; i < actionText.length; i++){
+            g2d.setColor(new Color(220, 220, 220, actionTextFades[i]));
+            g2d.drawString(actionText[i], 70, 100 + (100 * i));    
+        }
+    }
+    public void updateActionText(String message, Color color){
+        for(int i = 1; i < actionText.length; i++){
+            
+        }
+    }
+
     private void drawTriviaMenu(String[] question, int[] scoreData, Graphics2D g2d){
         triviaMenuWidth = (this.width / 2);
         triviaMenuHeight = (this.height * 2 / 3);
@@ -297,7 +320,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             }
             //Question incorrect
             else if(scoreData[i + 2] == 2){
-                g2d.setColor(new Color(255, 165, 0));
+                g2d.setColor(new Color(255, 150, 0));
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
         }
@@ -540,7 +563,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         trivChoice = -1;
         selectRectPos = -1;
         selectedAnswerData[0] = temp;
-        this.nextTriviaQuestion(true, new String[] {"bruh"});
+        this.nextTriviaQuestion(false, new String[] {"bruh"});
         return temp;
     }
     
