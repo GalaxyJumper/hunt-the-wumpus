@@ -2,28 +2,26 @@ import java.awt.FontFormatException;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args)
             throws HeadlessException, FileNotFoundException, FontFormatException, IOException {
-                System.setProperty("sun.java2d.uiScale", "0.7");
+                System.setProperty("sun.java2d.uiScale", "1.0");
         GameControl freak = new GameControl();
         
         Trivia trivia = new Trivia();
         // Here's a little thing for testing Triva
+        
+        
 
-        // bonjour
-        Cave.println("Your code works ~*,`");
-
-
-        //making sure highscore works! (should add a null player to the highscore csv)
+        //making sure highscore works! 
         String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
         Player player = new Player(test);
         HighScore highscore = new HighScore(player);
         highscore.endOfGame();
 
-
+        // This should always run at the end of main!!!!
+        Cave.println("Your code works ~*,`");
     }
 }
 

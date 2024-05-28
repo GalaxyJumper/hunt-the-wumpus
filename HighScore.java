@@ -29,9 +29,10 @@ public class HighScore {
   /// Methods///
 
   // checks if the current player has a high score, updates data table
-  public void endOfGame() throws IOException{
+  public String[][] endOfGame() throws IOException{
     endOfGameUpdate();
     updateFile();
+    return twoDArray();
   }
 
   // adds all players into array
@@ -74,7 +75,7 @@ public class HighScore {
 
   // checks if player has a high score and updates array accordingy
   private void endOfGameUpdate() throws FileNotFoundException {
-    
+
     //if there are less than 10 players in the csv, then the new player is automatically added to the csv
     if(players.size() < 10) players.add(player);
     else{
@@ -87,17 +88,39 @@ public class HighScore {
     }
   }
 
-    
-  
 
   //updates the file with the current list of players
   public void updateFile() throws IOException {
+
     FileWriter fw = new FileWriter(highScoreFile);
     fw.write("name,score,turns,coins,arrows,cave" + " \n");
     for (Player p: players){
       fw.write(p.toString() + " \n");
     }
     fw.close();
+
+  }
+
+  //complies everything in the csv into a string array
+  public String[][] twoDArray() throws FileNotFoundException{
+    String[][] result = new String[lengthOfFile()-1][6];
+    Scanner s = new Scanner(highScoreFile);
+    int i = 0;
+   
+   //advances this to the row without all the ttles
+    String line = s.nextLine();
+    
+    while (s.hasNextLine()) {
+      
+      //makes an array for each line
+      line = s.nextLine();
+      String[] pLine = line.split(",");
+      result[i] = pLine;
+      i++;
+    }
+
+    s.close();
+    return result;
 
   }
 

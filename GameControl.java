@@ -57,7 +57,7 @@ public  class GameControl {
         scores = new HighScore(player);
         
         if (!GraphicsEnvironment.isHeadless()){
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
+            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs, this); 
         }
     }
 
@@ -148,17 +148,18 @@ public  class GameControl {
         for (int i = 0; i < 5; i++){
             // questions[i] = trivia.getQandAandK();
         }
-        // gui.openTriviaMenu(questions);
+        boolean[] correctAnswers = {true, true, true, true, true};
         
-    }
-
-    public void updateNumRight(){
-        numRight++;
-    }
-
-    public void allQuestionsAsked(){
-        triviaAction(numRight > 3);
-        numRight = 0;
+        int numRight = 0;
+        for (int i = 0; i < 5; i++){
+            if (correctAnswers[i])
+                numRight++;
+            if (numRight >= 3){
+                triviaAction(true);
+                return;
+            }
+        }
+        triviaAction(false);
     }
 
     // response is "A", "B", "C", or "D"
