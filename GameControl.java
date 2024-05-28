@@ -153,7 +153,7 @@ public  class GameControl {
         boolean lastQCorrect;
 
         for (int i = 0; i < 5; i++){
-            questions[i] = trivia.getQnAnK();
+            questions[i] = trivia.getQandAandK();
         }
 
         gui.openTriviaMenu(questions[0], 5);

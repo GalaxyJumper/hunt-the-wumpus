@@ -2,99 +2,66 @@
 //shivansh
 
 //imports
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Random;
-import java.io.File;
-import java.io.FileNotFoundException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 class Trivia {
-    // PROPERTIES --------------------
 
-    File triviaFile; // Trivia stores all of our trivia questions in a CSV format
-    File hintFile; // Hint gives you a mix of useless info and valuable locations
+    private String[][] questionsAndInfo;
+    private boolean[] usedQuestions;
 
-    Scanner in; // Scans User imput
-    Scanner triviaHintScanner; // The scanner that reads the file ("TriviaT.csv")
-    Scanner triviaQuestionScanner; // the scanner that reads the file ("TriviaQ.csv")
+    public Trivia(){
 
-    // Values of the questions
+        JSONParser parser = new JSONParser();
 
-    String hint; // gets the hint
-    String question;
-    ArrayList<String[]> answer = new ArrayList<String[]>();
-    String pQuestion;
-    String key;
-    int amount; // amount requested
-    int right; // amound needed to be right
-    boolean isCorrect;
-    ArrayList<String[]> triviaData = new ArrayList<String[]>();
-    // 0 - lore, 1 - misc 2 - actions 3 - chem 4 - ect ill update this later
-    ArrayList<String[]> hintData = new ArrayList<String[]>();
-    // 0 - id, 1 - hint 2 - type
-
-    // CONSTRUCTOR --------------------
-    public Trivia() throws FileNotFoundException {
-        in = new Scanner(System.in); // Scans Usr imput
-
-        triviaFile = new File("TriviaQuestions.csv"); // The file we refer to
-        hintFile = new File("TriviaHints.csv"); // the file we refer to
-
-        triviaQuestionScanner = new Scanner(triviaFile); // the scanner that reads the file ("TriviaQ.csv")
-        triviaHintScanner = new Scanner(hintFile); // The scanner that reads the file ("TriviaQ.csv")
-
-        triviaData = compile(triviaQuestionScanner);
-        hintData = compile(triviaHintScanner);
-    }
-    // Methoods -----------------------
-
-    public ArrayList<String[]> compile(Scanner scn) { // compiles files into respective arraylists. Used for convinient
-                                                      // pulling from an array.
-        ArrayList<String[]> fileParts = new ArrayList<String[]>();
-        scn.nextLine();
-        while (scn.hasNextLine()) {
-            String line = scn.nextLine();
-            System.out.println(line);
-            String[] data = line.split(",");
-            fileParts.add(data);
+        try{
+            JSONObject a = (JSONObject) parser.parse(new FileReader("TriviaQuestions.json"));
+            interpretFile((JSONArray) a.get("Questions"));
+        } catch (IOException io) {
+            io.printStackTrace();
+        } catch (ParseException p) {
+            p.printStackTrace();
         }
-        return fileParts;
     }
 
-    public String randomTrivia(ArrayList<String[]> data, int index) { // Grabs a random hint
-        // int filelengthT = fileParts.length;
-        int randc = (int) (Math.random() * (data.size()));
-        hint = data.get(randc)[index];
-
-        // fancy algorhithm to determine which hint to give them go here.
-        // occurs when you want to get a hint
-        System.out.print("Works - Trivhint");
-        return hint;
-
-    }
-
-
- 
-
-    // Smaller functions for assisting in being able to grab things such as
-    // questions
-
-
-    public String[] getQnAnK() {
-        int rand = (int) (Math.random() * triviaData.size());
-        this.question = triviaData.get(rand)[1];
-        this.answer.clear();
-        this.answer.add((triviaData.get(rand)[2]).split("~"));
-        this.key = triviaData.get(rand)[3];
-
-        //----------------------------------
-           String[] QandAandK = new String[6];
-        QandAandK[0] = this.question;
-        for (int i = 1; i < this.answer.size(); i++) {
-            QandAandK[i] = this.answer.get(i)[0];
+    public void interpretFile(JSONArray questions){
+        JSONObject currentQuestion;
+        JSONArray tempArray;
+        questionsAndInfo = new String[questions.size()][6];
+        for (int i = 0; i < questions.size(); i++){
+            currentQuestion = (JSONObject) questions.get(i);
+            questionsAndInfo[i][0] = (String) currentQuestion.get("Question");
+            tempArray = (JSONArray) currentQuestion.get("Answers");
+            for (int j = 0; j < 4; j++){
+                questionsAndInfo[i][j + 1] = (String) tempArray.get(j);
+            }
+            questionsAndInfo[i][5] = (String) currentQuestion.get("Key");
         }
-        QandAandK[5] = this.key;
-        return QandAandK;
+
+        usedQuestions = new boolean[questions.size()];
     }
 
+    public String[] getQandAandK(){
+        return questionsAndInfo[uniqueRandomQuestion()];
+    }
+
+    public int uniqueRandomQuestion(){
+        ArrayList<Integer> tempIndexes = new ArrayList<Integer>();
+        for (int i = 0; i < usedQuestions.length; i++){
+            if (!usedQuestions[i]){
+                tempIndexes.add(i);
+            }
+        }
+        if (tempIndexes.size() == usedQuestions.length){
+            usedQuestions = new boolean[questionsAndInfo.length];
+        }
+        int indexToReturn = (int) (Math.random() * tempIndexes.size());
+        usedQuestions[tempIndexes.get(indexToReturn)] = true;
+        return indexToReturn;
+    }
 }

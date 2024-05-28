@@ -482,6 +482,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double mouseX = e.getX();
         double mouseY = e.getY();
         System.out.println(" at " + mouseX + ", " + mouseY);
+        updateActionText("Clicked", new Color(220, 220, 220));
 
         /////////// MAP INPUT ////////////
         /* 

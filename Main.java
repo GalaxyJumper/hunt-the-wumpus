@@ -9,11 +9,6 @@ public class Main {
                 System.setProperty("sun.java2d.uiScale", "0.7");
         GameControl freak = new GameControl();
         
-        Trivia trivia = new Trivia();
-        // Here's a little thing for testing Triva
-        
-        
-
         //making sure highscore works! 
         String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
         Player player = new Player(test);
