@@ -98,9 +98,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setTitle(name);
         frame.setVisible(true);
         this.failMove(2);
-        this.openTriviaMenu(new String[] {"Bruh", "b", "a", "correct answer", "no"}, 5);
-        this.nextTriviaChoice();
-        this.nextTriviaQuestion(true, new String[] {"Next q", "b", "b", "b", "a"}, false, 2);
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
