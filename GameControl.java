@@ -233,9 +233,9 @@ public  class GameControl {
 
     public void gameEnd(){
         try {
-        String[][] leaderboardInfo = scores.endOfGame();
-        } catch (IOException ioTwo) {
-            ioTwo.printStackTrace();
+            String[][] leaderboardInfo = scores.endOfGame();
+        } catch (IOException io) {
+            io.printStackTrace();
         }
         // gui.displayLeaderboard(leaderboardInfo);
         System.exit(0);
