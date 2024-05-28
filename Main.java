@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args)
             throws HeadlessException, FileNotFoundException, FontFormatException, IOException {
-                System.setProperty("sun.java2d.uiScale", "1.0");
+                System.setProperty("sun.java2d.uiScale", "0.7");
         GameControl freak = new GameControl();
         
         Trivia trivia = new Trivia();
