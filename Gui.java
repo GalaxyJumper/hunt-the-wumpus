@@ -394,7 +394,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         
         
     }
-    public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ){
+    public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ, int lastQNum){
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
         long animStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
@@ -412,7 +412,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
         nextQTransitionDim = 0;
         this.triviaQuestion = nextQuestion;
-        // Update bubbles
+        this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0;
         while(now - animStart <= 400){
             //Do nothing (delay)
             now = System.currentTimeMillis();
