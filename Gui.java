@@ -56,7 +56,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
-    public Gui(String name, int width, int height, GameLocations locations, GameControl gameControl) throws FontFormatException, IOException{
+    public Gui(String name, int width, int height, GameLocations locations, GameControl gameControl, int playerLoc) throws FontFormatException, IOException{
         this.width = width;
         this.height = height;
         this.gameLocs = locations;
@@ -65,6 +65,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
         this.cave = gameLocs.getCave();
+        this.playerLoc = playerLoc;
         frameTimer.start();
         //Create Calibri as a usable font
         File calibriFile = new File("calibri.ttf");
@@ -96,8 +97,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         //Make the window visible and set its name to the given name
         frame.setTitle(name);
         frame.setVisible(true);
-        this.move(23);
         this.failMove(2);
+        this.openTriviaMenu(new String[] {"Bruh", "b", "a", "correct answer", "no"}, 5);
+        this.nextTriviaChoice();
+        this.nextTriviaQuestion(true, new String[] {"Next q", "b", "b", "b", "a"}, false, 2);
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -555,7 +558,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                         System.out.println(roomNumClicked);
                     }
                     gameControl.turn(roomNumClicked);
-                    this.move(roomNumClicked);
+                    
                 }
 
             }
