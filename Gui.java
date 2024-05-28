@@ -98,9 +98,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setVisible(true);
         this.move(23);
         this.failMove(2);
-        this.openTriviaMenu(new String[] {"bruh", "a", "b", "c", "d"}, 5);
-        this.nextTriviaChoice();
-        //this.closeTriviaMenu
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -485,7 +482,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double mouseX = e.getX();
         double mouseY = e.getY();
         System.out.println(" at " + mouseX + ", " + mouseY);
-        updateActionText("Player clicked at " + mouseX + ", " + mouseY, new Color(0, 255, 0));
 
         /////////// MAP INPUT ////////////
         /* 
@@ -604,7 +600,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
 
     }
     public void mouseEntered(MouseEvent e){
-        updateActionText("You hear a rumble.", Color.BLUE);
+
     }
     public void mouseExited(MouseEvent e){
 
