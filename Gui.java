@@ -100,6 +100,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.failMove(2);
         this.openTriviaMenu(new String[][] {{"bruh"}, {"bruh"}});
         this.nextTriviaChoice();
+        //this.closeTriviaMenu
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -216,12 +217,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         ArrayList<Integer> exploredRoomsTemp = exploredRooms;
         for(int i : possibleMovesInt) possibleMoves.add(i);
         //Column
-        for(int i = 0; i < 6; i++){
-            double x = (i * (radius*1.5));
+        for(int i = 0; i < 5; i++){
+            
+            double y = (i * (Math.sqrt(3) * radius));
             //Row
-            for(int k = 0; k < 5; k++){ 
-                double y = (k * (Math.sqrt(3) * radius));
-                int currentRoomNum = k * 6 + i;
+            for(int k = 0; k < 6; k++){ 
+                double x = (k * (radius*1.5));
+                int currentRoomNum = i * 6 + k;
 
                 if(playerLoc == currentRoomNum){
                     currentColor = new Color(0, 255, 0);
@@ -236,7 +238,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     currentColor = new Color(20, 20, 20);
                 }
                 
-                drawRoom(x + startX, (y + ( (i % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
+                drawRoom(x + startX, (y + ( (k % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
             }
         }
     
@@ -598,7 +600,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
 
     }
     public void mouseEntered(MouseEvent e){
-
+        updateActionText("You hear a rumble.", Color.BLUE);
     }
     public void mouseExited(MouseEvent e){
 
