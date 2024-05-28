@@ -57,18 +57,13 @@ public  class GameControl {
         scores = new HighScore(player);
         
         if (!GraphicsEnvironment.isHeadless()){
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
+            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs, this); 
         }
     }
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
-
-    // start-up
-    public void getCave(){
-        
-    }
 
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
@@ -102,6 +97,7 @@ public  class GameControl {
                 return;
             }
         }
+        gameLocs.moveWumpus(player.getTurnsTaken());
     }
 
     // 0 - 29 (inclusive) + true location receiving arrow
@@ -115,21 +111,31 @@ public  class GameControl {
                 // gui.updateTurnCounter(player.getTurnsTaken());
                 String[] hazards = gameLocs.getHazards(playerInput);
                 boolean wumpusShot = false;
+                boolean missed = false;
                 for (String hazard : hazards){
                     if (hazard.equals("Wumpus")){
-                        wumpusShot = true;
+                        if (Math.random() < 0.5)
+                            wumpusShot = true;
+                        else {
+                            missed = true;
+                        }
                         break;
                     }
                 }
                 if (wumpusShot){
                     // gui.drawSplashText("You Won!", new Color(0,255,0));
                     gameEnd();
+                } else if (missed) {
+                    // gui.drawSplashText("You Missed!", new Color(255,255,0));
+                } else {
+                    // gui.drawSplashText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
                 }
             }
         } else {
             questionType = playerInput;
             triviaTime();
         }
+        gameLocs.moveWumpus(player.getTurnsTaken());
     }
 
     public void triviaTime(){
@@ -142,16 +148,18 @@ public  class GameControl {
         for (int i = 0; i < 5; i++){
             // questions[i] = trivia.getQandAandK();
         }
-        // gui.openTriviaMenu(questions);
-    }
-
-    public void updateNumRight(){
-        numRight++;
-    }
-
-    public void allQuestionsAsked(){
-        triviaAction(numRight > 3);
-        numRight = 0;
+        boolean[] correctAnswers = {true, true, true, true, true};
+        
+        int numRight = 0;
+        for (int i = 0; i < 5; i++){
+            if (correctAnswers[i])
+                numRight++;
+            if (numRight >= 3){
+                triviaAction(true);
+                return;
+            }
+        }
+        triviaAction(false);
     }
 
     // response is "A", "B", "C", or "D"
@@ -203,6 +211,8 @@ public  class GameControl {
     }
 
     public void gameEnd(){
+        // String[][] leaderboardInfo = scores.endOfGame();
+        // gui.displayLeaderboard(leaderboardInfo);
         System.exit(0);
     }
 }

@@ -32,7 +32,7 @@ public class HighScore {
   public String[][] endOfGame() throws IOException{
     endOfGameUpdate();
     updateFile();
-    return fileina2dayarray();
+    return twoDArray();
   }
 
   // adds all players into array
@@ -101,26 +101,27 @@ public class HighScore {
 
   }
 
-  
-  public String[][] fileina2dayarray() throws FileNotFoundException{
-
-    String[][] result = new String[6][players.size()];
-    /* 
+  //complies everything in the csv into a string array
+  public String[][] twoDArray() throws FileNotFoundException{
+    String[][] result = new String[lengthOfFile()-1][6];
     Scanner s = new Scanner(highScoreFile);
     int i = 0;
+   
    //advances this to the row without all the ttles
     String line = s.nextLine();
     
     while (s.hasNextLine()) {
+      
       //makes an array for each line
       line = s.nextLine();
       String[] pLine = line.split(",");
       result[i] = pLine;
+      i++;
     }
 
     s.close();
-    */
     return result;
 
   }
+
 }

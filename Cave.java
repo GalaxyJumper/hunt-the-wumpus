@@ -77,7 +77,7 @@ public class Cave {
     public static void print(String string){
         System.out.println(string);
     }
-
+ 
     public static void println(){
         System.out.println();
     }
