@@ -30,7 +30,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
     // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[5];
+    String[] triviaQuestion = new String[] {"Sample Question", "Answer 1", "Answer 2", "Answer 3", "Answer 4"};
     // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
     int[] triviaScoreData = {-1, -1, -1, -1, -1, -1};
     // How transparent is the dimming in the background of Trivia?
@@ -98,7 +98,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setVisible(true);
         this.move(23);
         this.failMove(2);
-        this.openTriviaMenu(new String[][] {{"bruh"}, {"bruh"}});
+        this.openTriviaMenu(new String[] {"bruh", "a", "b", "c", "d"}, 5);
         this.nextTriviaChoice();
         //this.closeTriviaMenu
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
@@ -151,7 +151,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.fillRect(0, 0, width, height);
         }
         if(inTriviaMenu){
-            drawTriviaMenu(new String[] {"Chicago is a ______", "Geography", "State", "County", "City", "Continent"}, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
+            drawTriviaMenu(this.triviaQuestion, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
         
         
@@ -339,7 +339,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         // "Trivia - X out of Y (Category)"
         g2d.setFont(calibri.deriveFont((float)40));
         g2d.setColor(Color.WHITE);
-        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0] + " (" + question[1] + ")", triviaMenuX + 20, triviaMenuY + 60);
+        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0], triviaMenuX + 20, triviaMenuY + 60);
         
         
         // Question
@@ -373,20 +373,22 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setFont(calibri.deriveFont((float)40));
         String[] answerLabels = {"a)    ", "b)    ", "c)    ", "d)    "};
         for(int i = 0; i < 4; i ++){
-            g2d.drawString(answerLabels[i] + question[i + 2], triviaMenuX + 50, (triviaMenuY + triviaMenuHeight / 3) + i * triviaMenuHeight/8);
+            g2d.drawString(answerLabels[i] + question[i + 1], triviaMenuX + 50, (triviaMenuY + triviaMenuHeight / 3) + i * triviaMenuHeight/8);
         }
         //g2d.drawRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 4);
         //g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
-    public void openTriviaMenu(String[][] question){
+    public void openTriviaMenu(String[] question, int numQs){
         long animationStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
         inTriviaMenu = true;
+        this.triviaScoreData[0] = numQs;
+        this.triviaScoreData[1] = (int)(numQs * 2/3);
         while(now - animationStart < 500){
             now = System.currentTimeMillis();
             dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
             if(now - animationStart > 250){
-                this.triviaQuestion = question[0];
+                this.triviaQuestion = question;
             }
             repaint();
 
@@ -395,7 +397,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         
         
     }
-    public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion){
+    public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ){
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
         long animStart = System.currentTimeMillis();
         long now = System.currentTimeMillis();
@@ -408,6 +410,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
         animStart = System.currentTimeMillis();
         now = System.currentTimeMillis();
+        if(isLastQ){
+            this.closeTriviaMenu();
+        }
         nextQTransitionDim = 0;
         this.triviaQuestion = nextQuestion;
         // Update bubbles
@@ -426,7 +431,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             this.repaint();
         }
         disableClicks = false;
-        closeTriviaMenu();
 
     }
     public void closeTriviaMenu(){
@@ -434,7 +438,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         dimRectTransparency = -1;
         triviaQuestion = new String[6];
     }
-    public int nextTriviaChoice(){
+    public String nextTriviaChoice(){
         double mouseX, mouseY;
         
         double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
@@ -458,12 +462,12 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             }
             this.repaint();
         }
+        String abcd = "ABCD";
         int temp = trivChoice;
         trivChoice = -1;
         selectRectPos = -1;
         selectedAnswerData[0] = temp;
-        nextTriviaQuestion(false, new String[] {"BRUH"});
-        return temp;
+        return abcd.substring(temp, temp + 1);
     }
     
     
