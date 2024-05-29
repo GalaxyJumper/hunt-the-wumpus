@@ -68,39 +68,32 @@ public  class GameControl {
 
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
-        System.out.println(Arrays.toString(cave.possibleMoves(playerInput)));
+        gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
         if (gameLocs.setPlayerLoc(playerInput)){
             gui.move(playerInput);
             player.addTurnsTaken();
             //gui.updateTurnCounter();
             String[] hazards = gameLocs.getHazards();
-            if (hazards.length == 0){
-                return;
-            }
+            gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
             if (hazards[0].equals("Wumpus")){
                 gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 0));
-                triviaTime();
                 questionType = 3;
-                if (hazards.length == 1){
-                    return;
+                triviaTime();
+                if (hazards.length != 1){
+                    hazards[0] = hazards[1];
                 }
-                hazards[0] = hazards[1];
-            }
-
-            if (hazards[0] == "Pit"){
+            } else if (hazards[0] == "Pit"){
                 gui.updateActionText("You Teeter On The Precipice Of A Bottomless Cliff!", new Color(255, 255, 0));
-                triviaTime();
                 questionType = 2;
-                return;
-            }
-            if (hazards[0] == "Bats"){
-                gui.updateActionText("You Found Bats!", new Color(255, 255, 0));
                 triviaTime();
+            } else if (hazards[0] == "Bats"){
+                gui.updateActionText("You Found Bats!", new Color(255, 255, 0));
                 questionType = 4;
-                return;
+                triviaTime();
             }
         }
         gameLocs.moveWumpus(player.getTurnsTaken());
+        gui.updateActionText("Turn completed", new Color(255,255,255));
     }
 
     // 0 - 29 (inclusive) + true location receiving arrow
@@ -218,6 +211,7 @@ public  class GameControl {
         } else if (questionType == 4){
             if (!triviaSuccess){
                 int newRoom = gameLocs.batTransport();
+                gui.move(newRoom);
                 gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
@@ -232,6 +226,7 @@ public  class GameControl {
     }
 
     public void gameEnd(){
+        gui.updateActionText("Game Over", new Color(255,255,255));
         try {
             String[][] leaderboardInfo = scores.endOfGame();
         } catch (IOException io) {
