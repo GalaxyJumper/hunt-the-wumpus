@@ -559,6 +559,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     System.out.println("here6");
                     gameControl.turn(roomNumClicked);
                     updateActionText("I'm here7", new Color(255,255,255));
+                    System.out.println("The program is NOT stuck...");
                     
                 }
 

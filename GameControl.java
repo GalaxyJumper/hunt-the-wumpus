@@ -75,13 +75,16 @@ public  class GameControl {
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
         gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
+        System.out.println("I'm here8");
         if (gameLocs.setPlayerLoc(playerInput)){
+            System.out.println("I'm here9");
             gui.move(playerInput);
+            System.out.println("I'm here10");
             player.addTurnsTaken();
             //gui.updateTurnCounter();
             String[] hazards = gameLocs.getHazards();
             gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
-
+            
             if (hazards.length > 0){
                 if (hazards[0].equals("Wumpus")){
                     gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 255));
@@ -156,15 +159,19 @@ public  class GameControl {
             questions[i] = trivia.getQandAandK();
         }
 
+        System.out.println("This runs... uh-oh");
+
         gui.openTriviaMenu(questions[0], 5);
+        System.out.println("This runs... uh-oh2");
         answers[0] = gui.nextTriviaChoice();
+        System.out.println("This runs... uh-oh3");
         lastQCorrect = questions[0][5].equals(answers[0].substring(0, 1));
         if (lastQCorrect){
             numCorrect++;
         }
-
+        
         for (int i = 1; i < 5; i++){
-            gui.nextTriviaQuestion(lastQCorrect, questions[i], false, i - 1);
+            //gui.nextTriviaQuestion(lastQCorrect, questions[i], false, i - 1);
             answers[i] = gui.nextTriviaChoice();
             lastQCorrect = questions[i][5].equals(answers[i]);
             if (lastQCorrect){
