@@ -22,12 +22,6 @@ public class Wumpus {
 
 
 
-
-
-
-
-
-
     // Getters and Setters
     public int getHealth(){
         return this.health;
