@@ -29,7 +29,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
     // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[] {"Sample Question", "Answer 1", "Answer 2", "Answer 3", "Answer 4"};
+    String[] triviaQuestion = new String[] {"", "", "", "", ""};
     // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
     int[] triviaScoreData = {-1, -1, -1, -1, -1, -1};
     // How transparent is the dimming in the background of Trivia?
@@ -50,7 +50,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     Color[] actionTextColors = new Color[] {new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31)};
 
     ArrayList<Integer> tempFadeIndices = new ArrayList<Integer>();
-
+    int testCounter = 0;
     String b = new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     /////////////////////////////////////
     // CONSTRUCTOR(S)
@@ -125,6 +125,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
 
     public void paint(Graphics g){
+        try {
         g2d = (Graphics2D)g;
         //Antialiasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -148,8 +149,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
-        
-        
+        g2d.setColor(new Color(255, 255, 255));
+        g2d.drawString("" + testCounter, 300, 90);
+        } catch (Exception e){
+            System.out.println("BRuh");
+            e.printStackTrace();
+
+        }
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -380,6 +386,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         inTriviaMenu = true;
         this.triviaScoreData[0] = numQs;
         this.triviaScoreData[1] = (int)(numQs * 2/3);
+        this.trivChoice = -1;
         while(now - animationStart < 500){
             now = System.currentTimeMillis();
             dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
@@ -441,22 +448,34 @@ RenderingHints.VALUE_ANTIALIAS_ON);
 
         double answerHitboxHeight = answerSelectionHeight / 4;
 
+        
+        try {
         while(trivChoice == -1){
+            inTriviaMenu = true;
+            // Update mouse position
             mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
             mouseY = MouseInfo.getPointerInfo().getLocation().getY();
             
+            // Is the mouse hovering over an answer?
             if(mouseX > triviaMenuX && 
                mouseX < triviaMenuX + triviaMenuWidth &&
                mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)
                && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)){
                 
-
+                // Do some math to figure out which answer specifically, 0-3.
                 int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)) / answerHitboxHeight);
                 selectRectPos = answerHovered;
             } else {
                 selectRectPos = -1;
             }
-            this.repaint();
+            repaint();
+            System.out.println(mouseX);
+        }
+
+
+        
+        } catch(Exception e) {
+            e.printStackTrace();
         }
         String abcd = "ABCD";
         int temp = trivChoice;
@@ -620,6 +639,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 actionTextFades[i] -= 1.3;
             }
         }
+        testCounter++;
         this.repaint();
     }
 }

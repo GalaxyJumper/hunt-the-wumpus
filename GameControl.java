@@ -163,6 +163,13 @@ public  class GameControl {
 
         gui.openTriviaMenu(questions[0], 5);
         System.out.println("This runs... uh-oh2");
+        long start = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
+        while(now-start < 1000){
+            //Do nothing
+            now = System.currentTimeMillis();
+            System.out.println("null");
+        }
         answers[0] = gui.nextTriviaChoice();
         System.out.println("This runs... uh-oh3");
         lastQCorrect = questions[0][5].equals(answers[0].substring(0, 1));
@@ -171,7 +178,7 @@ public  class GameControl {
         }
         
         for (int i = 1; i < 5; i++){
-            //gui.nextTriviaQuestion(lastQCorrect, questions[i], false, i - 1);
+            gui.nextTriviaQuestion(lastQCorrect, questions[i], false, i - 1);
             answers[i] = gui.nextTriviaChoice();
             lastQCorrect = questions[i][5].equals(answers[i]);
             if (lastQCorrect){
