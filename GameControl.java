@@ -75,25 +75,29 @@ public  class GameControl {
             //gui.updateTurnCounter();
             String[] hazards = gameLocs.getHazards();
             gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
-            if (hazards[0].equals("Wumpus")){
-                gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 0));
-                questionType = 3;
-                triviaTime();
-                if (hazards.length != 1){
-                    hazards[0] = hazards[1];
+
+            if (hazards.length > 0){
+                if (hazards[0].equals("Wumpus")){
+                    gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 0));
+                    questionType = 3;
+                    triviaTime();
+                    if (hazards.length != 1){
+                        hazards[0] = hazards[1];
+                    }
+                } else if (hazards[0].equals("Pit")){
+                    gui.updateActionText("You Teeter On The Precipice Of A Bottomless Cliff!", new Color(255, 255, 0));
+                    questionType = 2;
+                    triviaTime();
+                } else if (hazards[0].equals("Bats")){
+                    gui.updateActionText("You Found Bats!", new Color(255, 255, 0));
+                    questionType = 4;
+                    triviaTime();
                 }
-            } else if (hazards[0] == "Pit"){
-                gui.updateActionText("You Teeter On The Precipice Of A Bottomless Cliff!", new Color(255, 255, 0));
-                questionType = 2;
-                triviaTime();
-            } else if (hazards[0] == "Bats"){
-                gui.updateActionText("You Found Bats!", new Color(255, 255, 0));
-                questionType = 4;
-                triviaTime();
             }
+            //gui.updateActionText("This runs", new Color(255,255,255));
+            gameLocs.moveWumpus(player.getTurnsTaken());
+            gui.updateActionText("Turn completed", new Color(255,255,255));
         }
-        gameLocs.moveWumpus(player.getTurnsTaken());
-        gui.updateActionText("Turn completed", new Color(255,255,255));
     }
 
     // 0 - 29 (inclusive) + true location receiving arrow
