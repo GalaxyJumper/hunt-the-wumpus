@@ -58,8 +58,14 @@ public  class GameControl {
         scores = new HighScore(player);
         
         if (!GraphicsEnvironment.isHeadless()){
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs, this, gameLocs.getPlayerLoc()); 
+            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
         }
+
+        gui.updateActionText(gameLocs.getBatLoc(0) + "", new Color(255,255,255));
+        gui.updateActionText(gameLocs.getBatLoc(1) + "", new Color(255,255,255));
+        gui.updateActionText(gameLocs.getWumpusLoc() + "", new Color(255,255,255));
+        gui.updateActionText(gameLocs.getPitLoc(0) + "", new Color(255,255,255));
+        gui.updateActionText(gameLocs.getPitLoc(1) + "", new Color(255,255,255));
     }
 
     ///////////////////////////////////////////////
@@ -78,24 +84,24 @@ public  class GameControl {
 
             if (hazards.length > 0){
                 if (hazards[0].equals("Wumpus")){
-                    gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 0));
+                    gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 255));
                     questionType = 3;
                     triviaTime();
                     if (hazards.length != 1){
                         hazards[0] = hazards[1];
                     }
                 } else if (hazards[0].equals("Pit")){
-                    gui.updateActionText("You Teeter On The Precipice Of A Bottomless Cliff!", new Color(255, 255, 0));
+                    gui.updateActionText("You Teeter On The Precipice Of A Bottomless Cliff!", new Color(255, 255, 255));
                     questionType = 2;
                     triviaTime();
-                } else if (hazards[0].equals("Bats")){
-                    gui.updateActionText("You Found Bats!", new Color(255, 255, 0));
+                } else if (hazards[0].equals("Bat")){
+                    gui.updateActionText("You Found Bats!", new Color(255, 255, 255));
                     questionType = 4;
                     triviaTime();
                 }
             }
             //gui.updateActionText("This runs", new Color(255,255,255));
-            gameLocs.moveWumpus(player.getTurnsTaken());
+            //gameLocs.moveWumpus(player.getTurnsTaken());
             gui.updateActionText("Turn completed", new Color(255,255,255));
         }
     }
@@ -105,30 +111,27 @@ public  class GameControl {
     // 1 + false - purchase secret
     public void turn(int playerInput, boolean isShooting){
         if (isShooting){
-            if (gameLocs.getCave().canMove(gameLocs.getPlayerLoc(),playerInput)){
+            if (cave.canMove(gameLocs.getPlayerLoc(),playerInput)){
                 player.addTurnsTaken();
                 player.addArrows(-1);
                 // gui.updateTurnCounter(player.getTurnsTaken());
                 String[] hazards = gameLocs.getHazards(playerInput);
                 boolean wumpusShot = false;
                 boolean missed = false;
-                for (String hazard : hazards){
-                    if (hazard.equals("Wumpus")){
-                        if (Math.random() < 0.5)
-                            wumpusShot = true;
-                        else {
-                            missed = true;
-                        }
-                        break;
+                if (hazards[0].equals("Wumpus")){
+                    if (Math.random() < 0.5)
+                        wumpusShot = true;
+                    else {
+                        missed = true;
                     }
                 }
                 if (wumpusShot){
-                    // gui.updateActionText("You Won!", new Color(0,255,0));
+                    gui.updateActionText("You Won!", new Color(0,255,0));
                     gameEnd();
                 } else if (missed) {
-                    // gui.updateActionText("You Missed!", new Color(255,255,0));
+                    gui.updateActionText("You Missed!", new Color(255,255,0));
                 } else {
-                    // gui.updateActionText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
+                    gui.updateActionText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
                 }
             }
         } else {

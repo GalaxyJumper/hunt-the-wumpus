@@ -13,7 +13,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int mapStartX = 0;
     int mapStartY = 70;
     int mapRoomSize; // = width / 40;
-    GameLocations gameLocs;
     GameControl gameControl;
     int playerLoc;
     Font calibri;
@@ -56,15 +55,14 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
-    public Gui(String name, int width, int height, GameLocations locations, GameControl gameControl, int playerLoc) throws FontFormatException, IOException{
+    public Gui(String name, int width, int height, Cave cave, GameControl gameControl, int playerLoc) throws FontFormatException, IOException{
         this.width = width;
         this.height = height;
-        this.gameLocs = locations;
         this.gameControl = gameControl;
         this.mapRoomSize = width / 20;
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
-        this.cave = gameLocs.getCave();
+        this.cave = cave;
         this.playerLoc = playerLoc;
         frameTimer.start();
         //Create Calibri as a usable font
@@ -281,6 +279,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
     }
     public void updateActionText(String message, Color color){
+        System.out.println("actionText.length = " + actionText.length);
         for(int i = 1; i < actionText.length; i++){
             actionText[i - 1] = actionText[i];
             actionTextFades[i - 1] = actionTextFades[i];
@@ -538,7 +537,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                             roomNumClicked += 30;
                         }
 
-                        System.out.println(roomNumClicked);
+                        System.out.println(roomNumClicked + "here1");
                     }
                     else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
                         System.out.println("Hit top triangle");
@@ -549,13 +548,17 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                             roomNumClicked += 30;
                         }
                         
-                        System.out.println(roomNumClicked);
+                        System.out.println(roomNumClicked + "here2");
                         
                     } else {
                         roomNumClicked = twoToOneD(mapInputY, mapInputX);
-                        System.out.println(roomNumClicked);
+                        System.out.println(roomNumClicked + "here3");
                     }
+                    System.out.println("here4");
+                    updateActionText("I'm here5", new Color(255,255,255));
+                    System.out.println("here6");
                     gameControl.turn(roomNumClicked);
+                    updateActionText("I'm here7", new Color(255,255,255));
                     
                 }
 
