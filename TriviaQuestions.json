@@ -2,63 +2,8 @@
     "Questions": [
         {
             "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["~1%", "~5%", "10%", "50%"],
-            "Key": "B",
-            "Hint": " "
+            "Answers": ["1%", "5%", "10%", "50%"],
+            "Key": "B"
         },
         {
             "Question": "What is the deepest trench in the sea?",
