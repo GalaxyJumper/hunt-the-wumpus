@@ -414,13 +414,14 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
         animStart = System.currentTimeMillis();
         now = System.currentTimeMillis();
+        nextQTransitionDim = 0;
+        this.triviaQuestion = nextQuestion;
+        this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0;
         if(isLastQ){
             this.closeTriviaMenu();
             return;
         }
-        nextQTransitionDim = 0;
-        this.triviaQuestion = nextQuestion;
-        this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0;
+
         while(now - animStart <= 400){
             //Do nothing (delay)
             now = System.currentTimeMillis();
