@@ -213,4 +213,8 @@ public class GameLocations {
         return this.cave;
     }
 
+    public String[] getTYPES(){
+        return this.TYPES;
+    }
+
 }

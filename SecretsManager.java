@@ -12,9 +12,10 @@ public class SecretsManager {
         "The *HAZARD* is *DISTANCE* rooms away.",
         "There is a *HAZARD* in this cave...",
         "There is *NUMBER* *HAZARD* in this cave.",
-        "",
-        "",
-        ""
+        "There are *BOOLEAN* Hazards within 2 rooms.",
+        "There are *BOOLEAN* Hazards in the room with you.",
+        "There are *BOOLEAN* Hazards in the rooms around you.",
+        "You are in room *LOCATION*."
     };
 
     private GameLocations gl;
@@ -32,6 +33,13 @@ public class SecretsManager {
     ///////////////////////////////////////////////////
 
     public String makeSecret(int[][] gameState){
+        String base = SECRETS[(int) (Math.random()*SECRETS.length)];
+        if(base.contains("*HAZARD*")){
+            String hazard = gl.getTYPES()[(int) Math.ceil(Math.random()*3)];
+            base.replace("*HAZARD*", hazard);
+        } 
+        
+        
         return "";
     }
 
