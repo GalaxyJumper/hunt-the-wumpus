@@ -53,6 +53,20 @@
             "Answers": ["Refraction", "Bioluminescence", "Radiance", "Radiation"],
             "Key": "B",
             "Hint": ""
+        },
+        {
+            "Question": "How many species of sharks are there?",
+            "Answers": ["100", "50", "500", "63"],
+            "Key": "C",
+            "Hint": ""
+        },
+        {
+            "Question": "what is the scientific name for a giant squid?",
+            "Answers": ["Architeuthidae", "Cephalopoda", "Megaloteuthis", "Architeuthus"],
+            "Key": "A",
+            "Hint": ""
         }
+    
+
     ]
 }
