@@ -415,6 +415,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         animStart = System.currentTimeMillis();
         now = System.currentTimeMillis();
         if(isLastQ){
+            this.closeTriviaMenu();
             return;
         }
         nextQTransitionDim = 0;
