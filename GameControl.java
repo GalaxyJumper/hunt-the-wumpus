@@ -141,6 +141,10 @@ public  class GameControl {
         }
         triviaAction(numCorrect >= 3);
         
+
+        if (hazards == null){
+            endTurn();
+        }
         if (hazards[0].equals("Pit")){
             hazards = null;
             questionType = 2;
@@ -155,8 +159,6 @@ public  class GameControl {
             gui.openTriviaMenu(questions[0], 5);
             return;
         }
-
-        endTurn();
     }
 
     // 0 - 29 (inclusive) + true location receiving arrow
