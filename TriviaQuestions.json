@@ -58,12 +58,7 @@
             "Question": "How much of the ocean have we explored in total?",
             "Answers": ["~1%", "~5%", "10%", "50%"],
             "Key": "B",
-<<<<<<< HEAD
             "Hint": " "
-
-=======
-            "Hint": ""
->>>>>>> c8908965da6a9362b6af7ed4dcc804a440e1ef8c
         },
         {
             "Question": "What is the deepest trench in the sea?",
