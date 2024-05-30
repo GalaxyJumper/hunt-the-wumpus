@@ -418,6 +418,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.triviaQuestion = nextQuestion;
         this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0;
         if(isLastQ){
+            gameControl.continueTurn();
             this.closeTriviaMenu();
             return;
         }
