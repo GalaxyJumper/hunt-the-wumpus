@@ -2,7 +2,6 @@
     "Questions": [
         {
             "Question": "How much of the ocean have we explored in total?",
-<<<<<<< HEAD
             "Answers": ["~1%", "~5%", "10%", "50%"],
             "Key": "B",
             "Hint": " "
@@ -59,10 +58,7 @@
             "Question": "How much of the ocean have we explored in total?",
             "Answers": ["~1%", "~5%", "10%", "50%"],
             "Key": "B",
-            "Hint": " "
-=======
-            "Answers": ["1%", "5%", "10%", "50%"],
-            "Key": "B"
+            "Hint": ""
         },
         {
             "Question": "What is the deepest trench in the sea?",
@@ -103,7 +99,6 @@
             "Question": "What property makes certain marine life glow?",
             "Answers": ["Refraction", "Bioluminescence", "Radiance", "Radiation"],
             "Key": "B"
->>>>>>> bd98d93e027691c6bda69cf29955a77e09cf2568
         }
     ]
 }
