@@ -125,6 +125,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
 
     public void paint(Graphics g){
+        
         try {
         g2d = (Graphics2D)g;
         //Antialiasing
@@ -414,7 +415,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         animStart = System.currentTimeMillis();
         now = System.currentTimeMillis();
         if(isLastQ){
-            this.closeTriviaMenu();
+            return;
         }
         nextQTransitionDim = 0;
         this.triviaQuestion = nextQuestion;
@@ -441,49 +442,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         dimRectTransparency = -1;
         triviaQuestion = new String[6];
     }
-    public String nextTriviaChoice(){
-        double mouseX, mouseY;
-        
-        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
 
-        double answerHitboxHeight = answerSelectionHeight / 4;
-
-        
-        try {
-        while(trivChoice == -1){
-            inTriviaMenu = true;
-            // Update mouse position
-            mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
-            mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-            
-            // Is the mouse hovering over an answer?
-            if(mouseX > triviaMenuX && 
-               mouseX < triviaMenuX + triviaMenuWidth &&
-               mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)
-               && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)){
-                
-                // Do some math to figure out which answer specifically, 0-3.
-                int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)) / answerHitboxHeight);
-                selectRectPos = answerHovered;
-            } else {
-                selectRectPos = -1;
-            }
-            repaint();
-            System.out.println(mouseX);
-        }
-
-
-        
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        String abcd = "ABCD";
-        int temp = trivChoice;
-        trivChoice = -1;
-        selectRectPos = -1;
-        selectedAnswerData[0] = temp;
-        return abcd.substring(temp, temp + 1);
-    }
     
     
     
@@ -496,6 +455,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     // MOUSE METHODS
     ////////////////////////////////////////////////
     public void mouseClicked(MouseEvent e){
+        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+        double answerHitboxHeight = answerSelectionHeight / 4;
+        this.repaint();
         System.out.print("GUI: Player clicked");
         double mouseX = e.getX();
         double mouseY = e.getY();
@@ -583,6 +545,12 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 }
 
             }
+
+            /////////////////////////////////////////////////
+            // TRIVIA INPUT
+            //////////////////////////////////////////////////
+
+
             else if (inTriviaMenu) { 
                 System.out.println(triviaMenuX);
                 System.out.println(triviaMenuX + triviaMenuWidth);
@@ -593,13 +561,22 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 mouseY > triviaMenuY + triviaMenuHeight / 4 
                 && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 )){
                     
-                    double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+                    answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
 
-                    double answerHitboxHeight = answerSelectionHeight / 4;
+                    answerHitboxHeight = answerSelectionHeight / 4;
 
                     int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
                     trivChoice = answerSelected;
                 }
+                String abcd = "ABCD";
+                int temp = trivChoice;
+                trivChoice = -1;
+                selectRectPos = -1;
+                selectedAnswerData[0] = temp;
+                gameControl.questionAnswer(abcd.substring(temp, temp + 1));
+
+                
+
             }
         }
         
@@ -634,6 +611,10 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     }
     // Used for constantly ongoing animation such as action text fading out.
     public void actionPerformed(ActionEvent e){
+        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+        double answerHitboxHeight = answerSelectionHeight / 4;
+        double mouseX;
+        double mouseY;
         for(int i = 0; i < actionTextFades.length; i++){
             if(actionTextFades[i] > 30){
                 actionTextFades[i] -= 1.3;
@@ -641,5 +622,26 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
         testCounter++;
         this.repaint();
+        if(inTriviaMenu){
+            // TRIVIA UI UPDATING
+
+                // Update mouse position
+                mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
+                mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+            
+                // Is the mouse hovering over an answer?
+                if(mouseX > triviaMenuX && 
+                mouseX < triviaMenuX + triviaMenuWidth &&
+                mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)
+                && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)){
+                
+                // Do some math to figure out which answer specifically, 0-3.
+                    int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)) / answerHitboxHeight);
+                selectRectPos = answerHovered;
+                } else {
+                    selectRectPos = -1;
+                }
+
+        }
     }
 }
