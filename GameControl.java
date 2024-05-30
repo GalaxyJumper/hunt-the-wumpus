@@ -41,6 +41,8 @@ public  class GameControl {
     private String[][] questions = new String[5][6];
     private boolean[] answers = new boolean[5];
     private int currentQuestion = 0;
+
+    private String[] hazards;
     
     // purchasing arrows - 0
     // purchasing secrets - 1
@@ -84,22 +86,28 @@ public  class GameControl {
             System.out.println("I'm here9");
             gui.move(playerInput);
             System.out.println("I'm here10");
-            player.addTurnsTaken();
-            //gui.updateTurnCounter();
-            String[] hazards = gameLocs.getHazards();
+
+            hazards = gameLocs.getHazards();
             gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
             
             if (hazards.length == 0){
-                endTurn(null);
+                endTurn();
                 return;
             }
 
             if ((hazards.length >= 1) && (hazards[0].equals("Wumpus"))){
+                if (hazards.length == 1){
+                    hazards = null;
+                } else {
+                    hazards[0] = hazards[1];
+                }
                 questionType = 3;
                 createQuestions();
                 gui.openTriviaMenu(questions[0], 5);
                 return;
             }
+
+            continueTurn();
         }
     }
 
@@ -108,8 +116,10 @@ public  class GameControl {
             questions[i] = trivia.getQandAandK();
     }
 
-    public void endTurn(String string){
+    public void endTurn(){
         gameLocs.moveWumpus(player.getTurnsTaken());
+        player.addTurnsTaken();
+        //gui.updateTurnCounter();
     }
 
     public void questionAnswer(String answer){
@@ -117,8 +127,36 @@ public  class GameControl {
         currentQuestion++;
         if (currentQuestion == 5){
             gui.nextTriviaQuestion(answers[4], null, true, 4);
+            currentQuestion = 0;
         }
         gui.nextTriviaQuestion(answers[currentQuestion - 1], questions[currentQuestion], false, currentQuestion - 1);
+    }
+
+    public void continueTurn(){
+        int numCorrect = 0;
+        for (int i = 0; i < 5; i++){
+            if (answers[i]){
+                numCorrect++;
+            }
+        }
+        triviaAction(numCorrect >= 3);
+        
+        if (hazards[0].equals("Pit")){
+            hazards = null;
+            questionType = 2;
+            createQuestions();
+            gui.openTriviaMenu(questions[0], 5);
+            return;
+        }
+        if (hazards[0].equals("Bat")){
+            hazards = null;
+            questionType = 4;
+            createQuestions();
+            gui.openTriviaMenu(questions[0], 5);
+            return;
+        }
+
+        endTurn();
     }
 
     // 0 - 29 (inclusive) + true location receiving arrow
