@@ -393,7 +393,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.triviaScoreData[0] = numQs;
         this.triviaScoreData[1] = (int)(numQs * 2/3);
         this.trivChoice = -1;
-        this.triviaQuestion = question;
+        this.tempQuestion = question;
         
         
         
@@ -605,6 +605,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                         triviaFeedbackAnimStart = 0;
                         gameControl.continueTurn();
                         this.closeTriviaMenu();;;
+                        disableClicks = false;
                     }
             }
             else if(now - triviaFeedbackAnimStart > 1400 && now - triviaFeedbackAnimStart < 2100){

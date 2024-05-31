@@ -128,6 +128,7 @@ public  class GameControl {
         if (currentQuestion == 5){
             gui.nextTriviaQuestion(answers[4], new String[] {"", "", "", "", ""}, true, 4);
             currentQuestion = 0;
+            return;
         }
         gui.nextTriviaQuestion(answers[currentQuestion - 1], questions[currentQuestion], false, currentQuestion - 1);
     }
@@ -144,6 +145,7 @@ public  class GameControl {
 
         if (hazards == null){
             endTurn();
+            return;
         }
         if (hazards[0].equals("Pit")){
             hazards = null;
@@ -215,8 +217,7 @@ public  class GameControl {
             player.addTurnsTaken();
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 1){
-            if (triviaSuccess){ 
-                // gui.displaySecret(writeSecret((int) (Math.random() * 10 + 1)));
+            if (triviaSuccess){                // gui.displaySecret(writeSecret((int) (Math.random() * 10 + 1)));
             }
             player.addTurnsTaken();
             // gui.updateTurnCounter(player.getTurnsTaken());
