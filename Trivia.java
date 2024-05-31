@@ -33,7 +33,7 @@ class Trivia {
     public void interpretFile(JSONArray questions){
         JSONObject currentQuestion;
         JSONArray tempArray;
-        questionsAndInfo = new String[questions.size()][6];
+        questionsAndInfo = new String[questions.size()][6]; // 7 for hint
         for (int i = 0; i < questions.size(); i++){
             currentQuestion = (JSONObject) questions.get(i);
             questionsAndInfo[i][0] = (String) currentQuestion.get("Question");
@@ -42,6 +42,7 @@ class Trivia {
                 questionsAndInfo[i][j + 1] = answerTable[j] + ":" + (String) tempArray.get(j);
             }
             questionsAndInfo[i][5] = (String) currentQuestion.get("Key");
+            //questionsAndInfo[i][6] = (String) currentQuestion.get("Hint");
         }
 
         usedQuestions = new boolean[questions.size()];
