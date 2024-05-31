@@ -9,7 +9,21 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "hunt-the-wumpus_207dd00e"
+            "projectName": "hunt-the-wumpus_6383f4ae"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "hunt-the-wumpus-7_e3f5c871"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "hunt-the-wumpus-3_4f399ba5"
         },
         {
             "type": "java",

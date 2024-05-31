@@ -13,7 +13,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int mapStartX = 0;
     int mapStartY = 70;
     int mapRoomSize; // = width / 40;
-    GameLocations gameLocs;
     GameControl gameControl;
     int playerLoc;
     Font calibri;
@@ -30,7 +29,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     // -1 if not drawing
     int[] failMoveHex = {-1, -1};
     // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
-    String[] triviaQuestion = new String[] {"Sample Question", "Answer 1", "Answer 2", "Answer 3", "Answer 4"};
+    String[] triviaQuestion = new String[] {"", "", "", "", ""};
     // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
     int[] triviaScoreData = {-1, -1, -1, -1, -1, -1};
     // How transparent is the dimming in the background of Trivia?
@@ -46,25 +45,38 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
     boolean inTriviaMenu = false;
+
+    long triviaMenuOpened = 0;
+
+    long triviaFeedbackAnimStart = 0;
+
+    long now;
+
+    long failMoveStart = 0;
+
+    boolean isLastQ;
+
+    String[] tempQuestion;
+
     String[] actionText = new String[] {"Entered room 23.", "Survived a Wumpus attack.", "You smell a foul stench.", "Gary requires attention.", "I am getting tired."};
     int[] actionTextFades = {255, 255, 255, 255, 255};
     Color[] actionTextColors = new Color[] {new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31)};
-
     ArrayList<Integer> tempFadeIndices = new ArrayList<Integer>();
+    int testCounter = 0;
 
     String b = new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
-    public Gui(String name, int width, int height, GameLocations locations, GameControl gameControl) throws FontFormatException, IOException{
+    public Gui(String name, int width, int height, Cave cave, GameControl gameControl, int playerLoc) throws FontFormatException, IOException{
         this.width = width;
         this.height = height;
-        this.gameLocs = locations;
         this.gameControl = gameControl;
         this.mapRoomSize = width / 20;
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
-        this.cave = gameLocs.getCave();
+        this.cave = cave;
+        this.playerLoc = playerLoc;
         frameTimer.start();
         //Create Calibri as a usable font
         File calibriFile = new File("calibri.ttf");
@@ -96,7 +108,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         //Make the window visible and set its name to the given name
         frame.setTitle(name);
         frame.setVisible(true);
-        this.move(23);
         this.failMove(2);
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
@@ -127,6 +138,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
 
     public void paint(Graphics g){
+        
         g2d = (Graphics2D)g;
         //Antialiasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -150,8 +162,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
         }
-        
-        
+        g2d.setColor(new Color(255, 255, 255));
+        g2d.drawString("" + testCounter, 300, 90);
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -235,7 +247,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     currentColor = new Color(20, 20, 20);
                 }
                 
-                drawRoom(x + startX, (y + ( (k % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
+                drawRoom(x + startX, (y + ( (k % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum), currentColor);
             }
         }
     
@@ -281,13 +293,14 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
     }
     public void updateActionText(String message, Color color){
+        System.out.println("actionText.length = " + actionText.length);
         for(int i = 1; i < actionText.length; i++){
             actionText[i - 1] = actionText[i];
             actionTextFades[i - 1] = actionTextFades[i];
             actionTextColors[i - 1] = actionTextColors[i];
         }
         actionText[4] = message;
-        actionTextFades[4] = 220;
+        actionTextFades[4] = 255;
         actionTextColors[4] = color;
     }
     ///////////////////////////////////////
@@ -376,96 +389,32 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         //g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
     public void openTriviaMenu(String[] question, int numQs){
-        long animationStart = System.currentTimeMillis();
-        long now = System.currentTimeMillis();
-        inTriviaMenu = true;
+        triviaMenuOpened = System.currentTimeMillis();
         this.triviaScoreData[0] = numQs;
         this.triviaScoreData[1] = (int)(numQs * 2/3);
-        while(now - animationStart < 500){
-            now = System.currentTimeMillis();
-            dimRectTransparency = (int)(((double)now - (double)animationStart) / 500.0 * 150.0);
-            if(now - animationStart > 250){
-                this.triviaQuestion = question;
-            }
-            repaint();
-
-        }
+        this.trivChoice = -1;
+        this.triviaQuestion = question;
         
         
         
     }
     public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ, int lastQNum){
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
-        long animStart = System.currentTimeMillis();
-        long now = System.currentTimeMillis();
         disableClicks = true;
-        while(now - animStart <= 1000){
-            now = System.currentTimeMillis();
-            correctAnsRectDim = (int)(1000 - (now - animStart));
-            correctAnsRectDim = (correctAnsRectDim > 255)? 255 : correctAnsRectDim; 
-            this.repaint();
-        }
-        animStart = System.currentTimeMillis();
-        now = System.currentTimeMillis();
-        if(isLastQ){
-            this.closeTriviaMenu();
-        }
+        this.isLastQ = isLastQ;
         nextQTransitionDim = 0;
-        this.triviaQuestion = nextQuestion;
-        this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0;
-        while(now - animStart <= 400){
-            //Do nothing (delay)
-            now = System.currentTimeMillis();
-            this.repaint();
-        }
-        animStart = System.currentTimeMillis();
-        now = System.currentTimeMillis();
-        nextQTransitionDim = 1;
-        while(now - animStart <= 700){
-            nextQTransitionDim = (int)(255 * (now - animStart) / 700);
-
-            now = System.currentTimeMillis();
-            this.repaint();
-        }
-        disableClicks = false;
+        this.tempQuestion = nextQuestion;
+        this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0; 
+        triviaFeedbackAnimStart = System.currentTimeMillis();
 
     }
     public void closeTriviaMenu(){
         inTriviaMenu = false;
         dimRectTransparency = -1;
         triviaQuestion = new String[6];
+        triviaScoreData = new int[] {-1, -1, -1, -1, -1, -1};
     }
-    public String nextTriviaChoice(){
-        double mouseX, mouseY;
-        
-        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
 
-        double answerHitboxHeight = answerSelectionHeight / 4;
-
-        while(trivChoice == -1){
-            mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
-            mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-            
-            if(mouseX > triviaMenuX && 
-               mouseX < triviaMenuX + triviaMenuWidth &&
-               mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)
-               && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)){
-                
-
-                int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)) / answerHitboxHeight);
-                selectRectPos = answerHovered;
-            } else {
-                selectRectPos = -1;
-            }
-            this.repaint();
-        }
-        String abcd = "ABCD";
-        int temp = trivChoice;
-        trivChoice = -1;
-        selectRectPos = -1;
-        selectedAnswerData[0] = temp;
-        return abcd.substring(temp, temp + 1);
-    }
     
     
     
@@ -478,10 +427,14 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     // MOUSE METHODS
     ////////////////////////////////////////////////
     public void mouseClicked(MouseEvent e){
+        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+        double answerHitboxHeight = answerSelectionHeight / 4;
+        this.repaint();
         System.out.print("GUI: Player clicked");
         double mouseX = e.getX();
         double mouseY = e.getY();
         System.out.println(" at " + mouseX + ", " + mouseY);
+        updateActionText("Clicked", new Color(220, 220, 220));
 
         /////////// MAP INPUT ////////////
         /* 
@@ -537,7 +490,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                             roomNumClicked += 30;
                         }
 
-                        System.out.println(roomNumClicked);
+                        System.out.println(roomNumClicked + "here1");
                     }
                     else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
                         System.out.println("Hit top triangle");
@@ -548,17 +501,28 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                             roomNumClicked += 30;
                         }
                         
-                        System.out.println(roomNumClicked);
+                        System.out.println(roomNumClicked + "here2");
                         
                     } else {
                         roomNumClicked = twoToOneD(mapInputY, mapInputX);
-                        System.out.println(roomNumClicked);
+                        System.out.println(roomNumClicked + "here3");
                     }
+                    System.out.println("here4");
+                    updateActionText("I'm here5", new Color(255,255,255));
+                    System.out.println("here6");
                     gameControl.turn(roomNumClicked);
-                    this.move(roomNumClicked);
+                    updateActionText("I'm here7", new Color(255,255,255));
+                    System.out.println("The program is NOT stuck...");
+                    
                 }
 
             }
+
+            /////////////////////////////////////////////////
+            // TRIVIA INPUT
+            //////////////////////////////////////////////////
+
+
             else if (inTriviaMenu) { 
                 System.out.println(triviaMenuX);
                 System.out.println(triviaMenuX + triviaMenuWidth);
@@ -569,13 +533,22 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 mouseY > triviaMenuY + triviaMenuHeight / 4 
                 && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 )){
                     
-                    double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+                    answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
 
-                    double answerHitboxHeight = answerSelectionHeight / 4;
+                    answerHitboxHeight = answerSelectionHeight / 4;
 
                     int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
                     trivChoice = answerSelected;
                 }
+                String abcd = "ABCD";
+                int temp = trivChoice;
+                trivChoice = -1;
+                selectRectPos = -1;
+                selectedAnswerData[0] = temp;
+                gameControl.questionAnswer(abcd.substring(temp, temp + 1));
+
+                
+
             }
         }
         
@@ -610,11 +583,73 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     }
     // Used for constantly ongoing animation such as action text fading out.
     public void actionPerformed(ActionEvent e){
+        now = System.currentTimeMillis();
+
+        if(now - triviaMenuOpened < 500){
+            dimRectTransparency = (int)(((double)now - (double)triviaMenuOpened) / 500.0 * 200);
+            if(now - triviaMenuOpened > 250){
+                this.inTriviaMenu = true;
+            }
+            repaint();
+
+        } else {
+            triviaMenuOpened = 0;
+        }
+        if(now - triviaFeedbackAnimStart <= 2100){
+            
+            correctAnsRectDim = (int)(1000 - (now - triviaFeedbackAnimStart));
+            correctAnsRectDim = (correctAnsRectDim > 255)? 255 : correctAnsRectDim; 
+            correctAnsRectDim = (correctAnsRectDim < 0)? 0 : correctAnsRectDim;
+            if(now - triviaFeedbackAnimStart > 500 && now - triviaFeedbackAnimStart < 1400){
+                    if(isLastQ){
+                        triviaFeedbackAnimStart = 0;
+                        gameControl.continueTurn();
+                        this.closeTriviaMenu();;;
+                    }
+            }
+            else if(now - triviaFeedbackAnimStart > 1400 && now - triviaFeedbackAnimStart < 2100){
+                isLastQ = false;
+                this.triviaQuestion = tempQuestion;
+                nextQTransitionDim = (int)(255 * (now - (triviaFeedbackAnimStart + 1400)) / 700);
+                nextQTransitionDim = (nextQTransitionDim > 255)? 255 : nextQTransitionDim; 
+                nextQTransitionDim = (nextQTransitionDim < 0)? 0 : nextQTransitionDim;
+            }
+            if(now - triviaFeedbackAnimStart > 2050 && now - triviaFeedbackAnimStart < 2100){
+                disableClicks = false;
+            }
+        }
+        double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
+        double answerHitboxHeight = answerSelectionHeight / 4;
+        double mouseX;
+        double mouseY;
         for(int i = 0; i < actionTextFades.length; i++){
             if(actionTextFades[i] > 30){
                 actionTextFades[i] -= 1.3;
             }
         }
+        testCounter++;
         this.repaint();
+        if(inTriviaMenu){
+            // TRIVIA UI UPDATING
+            
+                // Update mouse position
+                mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
+                mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+            
+                // Is the mouse hovering over an answer?
+                if(mouseX > triviaMenuX && 
+                mouseX < triviaMenuX + triviaMenuWidth &&
+                mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)
+                && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)){
+                
+                // Do some math to figure out which answer specifically, 0-3.
+                int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)) / answerHitboxHeight);
+                selectRectPos = answerHovered;
+                } else {
+                    selectRectPos = -1;
+                }
+
+            
+        }
     }
 }

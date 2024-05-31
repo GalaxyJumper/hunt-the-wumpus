@@ -5,7 +5,7 @@ public class Wumpus {
     private int health;
     
 
-    // Constructos
+    // Constructors
     public Wumpus(int n){
         this.health = n;
     }
@@ -15,12 +15,6 @@ public class Wumpus {
     }
 
     // Methods
-
-
-
-
-
-
 
 
 

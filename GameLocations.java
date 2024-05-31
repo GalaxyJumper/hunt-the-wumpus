@@ -1,5 +1,4 @@
 // Joshua Lennon
-// Nick Lennon
 // 2/12/2024
 // Game Locations Object
 
@@ -129,7 +128,7 @@ public class GameLocations {
     // moves the wumpus to that room
     // returns the Wumpus' new location
     public int moveWumpus(int turnNum) {
-        if(turnNum% 20 > 3){
+        if(turnNum% 20 < 3){
             int[] possibleLocs = this.cave.possibleMoves(getWumpusLoc());
             int rand = random.nextInt(possibleLocs.length);
             int loc = possibleLocs[rand];
@@ -212,6 +211,10 @@ public class GameLocations {
 
     public Cave getCave() {
         return this.cave;
+    }
+
+    public String[] getTYPES(){
+        return this.TYPES;
     }
 
 }
