@@ -7,10 +7,12 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/**
- * Handles playing, stoping, and looping of sounds for the game.
- * @author Tyler Thomas
- *
+/*
+ * ./gameOver.wav
+ * ./disappointment.wav
+ * ./wrongAnswer.wav
+ * ./correctAnswer.wav
+ * ./caveNoise.wav
  */
 public class SoundManager {
     private Clip clip;
