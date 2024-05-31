@@ -1,6 +1,11 @@
 //Toki
+//Nick
 
 import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.*;
+
+//All audio clips need to be .wav!!!!
 
 public class SoundManager {
     private File f;
@@ -12,12 +17,13 @@ public class SoundManager {
      * to find the correct sfx for whatever the GControl needed.
      */
 
-     /*
-      * I need to find a way to make a bunch of sound files
-      Prefereably by ripping them off youtube. 
-      Then can use File to use them or something.
-      */
-    public SoundManager(){
-        
+    
+    public static void playSound(){
+        clip.start();
+    }
+    public static void stopSound() {
+            clip.flush();
+            clip.close();
     }
 }
+
