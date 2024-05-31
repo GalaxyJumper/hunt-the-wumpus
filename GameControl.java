@@ -126,7 +126,7 @@ public  class GameControl {
         answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
         currentQuestion++;
         if (currentQuestion == 5){
-            gui.nextTriviaQuestion(answers[4], null, true, 4);
+            gui.nextTriviaQuestion(answers[4], new String[] {"", "", "", "", ""}, true, 4);
             currentQuestion = 0;
         }
         gui.nextTriviaQuestion(answers[currentQuestion - 1], questions[currentQuestion], false, currentQuestion - 1);
