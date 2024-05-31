@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import javax.sound.sampled.*;
 
 //All audio clips need to be .wav!!!!
@@ -13,6 +14,7 @@ import javax.sound.sampled.*;
 public class SoundManager {
     private File f;
     private ArrayList<File> sounds;
+    private Clip clip;
 
     /*
      * I assume the general purpose for this class is to play sounds
@@ -31,15 +33,38 @@ public class SoundManager {
         this.sounds.add(new File("./correctAnswer"));
         this.sounds.add(new File("./caveNoise.wav"));
         this.sounds.add(new File("./wrongAnswer.wav"));
+
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         
     }
+
+
     
-    public static void playSound(){
-        clip.start();
+    public static void playSound(File f){
+        try {
+            File file = f;
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open();
+            clip.start();
+        } catch (Exception FileNotFoundException) {
+            System.out.println("Falaed");
+        }
+
+        
     }
     public static void stopSound() {
             clip.flush();
             clip.close();
     }
+
+    public File getSfx(int index){
+        return this.sounds.get(index);
+    }
+
 }
 
