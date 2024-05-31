@@ -6,6 +6,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.util.ArrayList;
 
 /*
  * ./gameOver.wav
@@ -16,11 +17,18 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class SoundManager {
     private Clip clip;
-    public SoundManager(String fileName) {
+    private ArrayList<File> sfx;
+    public SoundManager() {
         // specify the sound to play
         // (assuming the sound can be played by the audio system)
         // from a wave File
+        this.sfx = new ArrayList<File>();
         try {
+            sfx.add("./gameOver.wav");
+            sfx.add("./disappointment.wav");
+            sfx.add("./wrongAnswer.wav");
+            sfx.add("./correctAnswer.wav");
+            sfx.add("./caveNoise.wav");
             File file = new File(fileName);
             if (file.exists()) {
                 AudioInputStream sound = AudioSystem.getAudioInputStream(file);
@@ -51,9 +59,16 @@ public class SoundManager {
 
     // play, stop, loop the sound clip
     }
-    public void play(){
-        clip.setFramePosition(0);  // Must always rewind!
-        clip.start();
+    public void play(int index){
+        try {
+            File f = sfx.get(index);
+        
+            clip.setFramePosition(0);  // Must always rewind!
+            clip.start();
+        } catch (Exception FileNotFoundException) {
+            // TODO: handle exception
+        }
+        
     }
     public void loop(){
         clip.loop(Clip.LOOP_CONTINUOUSLY);
