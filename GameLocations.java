@@ -1,5 +1,4 @@
 // Joshua Lennon
-// Nick Lennon
 // 2/12/2024
 // Game Locations Object
 
@@ -212,6 +211,10 @@ public class GameLocations {
 
     public Cave getCave() {
         return this.cave;
+    }
+
+    public String[] getTYPES(){
+        return this.TYPES;
     }
 
 }

@@ -37,6 +37,12 @@ public  class GameControl {
         "",
         "",
     };
+
+    private String[][] questions = new String[5][6];
+    private boolean[] answers = new boolean[5];
+    private int currentQuestion = 0;
+
+    private String[] hazards;
     
     // purchasing arrows - 0
     // purchasing secrets - 1
@@ -80,32 +86,78 @@ public  class GameControl {
             System.out.println("I'm here9");
             gui.move(playerInput);
             System.out.println("I'm here10");
-            player.addTurnsTaken();
-            //gui.updateTurnCounter();
-            String[] hazards = gameLocs.getHazards();
+
+            hazards = gameLocs.getHazards();
             gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
             
-            if (hazards.length > 0){
-                if (hazards[0].equals("Wumpus")){
-                    gui.updateActionText("You Encountered The Wumpus", new Color(255, 255, 255));
-                    questionType = 3;
-                    triviaTime();
-                    if (hazards.length != 1){
-                        hazards[0] = hazards[1];
-                    }
-                } else if (hazards[0].equals("Pit")){
-                    gui.updateActionText("You Teeter On The Precipice Of A Bottomless Cliff!", new Color(255, 255, 255));
-                    questionType = 2;
-                    triviaTime();
-                } else if (hazards[0].equals("Bat")){
-                    gui.updateActionText("You Found Bats!", new Color(255, 255, 255));
-                    questionType = 4;
-                    triviaTime();
-                }
+            if (hazards.length == 0){
+                endTurn();
+                return;
             }
-            //gui.updateActionText("This runs", new Color(255,255,255));
-            //gameLocs.moveWumpus(player.getTurnsTaken());
-            gui.updateActionText("Turn completed", new Color(255,255,255));
+
+            if ((hazards.length >= 1) && (hazards[0].equals("Wumpus"))){
+                if (hazards.length == 1){
+                    hazards = null;
+                } else {
+                    hazards[0] = hazards[1];
+                }
+                questionType = 3;
+                createQuestions();
+                gui.openTriviaMenu(questions[0], 5);
+                return;
+            }
+
+            continueTurn();
+        }
+    }
+
+    public void createQuestions(){
+        for (int i = 0; i < 5; i++)
+            questions[i] = trivia.getQandAandK();
+    }
+
+    public void endTurn(){
+        gameLocs.moveWumpus(player.getTurnsTaken());
+        player.addTurnsTaken();
+        //gui.updateTurnCounter();
+    }
+
+    public void questionAnswer(String answer){
+        answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
+        currentQuestion++;
+        if (currentQuestion == 5){
+            gui.nextTriviaQuestion(answers[4], null, true, 4);
+            currentQuestion = 0;
+        }
+        gui.nextTriviaQuestion(answers[currentQuestion - 1], questions[currentQuestion], false, currentQuestion - 1);
+    }
+
+    public void continueTurn(){
+        int numCorrect = 0;
+        for (int i = 0; i < 5; i++){
+            if (answers[i]){
+                numCorrect++;
+            }
+        }
+        triviaAction(numCorrect >= 3);
+        
+
+        if (hazards == null){
+            endTurn();
+        }
+        if (hazards[0].equals("Pit")){
+            hazards = null;
+            questionType = 2;
+            createQuestions();
+            gui.openTriviaMenu(questions[0], 5);
+            return;
+        }
+        if (hazards[0].equals("Bat")){
+            hazards = null;
+            questionType = 4;
+            createQuestions();
+            gui.openTriviaMenu(questions[0], 5);
+            return;
         }
     }
 
@@ -139,50 +191,9 @@ public  class GameControl {
             }
         } else {
             questionType = playerInput;
-            triviaTime();
+            //triviaTime();
         }
         gameLocs.moveWumpus(player.getTurnsTaken());
-    }
-
-    public void triviaTime(){
-        // first is a list of trivia questions with all their info, there are always 5 questions at a time
-        // each one corresponds to a second list with indexes organized as such:
-        // index 0 - question (Q)
-        // index 1 - 4 - answers (A)
-        // index 5 - correct answer as a single letter (K)
-        int numCorrect = 0;
-        String[][] questions = new String[5][6];
-        String [] answers = new String[5];
-        boolean lastQCorrect;
-
-        for (int i = 0; i < 5; i++){
-            questions[i] = trivia.getQandAandK();
-        }
-
-        System.out.println("This runs... uh-oh");
-
-        gui.openTriviaMenu(questions[0], 5);
-        System.out.println("This runs... uh-oh2");
-        gui.repaint();  
-        answers[0] = gui.nextTriviaChoice();
-        System.out.println("This runs... uh-oh3");
-        lastQCorrect = questions[0][5].equals(answers[0].substring(0, 1));
-        if (lastQCorrect){
-            numCorrect++;
-        }
-        
-        for (int i = 1; i < 5; i++){
-            gui.nextTriviaQuestion(lastQCorrect, questions[i], false, i - 1);
-            answers[i] = gui.nextTriviaChoice();
-            lastQCorrect = questions[i][5].equals(answers[i]);
-            if (lastQCorrect){
-                numCorrect++;
-            }
-        }
-
-        gui.nextTriviaQuestion(lastQCorrect, new String[]{"", "", "", "", "", ""}, true, 4);
-
-        triviaAction(numCorrect >= 3);
     }
 
     public void updateNumRight(){
@@ -251,3 +262,22 @@ public  class GameControl {
         System.exit(0);
     }
 }
+
+
+/*
+ * game control:
+ * method 1
+ * check hazards
+ * wumpus
+ * open trivia (new question)
+ * gui:
+ * method 2
+ * mouseclicked on answer b
+ * game control:
+ * method 3
+ * ok, here's the next question
+ * 
+ * loop until eventually:
+ * ok, close the menu now
+ * calls finish
+ */
