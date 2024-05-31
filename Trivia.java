@@ -39,7 +39,7 @@ class Trivia {
             questionsAndInfo[i][0] = (String) currentQuestion.get("Question");
             tempArray = (JSONArray) currentQuestion.get("Answers");
             for (int j = 0; j < 4; j++){
-                questionsAndInfo[i][j + 1] = answerTable[j] + ":" + (String) tempArray.get(j);
+                questionsAndInfo[i][j + 1] = answerTable[j] + ": " + (String) tempArray.get(j);
             }
             questionsAndInfo[i][5] = (String) currentQuestion.get("Key");
             //questionsAndInfo[i][6] = (String) currentQuestion.get("Hint");
