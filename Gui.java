@@ -31,7 +31,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     // "Question?", "Answer 1", "Answer 2", "answer 3", "Answer 4"
     String[] triviaQuestion = new String[] {"", "", "", "", ""};
     // {total # of Qs, q1 correct, q2 correct, q3 correct, q4 correct, q5 correct}
-    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1};
+    int[] triviaScoreData = {-1, -1, -1, -1, -1, -1, -1};
     // How transparent is the dimming in the background of Trivia?
     int dimRectTransparency = -1;
     // Which question this rectangle is highlighting. 0-3 inclusive when hovering over a Q, -1 otherwise
@@ -160,7 +160,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.fillRect(0, 0, width, height);
         }
         if(inTriviaMenu){
-            drawTriviaMenu(this.triviaQuestion, new int[] {5, 3, 1, 2, 1, 0, 0}, g2d);
+            drawTriviaMenu(this.triviaQuestion, this.triviaScoreData, g2d);
         }
         g2d.setColor(new Color(255, 255, 255));
         g2d.drawString("" + testCounter, 300, 90);
@@ -331,7 +331,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             int bubbleY = (triviaMenuY + (triviaMenuHeight / 10 - scoreBubbleSize) / 2);
 
             //Question unanswered
-            if(scoreData[i + 2] == 0){
+            if(scoreData[i + 2] == -1){
                 g2d.setColor(new Color(220, 220, 220));
                 g2d.drawOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
@@ -341,7 +341,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
             //Question incorrect
-            else if(scoreData[i + 2] == 2){
+            else if(scoreData[i + 2] == 0){
                 g2d.setColor(new Color(255, 150, 0));
                 g2d.fillOval(bubbleX, bubbleY, scoreBubbleSize, scoreBubbleSize);
             }
@@ -349,7 +349,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         // "Trivia - X out of Y (Category)"
         g2d.setFont(calibri.deriveFont((float)40));
         g2d.setColor(Color.WHITE);
-        g2d.drawString("Trivia - " + scoreData[1] + " out of " + scoreData[0], triviaMenuX + 20, triviaMenuY + 60);
+        g2d.drawString("Trivia - get " + scoreData[1] + " out of " + scoreData[0] + " correct", triviaMenuX + 20, triviaMenuY + 60);
         
         
         // Question
@@ -393,7 +393,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.triviaScoreData[0] = numQs;
         this.triviaScoreData[1] = (int)(numQs * 2/3);
         this.trivChoice = -1;
-        this.tempQuestion = question;
+        this.triviaQuestion = question;
+        nextQTransitionDim = -1;
         
         
         
@@ -402,17 +403,18 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
         disableClicks = true;
         this.isLastQ = isLastQ;
-        nextQTransitionDim = 0;
+        nextQTransitionDim = -1;
         this.tempQuestion = nextQuestion;
-        this.triviaScoreData[lastQNum] = (lastQCorrect)? 1 : 0; 
+        this.triviaScoreData[5 - lastQNum] = (lastQCorrect)? 1 : 0; 
         triviaFeedbackAnimStart = System.currentTimeMillis();
 
     }
     public void closeTriviaMenu(){
         inTriviaMenu = false;
         dimRectTransparency = -1;
-        triviaQuestion = new String[6];
+        triviaQuestion = new String[] {"", "", "", "", "", ""};
         triviaScoreData = new int[] {-1, -1, -1, -1, -1, -1};
+        correctAnsRectDim = -1;
     }
 
     
@@ -434,7 +436,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double mouseX = e.getX();
         double mouseY = e.getY();
         System.out.println(" at " + mouseX + ", " + mouseY);
-        updateActionText("Clicked", new Color(220, 220, 220));
 
         /////////// MAP INPUT ////////////
         /* 
@@ -508,11 +509,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                         System.out.println(roomNumClicked + "here3");
                     }
                     System.out.println("here4");
-                    updateActionText("I'm here5", new Color(255,255,255));
                     System.out.println("here6");
                     gameControl.turn(roomNumClicked);
-                    updateActionText("I'm here7", new Color(255,255,255));
-                    System.out.println("The program is NOT stuck...");
                     
                 }
 
@@ -600,13 +598,17 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             correctAnsRectDim = (int)(1000 - (now - triviaFeedbackAnimStart));
             correctAnsRectDim = (correctAnsRectDim > 255)? 255 : correctAnsRectDim; 
             correctAnsRectDim = (correctAnsRectDim < 0)? 0 : correctAnsRectDim;
-            if(now - triviaFeedbackAnimStart > 500 && now - triviaFeedbackAnimStart < 1400){
+            if(now - triviaFeedbackAnimStart < 1000){
+                nextQTransitionDim = 255;
+            }
+            if(now - triviaFeedbackAnimStart > 1000 && now - triviaFeedbackAnimStart < 1400){
                     if(isLastQ){
                         triviaFeedbackAnimStart = 0;
                         gameControl.continueTurn();
                         this.closeTriviaMenu();;;
                         disableClicks = false;
                     }
+                    nextQTransitionDim = 0;
             }
             else if(now - triviaFeedbackAnimStart > 1400 && now - triviaFeedbackAnimStart < 2100){
                 isLastQ = false;
