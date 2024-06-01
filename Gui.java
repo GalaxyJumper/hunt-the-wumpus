@@ -405,7 +405,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.isLastQ = isLastQ;
         nextQTransitionDim = -1;
         this.tempQuestion = nextQuestion;
-        this.triviaScoreData[5 - lastQNum] = (lastQCorrect)? 1 : 0; 
+        this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
         triviaFeedbackAnimStart = System.currentTimeMillis();
 
     }
@@ -413,7 +413,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         inTriviaMenu = false;
         dimRectTransparency = -1;
         triviaQuestion = new String[] {"", "", "", "", "", ""};
-        triviaScoreData = new int[] {-1, -1, -1, -1, -1, -1};
+        triviaScoreData = new int[] {-1, -1, -1, -1, -1, -1, -1};
         correctAnsRectDim = -1;
     }
 
