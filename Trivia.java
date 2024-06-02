@@ -42,7 +42,7 @@ class Trivia {
                 questionsAndInfo[i][j + 1] = (String) tempArray.get(j);
             }
             questionsAndInfo[i][5] = (String) currentQuestion.get("Key");
-            //questionsAndInfo[i][6] = (String) currentQuestion.get("Hint");
+            questionsAndInfo[i][6] = (String) currentQuestion.get("Hint");
         }
 
         usedQuestions = new boolean[questions.size()];

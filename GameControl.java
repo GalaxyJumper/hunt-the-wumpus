@@ -26,20 +26,7 @@ public  class GameControl {
     private Cave cave;
     private SoundManager sManager;
 
-    private final String[] secrets = {
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-    };
-
-    private String[][] questions = new String[5][6];
+    private String[][] questions = new String[5][7];
     private boolean[] answers = new boolean[5];
     private int currentQuestion = 0;
 
@@ -79,6 +66,10 @@ public  class GameControl {
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
+
+    public getHint(int questionNum){
+        return questions[questionNum][6];
+    }
 
     public void move(int playerInput){
         gui.move(playerInput);
@@ -239,7 +230,7 @@ public  class GameControl {
         } else if (questionType == 1){
             player.addCoins(-1);
             if (triviaSuccess){                
-                // gui.displaySecret(writeSecret((int) (Math.random() * 10 + 1)));
+                gui.updateActionText(gameLocs.getSecret(), new Color(255,255,255));
             }
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 2){
