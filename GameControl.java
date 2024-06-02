@@ -80,13 +80,31 @@ public  class GameControl {
     // METHODS
     ///////////////////////////////////////////////
 
+    public void move(int playerInput){
+        gui.move(playerInput);
+        String[] hazards = gameLocs.checkForHazards();
+        for (String hazard : hazards){
+            if (hazard.equals("Wumpus")){
+                gui.updateActionText("The ship rocks with an ominous rumble...");
+            } else if (hazard.equals("Pit")){
+                gui.updateActionText("You feel a current pulling your ship...");
+            } else if (hazards.equals("Bat")) {
+                gui.updateActionText("BATMANNNNN...");
+            }
+        }
+    }
+
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
         //gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
         System.out.println("I'm here8");
         if (gameLocs.setPlayerLoc(playerInput)){
+            if (gameLocs.inNewRoom(playerInput)){
+                player.addCoins(1);
+            }
+            player.addTurnsTaken();
             System.out.println("I'm here9");
-            gui.move(playerInput);
+            move(playerInput);
             System.out.println("I'm here10");
 
             hazards = gameLocs.getHazards();
@@ -105,7 +123,7 @@ public  class GameControl {
                 }
                 questionType = 3;
                 createQuestions();
-                gui.openTriviaMenu(questions[0], 5);
+                gui.openTriviaMenu("Wumpus Encounter", questions[0], 5);
                 return;
             }
 
@@ -120,7 +138,7 @@ public  class GameControl {
 
     public void endTurn(){
         gameLocs.moveWumpus(player.getTurnsTaken());
-        player.addTurnsTaken();
+        answers = new boolean[5];
         //gui.updateTurnCounter();
     }
 
@@ -153,14 +171,14 @@ public  class GameControl {
             hazards = null;
             questionType = 2;
             createQuestions();
-            gui.openTriviaMenu(questions[0], 5);
+            gui.openTriviaMenu("Pit Encounter", questions[0], 5);
             return;
         }
         if (hazards[0].equals("Bat")){
             hazards = null;
             questionType = 4;
             createQuestions();
-            gui.openTriviaMenu(questions[0], 5);
+            gui.openTriviaMenu("Bat Encounter", questions[0], 5);
             return;
         }
     }
@@ -195,9 +213,10 @@ public  class GameControl {
             }
         } else {
             questionType = playerInput;
-            //triviaTime();
+            createQuestions();
+            hazards = null;
+            gui.openTriviaMenu((playerInput == 1) "Purchase Secret" : "Purchase Arrow", questions[0], 5);
         }
-        gameLocs.moveWumpus(player.getTurnsTaken());
     }
 
     public void updateNumRight(){
@@ -212,16 +231,17 @@ public  class GameControl {
     // response is "A", "B", "C", or "D"
     public void triviaAction(boolean triviaSuccess){
         if (questionType == 0){
+            player.addCoins(-1);
             if (triviaSuccess){
-                player.purchaseArrow();
+                player.addArrows(1);
                 gui.updateActionText("Arrow Gained", new Color(255,0,255));
             }
-            player.addTurnsTaken();
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 1){
-            if (triviaSuccess){                // gui.displaySecret(writeSecret((int) (Math.random() * 10 + 1)));
+            player.addCoins(-1);
+            if (triviaSuccess){                
+                // gui.displaySecret(writeSecret((int) (Math.random() * 10 + 1)));
             }
-            player.addTurnsTaken();
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 2){
             if (!triviaSuccess){
@@ -240,7 +260,7 @@ public  class GameControl {
         } else if (questionType == 4){
             if (!triviaSuccess){
                 int newRoom = gameLocs.batTransport();
-                gui.move(newRoom);
+                move(newRoom);
                 gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
