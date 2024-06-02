@@ -412,9 +412,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
         triviaFeedbackAnimStart = System.currentTimeMillis();
         if(lastQCorrect){
-            sounds.play(4);
+            sounds.playSound(4);
         } else {
-            sounds.play(3);
+            sounds.playSound(3);
         }
 
     }
