@@ -67,11 +67,11 @@ public  class GameControl {
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
         }
 
-        gui.updateActionText(gameLocs.getBatLoc(0) + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getBatLoc(1) + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getWumpusLoc() + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getPitLoc(0) + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getPitLoc(1) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getBatLoc(0) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getBatLoc(1) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getWumpusLoc() + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getPitLoc(0) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getPitLoc(1) + "", new Color(255,255,255));
     }
 
     ///////////////////////////////////////////////
@@ -80,7 +80,7 @@ public  class GameControl {
 
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
-        gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
+        //gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
         System.out.println("I'm here8");
         if (gameLocs.setPlayerLoc(playerInput)){
             System.out.println("I'm here9");
@@ -88,7 +88,7 @@ public  class GameControl {
             System.out.println("I'm here10");
 
             hazards = gameLocs.getHazards();
-            gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
+            //gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
             
             if (hazards.length == 0){
                 endTurn();
@@ -126,7 +126,7 @@ public  class GameControl {
         answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
         currentQuestion++;
         if (currentQuestion == 5){
-            gui.nextTriviaQuestion(answers[4], new String[] {"", "", "", "", ""}, true, 4);
+            gui.nextTriviaQuestion(answers[4], new String[] {"", "", "", "", ""}, true, 5);
             currentQuestion = 0;
             return;
         }
