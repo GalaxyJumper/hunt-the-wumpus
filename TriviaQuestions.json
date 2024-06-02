@@ -23,6 +23,17 @@
             "Hint": "I feel sorry for the beasts that evolved trapped within the confines of these caves. Mother nature intended so much more for them–just looking into their unseeing eyes wrenches my heart. The only justice for them is death."
         },
         {
+            "Question": "Which of the following surface features also exist on the ocean floor",
+            "Answers": [
+                "Trees",
+                "Rivers",
+                "Solar Cycles",
+                "Seasons"
+            ],
+            "Key": "B",
+            "Hint": "Mysterious rivers wind along the sea floor. I’ve never seen anything escape once embraced by the cerulean current - makes you wonder if there really was something to the myth of Lethe."
+        },
+        {
             "Question": "How much of the ocean have we explored in total?",
             "Answers": [
                 "1%",
