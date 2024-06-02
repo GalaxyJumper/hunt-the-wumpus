@@ -111,6 +111,39 @@
             "Hint": "Without the presence of light, color loses its purpose. These creatures have no need for pigmentation in their perpetual twilight."
         },
         {
+            "Question": "Which ancient marine reptile, known for its elongated neck, roamed the seas during the Mesozoic era?",
+            "Answers": [
+                "Plesiosaur",
+                "Ichthyosaur",
+                "Mosasaur",
+                "Tylosaurus"
+            ],
+            "Key": "A",
+            "Hint": "Resembling a dragon of myth, this creature's long neck allowed it to snatch prey while its body remained concealed, a fearsome predator of its time."
+        },
+        {
+            "Question": "What is the main cause of the phenomenon known as 'red tide'?",
+            "Answers": [
+                "Algal Blooms",
+                "Oil Spills",
+                "Underwater Volcanoes",
+                "Human Pollution"
+            ],
+            "Key": "A",
+            "Hint": "When the sea turns crimson, it’s not blood but a bloom of microscopic organisms, painting the waves in deadly beauty."
+        },
+        {
+            "Question": "What strange phenomenon involves the ocean emitting a continuous, low-frequency hum heard globally?",
+            "Answers": [
+                "Ocean Murmur",
+                "Thrum of the Deep",
+                "Marine Drone",
+                "Earth’s Hum"
+            ],
+            "Key": "D",
+            "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep."
+        },
+        {
             "Question": "How much of the ocean have we explored in total?",
             "Answers": [
                 "1%",
