@@ -46,6 +46,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     // Input variables
     boolean inTriviaMenu = false;
 
+    String triviaCause;
+
     long triviaMenuOpened = 0;
 
     long triviaFeedbackAnimStart = 0;
@@ -65,6 +67,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int testCounter = 0;
 
     String b = new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+    SoundManager sounds = new SoundManager();
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -72,7 +75,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.width = width;
         this.height = height;
         this.gameControl = gameControl;
-        this.mapRoomSize = width / 20;
+        this.mapRoomSize = width / 10;
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
         this.cave = cave;
@@ -349,7 +352,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         // "Trivia - X out of Y (Category)"
         g2d.setFont(calibri.deriveFont((float)40));
         g2d.setColor(Color.WHITE);
-        g2d.drawString("Trivia - get " + scoreData[1] + " out of " + scoreData[0] + " correct", triviaMenuX + 20, triviaMenuY + 60);
+        g2d.drawString(triviaCause + " - get " + scoreData[1] + " out of " + scoreData[0] + " correct", triviaMenuX + 20, triviaMenuY + 60);
         
         
         // Question
@@ -388,13 +391,14 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         //g2d.drawRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 4);
         //g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
-    public void openTriviaMenu(String[] question, int numQs){
+    public void openTriviaMenu(String why, String[] question, int numQs){
         triviaMenuOpened = System.currentTimeMillis();
         this.triviaScoreData[0] = numQs;
         this.triviaScoreData[1] = (int)(numQs * 2/3);
         this.trivChoice = -1;
         this.triviaQuestion = question;
         nextQTransitionDim = -1;
+        triviaCause = why;
         
         
         
@@ -407,6 +411,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.tempQuestion = nextQuestion;
         this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
         triviaFeedbackAnimStart = System.currentTimeMillis();
+        if(lastQCorrect){
+            sounds.play(4);
+        } else {
+            sounds.play(3);
+        }
 
     }
     public void closeTriviaMenu(){
@@ -424,6 +433,19 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     private int twoToOneD(int y, int x){
         return x + (6 * y);
     }
+    private int[] oneToTwoD(int index){
+        return new int[] {
+            (index % 6),
+            (index / 6)
+        };
+
+    }
+    private double[] oneDToScreenSpace(int index){
+        return new double[] {
+            
+        };
+    }
+    
     
     ////////////////////////////////////////////////
     // MOUSE METHODS
@@ -432,11 +454,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
         double answerHitboxHeight = answerSelectionHeight / 4;
         this.repaint();
-        System.out.print("GUI: Player clicked");
         double mouseX = e.getX();
         double mouseY = e.getY();
         System.out.println(" at " + mouseX + ", " + mouseY);
-
         /////////// MAP INPUT ////////////
         /* 
          * Uses a tiling grid of rectangles to represent hexagons. 
@@ -474,7 +494,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 }
                 else {
                     double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
-                    double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + 15;
+                    double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 15 / 128);
                     System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
                     if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
                         
@@ -625,6 +645,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         double answerHitboxHeight = answerSelectionHeight / 4;
         double mouseX;
         double mouseY;
+        // Update mouse position
+        mouseX = MouseInfo.getPointerInfo().getLocation().getX();
+        mouseY = MouseInfo.getPointerInfo().getLocation().getY();
         for(int i = 0; i < actionTextFades.length; i++){
             if(actionTextFades[i] > 30){
                 actionTextFades[i] -= 1.3;
@@ -635,9 +658,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         if(inTriviaMenu){
             // TRIVIA UI UPDATING
             
-                // Update mouse position
-                mouseX = MouseInfo.getPointerInfo().getLocation().getX();    
-                mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+
             
                 // Is the mouse hovering over an answer?
                 if(mouseX > triviaMenuX && 
