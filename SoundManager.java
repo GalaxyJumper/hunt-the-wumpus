@@ -2,51 +2,48 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SoundManager {
-    private Clip activeClip;
     private ArrayList<File> soundFiles;
-    private ArrayList<Clip> soundClips;
+    private Clip currentClip;
 
-    public SoundManager() {
-        soundFiles = new ArrayList<File>();
-        soundClips = new ArrayList<Clip>();
-        soundFiles.add(new File("./gameOver.wav"));
-        soundFiles.add(new File("./disappointment.wav"));
-        soundFiles.add(new File("./caveNoise.wav"));
-        soundFiles.add(new File("./wrongAnswer.wav"));
-        soundFiles.add(new File("./correctAnswer.wav"));
-        this.soundClips = convertFilesToClips(soundFiles);
+    public SoundPlayer() {
+        this.soundFiles = new ArrayList<File>();
+        this.soundFiles.add("./gameOver.wav")
     }
 
-
-    public void play(int index) {
-        Clip activeClip = this.soundClips.get(index);
-        if (!activeClip.isRunning()) {
-            activeClip.start();
-        }
-    }
-
-    public void stop() {
-        if (activeClip.isRunning()) {
-            activeClip.stop();
-        }
-    }
-
-    
-    private ArrayList<Clip> convertFilesToClips(ArrayList<File> files) {
-        ArrayList<Clip> arr = new ArrayList<Clip>();
-        for (File file : soundFiles) {
+    public void playSounds() {
+        for (File soundFile : soundFiles) {
             try {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
                 Clip clip = AudioSystem.getClip();
-                clip.open(AudioSystem.getAudioInputStream(file));
-                soundClips.add(clip);
-            } catch (Exception e) {
-                // Handle any exceptions (e.g., unsupported audio format, file not found)
+                clip.open(audioIn);
+                currentClip = clip; // Save the current clip for stopping
+                clip.start();
+                // Allow sound to finish playing before moving to the next one
+                Thread.sleep(clip.getMicrosecondLength() / 1000);
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return arr;
+    }
+
+    public void stopCurrentSound() {
+        if (currentClip != null && currentClip.isRunning()) {
+            currentClip.stop();
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayList<File> soundFiles = new ArrayList<>();
+        soundFiles.add(new File("path/to/sound1.wav"));
+        soundFiles.add(new File("path/to/sound2.wav"));
+        // Add more sound files as needed
+
+        SoundPlayer soundPlayer = new SoundPlayer(soundFiles);
+        soundPlayer.playSounds();
+
+        // If you want to stop the currently playing sound
+        // soundPlayer.stopCurrentSound();
     }
 }
