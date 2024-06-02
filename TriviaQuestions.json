@@ -78,6 +78,17 @@
             "Hint": "Rising from the ground like ancient teeth, these formations grow ever so slowly, as each drop of mineral-rich water leaves behind a tiny trace of its journey."
         },
         {
+            "Question": "What phenomenon causes the eerie, rhythmic sounds often heard in deep ocean trenches?",
+            "Answers": [
+                "Tectonic Activity",
+                "Whales Singing",
+                "Underwater Waterfalls",
+                "Thermal Vents"
+            ],
+            "Key": "A",
+            "Hint": "Deep below, the earth is restless. Its movements send out a low, haunting moan that echoes through the water."
+        },
+        {
             "Question": "How much of the ocean have we explored in total?",
             "Answers": [
                 "1%",
