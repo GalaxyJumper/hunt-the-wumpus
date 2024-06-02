@@ -88,7 +88,7 @@ public  class GameControl {
                 gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
             } else if (hazard.equals("Pit")){
                 gui.updateActionText("You feel a current pulling your ship...", new Color(255,255,255));
-            } else if (hazards.equals("Bat")) {
+            } else if (hazard.equals("Bat")) {
                 gui.updateActionText("BATMANNNNN...", new Color(255,255,255));
             }
         }
@@ -214,7 +214,7 @@ public  class GameControl {
             questionType = playerInput;
             createQuestions();
             hazards = null;
-            gui.openTriviaMenu((playerInput == 1) "Purchase Secret" : "Purchase Arrow", questions[0], 5);
+            gui.openTriviaMenu((playerInput == 1)? "Purchase Secret" : "Purchase Arrow", questions[0], 5);
         }
     }
 
@@ -261,7 +261,7 @@ public  class GameControl {
                 int newRoom = gameLocs.batTransport();
                 move(newRoom);
                 gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
-                if (gameLocs.inNewRoom(playerInput))
+                if (gameLocs.inNewRoom(newRoom))
                     player.addCoins(1);
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));

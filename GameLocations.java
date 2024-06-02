@@ -24,6 +24,7 @@ public class GameLocations {
     private Cave cave;
     private SecretsManager secrets;
     private Set<Integer> occupiedLocations;
+    private Set<Integer> visitedRooms;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -33,6 +34,7 @@ public class GameLocations {
         this.cave = cave;
         this.secrets = new SecretsManager(this);
         this.occupiedLocations = new HashSet<>();
+        this.visitedRooms = new HashSet<>();
         initializeLocations();
     }
 
@@ -55,6 +57,10 @@ public class GameLocations {
     // Returns true if there is, false otherwise
     public boolean somethingThere(int roomNum) {
         return occupiedLocations.contains(roomNum);
+    }
+
+    public boolean inNewRoom(int roomNum){
+        return !visitedRooms.contains(roomNum);
     }
 
     // Gets a new random location that is not already occupied
@@ -177,6 +183,7 @@ public class GameLocations {
     public boolean setPlayerLoc(int room) {
         if (cave.canMove(getPlayerLoc(), room)) {
             occupiedLocations.remove(locsTable[0][0]);
+            visitedRooms.add(locsTable[0][0]);
             locsTable[0][0] = room;
             occupiedLocations.add(room);
             return true;
