@@ -119,7 +119,7 @@ public class GameLocations {
         if (turnNum % 20 < 3) {
             return moveWumpus();
         }
-        return -1;
+        return getWumpusLoc();
     }
 
     // Moves the Wumpus to a random adjacent room
