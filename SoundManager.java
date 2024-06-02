@@ -7,13 +7,17 @@ public class SoundManager {
     private ArrayList<File> soundFiles;
     private Clip currentClip;
 
-    public SoundPlayer() {
+    public SoundManager() {
         this.soundFiles = new ArrayList<File>();
-        this.soundFiles.add("./gameOver.wav")
+        this.soundFiles.add(new File("./gameOver.wav"));
+        this.soundFiles.add(new File("./disappointment.wav"));
+        this.soundFiles.add(new File("./wrongAnswer.wav"));
+        this.soundFiles.add(new File("./correctAnswer.wav"));
+        this.soundFiles.add(new File("./caveNoise.wav"));
     }
 
-    public void playSounds() {
-        for (File soundFile : soundFiles) {
+    public void playSound(int index) {
+        File soundFile = soundFiles.get(index);
             try {
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
                 Clip clip = AudioSystem.getClip();
@@ -26,24 +30,11 @@ public class SoundManager {
                 e.printStackTrace();
             }
         }
-    }
+    
 
     public void stopCurrentSound() {
         if (currentClip != null && currentClip.isRunning()) {
             currentClip.stop();
         }
-    }
-
-    public static void main(String[] args) {
-        ArrayList<File> soundFiles = new ArrayList<>();
-        soundFiles.add(new File("path/to/sound1.wav"));
-        soundFiles.add(new File("path/to/sound2.wav"));
-        // Add more sound files as needed
-
-        SoundPlayer soundPlayer = new SoundPlayer(soundFiles);
-        soundPlayer.playSounds();
-
-        // If you want to stop the currently playing sound
-        // soundPlayer.stopCurrentSound();
     }
 }
