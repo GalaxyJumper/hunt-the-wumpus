@@ -24,6 +24,7 @@ public  class GameControl {
     private Trivia trivia;
     private HighScore scores;
     private Cave cave;
+    private SoundManager sManager;
 
     private final String[] secrets = {
         "",
@@ -62,6 +63,7 @@ public  class GameControl {
         gameLocs = new GameLocations(cave);
         trivia = new Trivia();
         scores = new HighScore(player);
+        sManager = new SoundManager();
         
         if (!GraphicsEnvironment.isHeadless()){
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
