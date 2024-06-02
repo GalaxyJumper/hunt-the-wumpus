@@ -89,6 +89,28 @@
             "Hint": "Deep below, the earth is restless. Its movements send out a low, haunting moan that echoes through the water."
         },
         {
+            "Question": "Which deep-sea organism is known for its ability to survive in both freezing temperatures and near-boiling hydrothermal vents?",
+            "Answers": [
+                "Tardigrades",
+                "Deep-Sea Crabs",
+                "Tube Worms",
+                "Brine Shrimp"
+            ],
+            "Key": "A",
+            "Hint": "These microscopic marvels are the ultimate survivors, withstanding conditions that would annihilate most other forms of life."
+        },
+        {
+            "Question": "What is the primary reason why many cave-dwelling creatures are colorless or white?",
+            "Answers": [
+                "Lack of Predators",
+                "High Calcium Content",
+                "Absence of Light",
+                "Abundant Minerals"
+            ],
+            "Key": "C",
+            "Hint": "Without the presence of light, color loses its purpose. These creatures have no need for pigmentation in their perpetual twilight."
+        },
+        {
             "Question": "How much of the ocean have we explored in total?",
             "Answers": [
                 "1%",
