@@ -1,3 +1,4 @@
+
 // Toki
 import javax.sound.sampled.*;
 import java.io.File;
@@ -17,8 +18,6 @@ public class SoundManager {
         soundFiles.add(new File("./correctAnswer.wav"));
     }
 
-    
-
     public void play(int index) {
         if (index >= 0 && index < soundFiles.size()) {
             try {
@@ -30,7 +29,7 @@ public class SoundManager {
                 e.printStackTrace();
             }
         }
-        System.out.println("out of index idiot ಠ ಠ");
+        stop();
     }
 
     public void stop() {
