@@ -42,7 +42,18 @@
                 "Dead fish                "
             ],
             "Key": "C",
-            "Hint": "Beneath the crushing weight of the ocean, where heat and darkness reign, life finds a way to thrive. It's not sunlight that nourishes these strange creatures, but rather the alchemy of the deep, where chemistry meets biology in a delicate dance of survival."
+            "Hint": "Among the deepest recesses, where heat and darkness reign, life finds a way to thrive. It's not sunlight that nourishes these strange creatures, but rather the alchemy of the deep, where chemistry meets biology in a delicate dance of survival."
+        },
+        {
+            "Question": "What adaptation helps deep-sea fish survive the extreme pressures of the ocean depths?",
+            "Answers": [
+                "Thick Scales",
+                "No Bones",
+                "Large Lungs",
+                "Tough Skin"
+            ],
+            "Key": "B",
+            "Hint": "Under the crushing pressure of the ocean, interestingly, strength is a curse. Plasticity, on the other hand, allows a handful of curious creatures to thrive in an environment that capable of shattering an elephant's bones."
         },
         {
             "Question": "How much of the ocean have we explored in total?",
