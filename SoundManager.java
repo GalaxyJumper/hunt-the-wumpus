@@ -1,53 +1,52 @@
-
-// Toki
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SoundManager {
+    private Clip activeClip;
     private ArrayList<File> soundFiles;
-    private Clip currentClip;
+    private ArrayList<Clip> soundClips;
 
     public SoundManager() {
         soundFiles = new ArrayList<File>();
+        soundClips = new ArrayList<Clip>();
         soundFiles.add(new File("./gameOver.wav"));
         soundFiles.add(new File("./disappointment.wav"));
         soundFiles.add(new File("./caveNoise.wav"));
         soundFiles.add(new File("./wrongAnswer.wav"));
         soundFiles.add(new File("./correctAnswer.wav"));
+        this.soundClips = convertFilesToClips(soundFiles);
     }
 
+
     public void play(int index) {
-        if (index >= 0 && index < soundFiles.size()) {
-            try {
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFiles.get(index));
-                currentClip = AudioSystem.getClip();
-                currentClip.open(audioIn);
-                currentClip.start();
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-                e.printStackTrace();
-            }
+        Clip activeClip = this.soundClips.get(index);
+        if (!activeClip.isRunning()) {
+            activeClip.start();
         }
-        stop();
     }
 
     public void stop() {
-        if (currentClip != null && currentClip.isRunning()) {
-            currentClip.stop();
+        if (activeClip.isRunning()) {
+            activeClip.stop();
         }
     }
 
-    public void loop(int index) {
-        if (index >= 0 && index < soundFiles.size()) {
+    
+    private ArrayList<Clip> convertFilesToClips(ArrayList<File> files) {
+        ArrayList<Clip> arr = new ArrayList<Clip>();
+        for (File file : soundFiles) {
             try {
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFiles.get(index));
-                currentClip = AudioSystem.getClip();
-                currentClip.open(audioIn);
-                currentClip.loop(Clip.LOOP_CONTINUOUSLY);
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                Clip clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(file));
+                soundClips.add(clip);
+            } catch (Exception e) {
+                // Handle any exceptions (e.g., unsupported audio format, file not found)
                 e.printStackTrace();
             }
         }
+        return arr;
     }
 }
