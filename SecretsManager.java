@@ -2,6 +2,8 @@
 // 4 - 24 - 24
 // Secrets Managing Object
 
+import java.util.*;
+
 public class SecretsManager {
     ///////////////////////////////////////////////////
     // VARIABLES
@@ -11,10 +13,8 @@ public class SecretsManager {
         "The *HAZARD* is in room *LOCATION*.",
         "The *HAZARD* is *DISTANCE* rooms away.",
         "There is a *HAZARD* in this cave...",
-        "There is *NUMBER* *HAZARD* in this cave.",
-        "There are *BOOLEAN* Hazards within 2 rooms.",
-        "There are *BOOLEAN* Hazards within the room.",
-        "There are *BOOLEAN* Hazards within 1 room.",
+        "There *NUMBER* *HAZARD* in this cave.",
+        "There are *BOOLEAN*Hazards within *AMOUNT*."
     };
 
     private GameLocations gl;
@@ -23,6 +23,7 @@ public class SecretsManager {
     // CONSTRUCTORS
     ///////////////////////////////////////////////////
     
+    // Constructor to initialize the SecretsManager with a GameLocations object
     public SecretsManager(GameLocations gl){
         this.gl = gl;
     }
@@ -31,54 +32,134 @@ public class SecretsManager {
     // METHODS
     ///////////////////////////////////////////////////
 
-    public String makeSecret(int[][] gameState){
-        String base = SECRETS[(int) (Math.random()*SECRETS.length)];
-        if(base.contains("*HAZARD*")){
-            int type = (int) (Math.random()*gl.getTYPES().length);
+    // Randomly picks a secret template from SECRETS and fills in the necessary information accordingly
+    // Returns the finished secret as a string
+    public String makeSecret(){
+        // Select a random base template
+        String base = SECRETS[(int) (Math.random() * SECRETS.length)];
+        StringBuilder result = new StringBuilder(base);
+
+        // If the template contains *HAZARD*, replace it with a random hazard type
+        if (base.contains("*HAZARD*")) {
+            int type = (int) (Math.random() * gl.getTYPES().length);
             String hazard = gl.getTYPES()[type];
+            replace(result, "*HAZARD*", hazard);
 
-            base.replace("*HAZARD*", hazard);
-
-            if(base.contains("*LOCATION*")){
+            // Replace *LOCATION* with the location of the hazard
+            if (base.contains("*LOCATION*")) {
                 int loc = getHazardLoc(type);
-                base.replace("*LOCATION*", ""+loc);
-            } 
-            if(base.contains("*DISTANCE*")) {
-                int dist;
-                if(type == 0) dist = 0;
-                else dist = getDistance(type);
-                base.replace("*DISTANCE*", ""+dist);
-            } 
-            if(base.contains("*NUMBER*")){
-                int num = getHazardNum(type);
-                base.replace("*NUMBER*", ""+num);
-
+                replace(result, "*LOCATION*", String.valueOf(loc));
             }
-        }  else {
-            if(base.contains("*BOOLEAN*")){
-                
+
+            // Replace *DISTANCE* with the distance to the hazard
+            if (base.contains("*DISTANCE*")) {
+                int dist = (type == 0) ? 0 : getDistance(hazard);
+                replace(result, "*DISTANCE*", String.valueOf(dist));
+            }
+
+            // Replace *NUMBER* with the number of such hazards
+            if (base.contains("*NUMBER*")) {
+                int num = getHazardNum(type);
+                replace(result, "*NUMBER*", (num == 1 ? "is " : "are ") + num);
+            }
+        } else {
+            // If the template contains *BOOLEAN*, replace it with true/false based on the presence of hazards
+            if (base.contains("*BOOLEAN*")) {
+                int amount = (int) (Math.random() * 4);
+                boolean bool = areThereHazards(amount);
+                replace(result, "*BOOLEAN*", bool ? "" : "not ");
+                replace(result, "*AMOUNT*", (amount == 0) ? "this room" : amount + (amount == 1 ? " room" : " rooms"));
             }
         }
-        
-        
-        return base;
+        return result.toString();
     }
 
-    public int getHazardLoc(int type){
-        if(type == 0) return gl.getPlayerLoc();
-        else if(type == 1) return gl.getWumpusLoc();
-        else if(type == 2) return gl.getRandomBatLoc();
-        else if(type == 3) return gl.getRandomPitLoc();
-        else return -1;
+    // Helper method to replace all occurrences of a target string within a StringBuilder
+    private void replace(StringBuilder sb, String target, String replacement) {
+        int start = sb.indexOf(target);
+        while (start != -1) {
+            sb.replace(start, start + target.length(), replacement);
+            start = sb.indexOf(target, start + replacement.length());
+        }
     }
 
-    public int getHazardNum(int type){
-        if(type < 2) return 1;
-        else return 2;
+    // Returns the current location of the specified hazard type
+    private int getHazardLoc(int type) {
+        switch(type) {
+            case 0: return gl.getPlayerLoc();
+            case 1: return gl.getWumpusLoc();
+            case 2: return gl.getRandomBatLoc();
+            case 3: return gl.getRandomPitLoc();
+            default: return -1;
+        }
     }
 
-    public int getDistance(int type){
-        return -1;
+    // Returns the number of instances of a given hazard type
+    private int getHazardNum(int type) {
+        return gl.getLocsTable()[type].length;
     }
 
+    // Uses Breadth-First Search (BFS) to find the distance from the player to the first room that contains the specified hazard type
+    private int getDistance(String type) {
+        if (type.equals("Player")) return 0;
+
+        Queue<Integer> toVisit = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        toVisit.add(gl.getPlayerLoc());
+        int distance = 0;
+
+        while (!toVisit.isEmpty()) {
+            int size = toVisit.size();
+            for (int i = 0; i < size; i++) {
+                int room = toVisit.poll();
+                if (visited.contains(room)) continue;
+                visited.add(room);
+
+                // Check if the room contains the hazard type
+                String[] hazards = gl.getHazards(room);
+                for (String hazard : hazards) {
+                    if (hazard.equals(type)) return distance + 1;
+                }
+
+                // Add connected rooms to the queue
+                int[] connects = gl.getCave().possibleMoves(room);
+                for (int nextRoom : connects) {
+                    if (!visited.contains(nextRoom)) {
+                        toVisit.add(nextRoom);
+                    }
+                }
+            }
+            distance++;
+        }
+        return -1; // In case no hazard is found
+    }
+
+    // Uses BFS to check for the presence of hazards within a certain distance from the player's location
+    private boolean areThereHazards(int dist) {
+        Queue<Integer> toVisit = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        toVisit.add(gl.getPlayerLoc());
+
+        while (!toVisit.isEmpty() && dist >= 0) {
+            int size = toVisit.size();
+            for (int i = 0; i < size; i++) {
+                int room = toVisit.poll();
+                if (visited.contains(room)) continue;
+                visited.add(room);
+
+                // Check if the room contains any hazards
+                if (gl.getHazards(room).length > 0) return true;
+
+                // Add connected rooms to the queue
+                int[] connects = gl.getCave().possibleMoves(room);
+                for (int nextRoom : connects) {
+                    if (!visited.contains(nextRoom)) {
+                        toVisit.add(nextRoom);
+                    }
+                }
+            }
+            dist--;
+        }
+        return false;
+    }
 }
