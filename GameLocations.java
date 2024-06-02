@@ -14,14 +14,15 @@ public class GameLocations {
 
     // Holds room location of all game instances
     // First dimension represents types; e.g., player, wumpus, bat, pit
-    // Second dimension represents instances - e.g., bat 0 or 1, etc.
-    // There is one player, one wumpus, two bats, and two pits
+    // Second dimension represents instances of those types- e.g., bat 0 or 1, etc.
+    // There is one player, one wumpus, two bats, and two pits according to spec
     private final int[][] locsTable = { new int[1], new int[1], new int[2], new int[2] };
 
     // Maps the type name to the locs table
     private final String[] TYPES = { "Player", "Wumpus", "Bat", "Pit" };
 
     private Cave cave;
+    private SecretsManager secrets;
     private Set<Integer> occupiedLocations;
 
     ///////////////////////////////////////////////
@@ -30,6 +31,7 @@ public class GameLocations {
 
     public GameLocations(Cave cave) {
         this.cave = cave;
+        this.secrets = new SecretsManager(this);
         this.occupiedLocations = new HashSet<>();
         initializeLocations();
     }
@@ -37,6 +39,12 @@ public class GameLocations {
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
+
+    // Uses the secret manager to make a new secret from the current game state
+    // Returns the filled in secret as a string
+    public String newSecret(){
+        return secrets.makeSecret();
+    }
 
     // Returns a random room coordinate between 0 and 29
     public int getRandomLocation() {
