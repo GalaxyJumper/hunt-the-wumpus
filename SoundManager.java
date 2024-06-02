@@ -1,3 +1,4 @@
+// Toki
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class SoundManager {
                 e.printStackTrace();
             }
         }
+        System.out.println("out of index idiot ಠ ಠ");
     }
 
     public void stop() {
