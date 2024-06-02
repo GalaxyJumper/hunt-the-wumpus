@@ -67,6 +67,17 @@
             "Hint": "A tiny beacon in the abyss, a glimmer of hope—or doom—for those who seek it. Beware the light, for it masks a deadly maw."
         },
         {
+            "Question": "Which cave formation is created by dripping water depositing minerals over time",
+            "Answers": [
+                "Stalagmites",
+                "Sinkholes",
+                "Petrified Wood",
+                "Lava Tubes"
+            ],
+            "Key": "A",
+            "Hint": "Rising from the ground like ancient teeth, these formations grow ever so slowly, as each drop of mineral-rich water leaves behind a tiny trace of its journey."
+        },
+        {
             "Question": "How much of the ocean have we explored in total?",
             "Answers": [
                 "1%",
