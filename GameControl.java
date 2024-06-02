@@ -85,11 +85,11 @@ public  class GameControl {
         String[] hazards = gameLocs.checkForHazards();
         for (String hazard : hazards){
             if (hazard.equals("Wumpus")){
-                gui.updateActionText("The ship rocks with an ominous rumble...");
+                gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
             } else if (hazard.equals("Pit")){
-                gui.updateActionText("You feel a current pulling your ship...");
+                gui.updateActionText("You feel a current pulling your ship...", new Color(255,255,255));
             } else if (hazards.equals("Bat")) {
-                gui.updateActionText("BATMANNNNN...");
+                gui.updateActionText("BATMANNNNN...", new Color(255,255,255));
             }
         }
     }
@@ -99,9 +99,8 @@ public  class GameControl {
         //gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
         System.out.println("I'm here8");
         if (gameLocs.setPlayerLoc(playerInput)){
-            if (gameLocs.inNewRoom(playerInput)){
+            if (gameLocs.inNewRoom(playerInput))
                 player.addCoins(1);
-            }
             player.addTurnsTaken();
             System.out.println("I'm here9");
             move(playerInput);
@@ -262,6 +261,8 @@ public  class GameControl {
                 int newRoom = gameLocs.batTransport();
                 move(newRoom);
                 gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
+                if (gameLocs.inNewRoom(playerInput))
+                    player.addCoins(1);
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
             }
