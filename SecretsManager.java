@@ -39,11 +39,11 @@ public class SecretsManager {
         String base = SECRETS[(int) (Math.random() * SECRETS.length)];
         StringBuilder result = new StringBuilder(base);
 
-        // If the template contains *HAZARD*, replace it with a random hazard type
+        // If the template contains *HAZARD*, replace it with a random type
         if (base.contains("*HAZARD*")) {
             int type = (int) (Math.random() * gl.getTYPES().length);
-            String hazard = gl.getTYPES()[type];
-            replace(result, "*HAZARD*", hazard);
+            String typeName = gl.getTYPES()[type];
+            replace(result, "*HAZARD*", typeName);
 
             // Replace *LOCATION* with the location of the hazard
             if (base.contains("*LOCATION*")) {
@@ -53,7 +53,7 @@ public class SecretsManager {
 
             // Replace *DISTANCE* with the distance to the hazard
             if (base.contains("*DISTANCE*")) {
-                int dist = (type == 0) ? 0 : getDistance(hazard);
+                int dist = (type == 0) ? 0 : getDistance(typeName);
                 replace(result, "*DISTANCE*", String.valueOf(dist));
             }
 
