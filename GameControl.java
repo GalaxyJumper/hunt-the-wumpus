@@ -67,7 +67,7 @@ public  class GameControl {
     // METHODS
     ///////////////////////////////////////////////
 
-    public getHint(int questionNum){
+    public String getHint(int questionNum){
         return questions[questionNum][6];
     }
 
@@ -230,7 +230,7 @@ public  class GameControl {
         } else if (questionType == 1){
             player.addCoins(-1);
             if (triviaSuccess){                
-                gui.updateActionText(gameLocs.getSecret(), new Color(255,255,255));
+                gui.updateActionText(gameLocs.newSecret(), new Color(255,255,255));
             }
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 2){
@@ -261,10 +261,7 @@ public  class GameControl {
         triviaSuccess = false;
     }
 
-    public String writeSecret(int secretIndex){
-        String secret = secrets[secretIndex];
-        return secret;
-    }
+    
 
     public void gameEnd(){
         gui.updateActionText("Game Over", new Color(255,255,255));
