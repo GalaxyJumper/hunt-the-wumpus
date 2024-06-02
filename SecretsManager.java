@@ -101,8 +101,6 @@ public class SecretsManager {
 
     // Uses Breadth-First Search (BFS) to find the distance from the player to the first room that contains the specified hazard type
     private int getDistance(String type) {
-        if (type.equals("Player")) return 0;
-
         Queue<Integer> toVisit = new LinkedList<>();
         Set<Integer> visited = new HashSet<>();
         toVisit.add(gl.getPlayerLoc());
@@ -118,7 +116,7 @@ public class SecretsManager {
                 // Check if the room contains the hazard type
                 String[] hazards = gl.getHazards(room);
                 for (String hazard : hazards) {
-                    if (hazard.equals(type)) return distance + 1;
+                    if (hazard.equals(type)) return distance;
                 }
 
                 // Add connected rooms to the queue
