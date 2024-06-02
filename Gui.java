@@ -45,6 +45,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
     boolean inTriviaMenu = false;
+    
+    long moveAnimStart = -1;
 
     String triviaCause;
 
@@ -268,6 +270,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     public void move(int whereTo){
         playerLoc = whereTo;
         this.repaint();
+        disableClicks = true;
+        moveAnimStart = System.currentTimeMillis();
+
 
     }
     public void failMove(int whereTo){
@@ -414,7 +419,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         if(lastQCorrect){
             sounds.playSound(4);
         } else {
-            sounds.playSound(3);
+
         }
 
     }
@@ -440,9 +445,12 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         };
 
     }
-    private double[] oneDToScreenSpace(int index){
+    private double[] twoDToScreenSpace(int x, int y){
+        double resultY = (y * (Math.sqrt(3) * mapRoomSize));
+        double resultX = (x * (mapRoomSize*1.5));
         return new double[] {
-            
+            resultX + mapStartX,
+            (resultY + ((x % 2) * (Math.sqrt(3)*mapRoomSize)/2) ) + mapStartY
         };
     }
     
@@ -530,6 +538,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     }
                     System.out.println("here4");
                     System.out.println("here6");
+                    System.out.println(twoToOneD(mapInputY, mapInputX));
+                    double[] screenSpaceCoords = twoDToScreenSpace(mapInputX, mapInputY);
+                    System.out.println(screenSpaceCoords[0] + "    " + screenSpaceCoords[1]);
                     gameControl.turn(roomNumClicked);
                     
                 }
