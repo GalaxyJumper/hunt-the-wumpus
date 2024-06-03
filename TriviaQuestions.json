@@ -1,7 +1,7 @@
 {
     "Questions": [
         {
-            "Question": "What is “marine snow” made of?",
+            "Question": "What is \"marine snow\" made of?",
             "Answers": [
                 "Decaying Biomass",
                 "Frozen Water",
@@ -130,7 +130,7 @@
                 "Human Pollution"
             ],
             "Key": "A",
-            "Hint": "When the sea turns crimson, it’s not blood but a bloom of microscopic organisms, painting the waves in deadly beauty."
+            "Hint": "When the sea turns crimson, it's not blood but a bloom of microscopic organisms, painting the waves in deadly beauty."
         },
         {
             "Question": "What strange phenomenon involves the ocean emitting a continuous, low-frequency hum heard globally?",
@@ -138,7 +138,7 @@
                 "Ocean Murmur",
                 "Thrum of the Deep",
                 "Marine Drone",
-                "Earth’s Hum"
+                "Earth's Hum"
             ],
             "Key": "D",
             "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep."
