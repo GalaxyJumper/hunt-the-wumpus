@@ -513,8 +513,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 int roomNumClicked = 99;
                     double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
                     double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 15 / 128);
-                    System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
                     if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
+                        System.out.println("Hit bottom triangle");
                         //Bottom triangle
                         //Special case - the room at the triangle's location will be at a different Y than this hexagon.
                         if(mapInputX == 0){
@@ -534,7 +534,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     }
                     else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
                         // TOP triangle
-                    
+                        System.out.println("Hit top triangle");
                         roomNumClicked = (twoToOneD(mapInputY, mapInputX) - ((mapInputX % 2 == 0)? 7 : 1)) % 30;
 
                         if(roomNumClicked < 0){
@@ -547,9 +547,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     } else {
                         roomNumClicked = twoToOneD(mapInputY, mapInputX);
                     }
-                    if()
-                    double[] screenSpaceCoords = twoDToScreenSpace(mapInputX, mapInputY);
-                    gameControl.turn(roomNumClicked);
+                    if(buttonClicked == 1){
+                        double[] screenSpaceCoords = twoDToScreenSpace(mapInputX, mapInputY);
+                        gameControl.turn(roomNumClicked);
+                    } 
+                    else if(buttonClicked == 2){
+                        gameControl.turn(roomNumClicked, true);
+                    }
                     
                 
 

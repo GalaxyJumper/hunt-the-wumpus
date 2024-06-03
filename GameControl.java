@@ -90,12 +90,10 @@ public  class GameControl {
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
         //gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
-        System.out.println("I'm here8");
         if (gameLocs.setPlayerLoc(playerInput)){
             player.addTurnsTaken();
-            System.out.println("I'm here9");
             move(playerInput);
-            System.out.println("I'm here10");
+            
 
             hazards = gameLocs.getHazards();
             //gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
