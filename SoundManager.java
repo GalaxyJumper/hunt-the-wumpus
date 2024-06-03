@@ -7,6 +7,8 @@ public class SoundManager {
     private ArrayList<File> soundFiles;
 
     public SoundManager() {
+         // Need to convert the wav files into somthing more generic like a .pcm file.
+
         this.soundFiles = new ArrayList<File>();
         this.soundFiles.add(new File("sound/gameOver.wav"));
         this.soundFiles.add(new File("sound/Ambiance.wav"));
