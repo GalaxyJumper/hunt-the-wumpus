@@ -186,6 +186,7 @@ public  class GameControl {
                 boolean wumpusShot = false;
                 boolean missed = false;
                 gui.updateActionText("Arrow Fired...", new Color(255,255,255));
+                gui.updateActionText(player.getArrows() + " arrows left", new Color(255,255,255));
                 if (hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
