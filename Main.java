@@ -1,19 +1,18 @@
 import java.awt.FontFormatException;
-import java.awt.HeadlessException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args)
-            throws HeadlessException, FileNotFoundException, FontFormatException, IOException {
-                System.setProperty("sun.java2d.uiScale", "0.7");
-        GameControl freak = new GameControl();
+            throws FontFormatException, IOException {
+        System.setProperty("sun.java2d.uiScale", "0.7");
+        new GameControl();
+        SoundManager sm = new SoundManager();
         
-        //making sure highscore works! 
-        //String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
-        //Player player = new Player(test);
-        //HighScore highscore = new HighScore(player);
-        //highscore.endOfGame();
+        // making sure highscore works!
+        // String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
+        // Player player = new Player(test);
+        // HighScore highscore = new HighScore(player);
+        // highscore.endOfGame();
 
         // This should always run at the end of main!!!!
         Cave.println("Your code works ~*,`");

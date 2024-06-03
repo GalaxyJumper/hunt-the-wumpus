@@ -1,66 +1,384 @@
 {
     "Questions": [
         {
+            "Question": "What is “marine snow” made of?",
+            "Answers": [
+                "Decaying Biomass",
+                "Frozen Water",
+                "Pollution",
+                "Migrating Plankton"
+            ],
+            "Key": "A",
+            "Hint": "Once you pass the mesopelagic the sun disappears. In brief flashes of bioluminescence you can see a kind of snow suspended in the expanse. Leave it be… its a little fleshy."
+        },
+        {
+            "Question": "This condition is common in organisms that evolved within cave systems:",
+            "Answers": [
+                "Blindness",
+                "Nocturnalism",
+                "Gigantism",
+                "Elevated Melanin"
+            ],
+            "Key": "A",
+            "Hint": "I feel sorry for the beasts that evolved trapped within the confines of these caves. Mother nature intended so much more for them–just looking into their unseeing eyes wrenches my heart. The only justice for them is death."
+        },
+        {
+            "Question": "Which of the following surface features also exist on the ocean floor",
+            "Answers": [
+                "Trees",
+                "Rivers",
+                "Solar Cycles",
+                "Seasons"
+            ],
+            "Key": "B",
+            "Hint": "Mysterious rivers wind along the sea floor. I’ve never seen anything escape once embraced by the cerulean current - makes you wonder if there really was something to the myth of Lethe."
+        },
+        {
+            "Question": "What is the primary source of sustenance for organisms living near hydrothermal vents?",
+            "Answers": [
+                "Sunlight",
+                "Plankton",
+                "Chemical energy",
+                "Dead fish                "
+            ],
+            "Key": "C",
+            "Hint": "Among the deepest recesses, where heat and darkness reign, life finds a way to thrive. It's not sunlight that nourishes these strange creatures, but rather the alchemy of the deep, where chemistry meets biology in a delicate dance of survival."
+        },
+        {
+            "Question": "What adaptation helps deep-sea fish survive the extreme pressures of the ocean depths?",
+            "Answers": [
+                "Thick Scales",
+                "No Bones",
+                "Large Lungs",
+                "Tough Skin"
+            ],
+            "Key": "B",
+            "Hint": "Under the crushing pressure of the ocean, interestingly, strength is a curse. Plasticity, on the other hand, allows a handful of curious creatures to thrive in an environment capable of shattering an elephant's bones."
+        },
+        {
+            "Question": "Which deep-sea creature is known for its bioluminescent lure used to attract prey?",
+            "Answers": [
+                "Goblin Shark",
+                "Gulper Eel",
+                "Anglerfish",
+                "Vampire Squid"
+            ],
+            "Key": "C",
+            "Hint": "A tiny beacon in the abyss, a glimmer of hope—or doom—for those who seek it. Beware the light, for it masks a deadly maw."
+        },
+        {
+            "Question": "Which formation is created by dripping water depositing minerals over time",
+            "Answers": [
+                "Stalagmites",
+                "Sinkholes",
+                "Petrified Wood",
+                "Lava Tubes"
+            ],
+            "Key": "A",
+            "Hint": "The Greeks called them 'stalassein': 'to drip'. I think the name 'odóntes' would be more befitting - they look like teeth to me."
+        },
+        {
+            "Question": "What phenomenon causes the eerie, rhythmic sounds often heard in deep ocean trenches?",
+            "Answers": [
+                "Tectonic Activity",
+                "Whales Singing",
+                "Underwater Waterfalls",
+                "Thermal Vents"
+            ],
+            "Key": "A",
+            "Hint": "Deep below, the earth is restless. Its movements send out a low, haunting moan that echoes through the water."
+        },
+        {
+            "Question": "Which deep-sea organism is known for its ability to survive in both freezing temperatures and near-boiling hydrothermal vents?",
+            "Answers": [
+                "Tardigrades",
+                "Deep-Sea Crabs",
+                "Tube Worms",
+                "Brine Shrimp"
+            ],
+            "Key": "A",
+            "Hint": "With a name meaning 'slow walker' paying homage to their ability of long-term hibernation, these microorganisms can survive in the vaccum of space."
+        },
+        {
+            "Question": "What is the primary reason why many cave-dwelling creatures are colorless or white?",
+            "Answers": [
+                "Lack of Predators",
+                "High Calcium Content",
+                "Absence of Light",
+                "Abundant Minerals"
+            ],
+            "Key": "C",
+            "Hint": "Without the presence of light, color loses its purpose. These creatures have no need for pigmentation in their perpetual twilight."
+        },
+        {
+            "Question": "Which ancient marine reptile, known for its elongated neck, roamed the seas during the Mesozoic era?",
+            "Answers": [
+                "Plesiosaur",
+                "Ichthyosaur",
+                "Mosasaur",
+                "Tylosaurus"
+            ],
+            "Key": "A",
+            "Hint": "Resembling a dragon of myth, this creature's long neck allowed it to snatch prey while its body remained concealed, a fearsome predator of its time."
+        },
+        {
+            "Question": "What is the main cause of the phenomenon known as 'red tide'?",
+            "Answers": [
+                "Algal Blooms",
+                "Oil Spills",
+                "Underwater Volcanoes",
+                "Human Pollution"
+            ],
+            "Key": "A",
+            "Hint": "When the sea turns crimson, it’s not blood but a bloom of microscopic organisms, painting the waves in deadly beauty."
+        },
+        {
+            "Question": "What strange phenomenon involves the ocean emitting a continuous, low-frequency hum heard globally?",
+            "Answers": [
+                "Ocean Murmur",
+                "Thrum of the Deep",
+                "Marine Drone",
+                "Earth’s Hum"
+            ],
+            "Key": "D",
+            "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep."
+        },
+        {
             "Question": "How much of the ocean have we explored in total?",
-            "Answers": ["1%", "5%", "10%", "50%"],
+            "Answers": [
+                "1%",
+                "5%",
+                "10%",
+                "50%"
+            ],
             "Key": "B",
             "Hint": ""
         },
         {
             "Question": "What is the deepest trench in the sea?",
-            "Answers": ["Marina Trench", "Mariana Trench", "Sierena deep", "Marinara Trench"],
+            "Answers": [
+                "Marina Trench",
+                "Mariana Trench",
+                "Sierena deep",
+                "Marinara Trench"
+            ],
             "Key": "B",
             "Hint": ""
         },
         {
             "Question": "The technology that allows submarines to detect objects is?",
-            "Answers": ["Sonar", "Radar", "Gamma", "Ultraviolet"],
+            "Answers": [
+                "Sonar",
+                "Radar",
+                "Gamma",
+                "Ultraviolet"
+            ],
             "Key": "A",
             "Hint": ""
         },
         {
             "Question": "What is the saltiest body of water?",
-            "Answers": ["Don Juan Pond", "Alantic Ocean", "Dead Sea", "Great Salt Lake"],
+            "Answers": [
+                "Don Juan Pond",
+                "Alantic Ocean",
+                "Dead Sea",
+                "Great Salt Lake"
+            ],
             "Key": "A",
             "Hint": ""
         },
         {
             "Question": "What war were submarines first used?",
-            "Answers": ["World War I", "World War II", "Civil War", "The Napoleonic Wars"],
+            "Answers": [
+                "World War I",
+                "World War II",
+                "Civil War",
+                "The Napoleonic Wars"
+            ],
             "Key": "C",
             "Hint": ""
         },
         {
-            "Question": "What is the name of the deepest underwater cave?",
-            "Answers": ["Krubera-Voronja cave", "Sarma cave", "Hranicka Propast cave", "Abisso Paolo Roversi cave "],
+            "Question": "What is the name of the deepest underwater cave explored by man?",
+            "Answers": [
+                "Krubera-Voronja cave",
+                "Sarma cave",
+                "Hranicka Propast cave",
+                "Abisso Paolo Roversi cave "
+            ],
             "Key": "C",
             "Hint": ""
         },
         {
-            "Question": "What type of rock is commonly found in cave formations?",
-            "Answers": ["Granite", "Basalt", "Olivine", "Limestone"],
+            "Question": "What type of rock is most commonly associated with cave formations?",
+            "Answers": [
+                "Granite",
+                "Basalt",
+                "Olivine",
+                "Limestone"
+            ],
+            "Key": "D",
+            "Hint": ""
+        },
+        {
+            "Question": "What fish goes through decompression sickness when brought out of their habitat?",
+            "Answers": [
+                "Pufferfish",
+                "Oarfish",
+                "Swordfish",
+                "Blobfish"
+            ],
             "Key": "D",
             "Hint": ""
         },
         {
             "Question": "What property makes certain marine life glow?",
-            "Answers": ["Refraction", "Bioluminescence", "Radiance", "Radiation"],
+            "Answers": [
+                "Refraction",
+                "Bioluminescence",
+                "Radiance",
+                "Radiation"
+            ],
             "Key": "B",
             "Hint": ""
         },
         {
             "Question": "How many species of sharks are there?",
-            "Answers": ["100", "50", "500", "63"],
+            "Answers": [
+                "100",
+                "50",
+                "500",
+                "63"
+            ],
             "Key": "C",
             "Hint": ""
         },
         {
             "Question": "what is the scientific name for a giant squid?",
-            "Answers": ["Architeuthidae", "Cephalopoda", "Megaloteuthis", "Architeuthus"],
+            "Answers": [
+                "Architeuthidae",
+                "Cephalopoda",
+                "Megaloteuthis",
+                "Architeuthus"
+            ],
+            "Key": "A",
+            "Hint": ""
+        },
+        {
+            "Question": "How much of the ocean have we explored in total?",
+            "Answers": [
+                "1%",
+                "5%",
+                "10%",
+                "50%"
+            ],
+            "Key": "B",
+            "Hint": ""
+        },
+        {
+            "Question": "What is the deepest trench in the sea?",
+            "Answers": [
+                "Marina Trench",
+                "Mariana Trench",
+                "Sierena deep",
+                "Marinara Trench"
+            ],
+            "Key": "B",
+            "Hint": ""
+        },
+        {
+            "Question": "The technology that allows submarines to detect objects is?",
+            "Answers": [
+                "Sonar",
+                "Radar",
+                "Gamma",
+                "Ultraviolet"
+            ],
+            "Key": "A",
+            "Hint": ""
+        },
+        {
+            "Question": "What is the saltiest body of water?",
+            "Answers": [
+                "Don Juan Pond",
+                "Alantic Ocean",
+                "Dead Sea",
+                "Great Salt Lake"
+            ],
+            "Key": "A",
+            "Hint": ""
+        },
+        {
+            "Question": "What war were submarines first used?",
+            "Answers": [
+                "World War I",
+                "World War II",
+                "Civil War",
+                "The Napoleonic Wars"
+            ],
+            "Key": "C",
+            "Hint": ""
+        },
+        {
+            "Question": "What is the name of the deepest underwater cave?",
+            "Answers": [
+                "Krubera-Voronja cave",
+                "Sarma cave",
+                "Hranicka Propast cave",
+                "Abisso Paolo Roversi cave "
+            ],
+            "Key": "C",
+            "Hint": ""
+        },
+        {
+            "Question": "What type of rock is commonly found in cave formations?",
+            "Answers": [
+                "Granite",
+                "Basalt",
+                "Olivine",
+                "Limestone"
+            ],
+            "Key": "D",
+            "Hint": ""
+        },
+        {
+            "Question": "What fish goes through decompression sickness when brought out of their habitat?",
+            "Answers": ["Pufferfish", "Oarfish", "Swordfish", "Blobfish"],
+            "Key": "D",
+            "Hint": ""
+        },
+        {
+            "Question": "What property makes certain marine life glow?",
+            "Answers": [
+                "Refraction",
+                "Bioluminescence",
+                "Radiance",
+                "Radiation"
+            ],
+            "Key": "B",
+            "Hint": ""
+        },
+        {
+            "Question": "How many species of sharks are there?",
+            "Answers": [
+                "100",
+                "50",
+                "500",
+                "63"
+            ],
+            "Key": "C",
+            "Hint": ""
+        },
+        {
+            "Question": "what is the scientific name for a giant squid?",
+            "Answers": [
+                "Architeuthidae",
+                "Cephalopoda",
+                "Megaloteuthis",
+                "Architeuthus"
+            ],
             "Key": "A",
             "Hint": ""
         }
-    
-
     ]
 }

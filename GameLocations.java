@@ -2,29 +2,29 @@
 // 2/12/2024
 // Game Locations Object
 
-//make an array representing each hexagonal room 
-//tracking hazards and wumpus
 
-import java.util.Random;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GameLocations {
     ///////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////
 
-    // holds room location of all game instances
-    // first d is the types; e.g. player, wumpus, pit
-    // second d is intances - bat 0 or 1, ect.
-    // There is one play, one wumpus, two bats, and two pits
-    // Wumpus and Player have moving ability in the game
+    // Holds room location of all game instances
+    // First dimension represents types; e.g., player, wumpus, bat, pit
+    // Second dimension represents instances of those types- e.g., bat 0 or 1, etc.
+    // There is one player, one wumpus, two bats, and two pits according to spec
     private final int[][] locsTable = { new int[1], new int[1], new int[2], new int[2] };
 
-    // maps the type name to the locs table
+    // Maps the type name to the locs table
     private final String[] TYPES = { "Player", "Wumpus", "Bat", "Pit" };
 
     private Cave cave;
-    private Random random;
+    private SecretsManager secrets;
+    private Set<Integer> occupiedLocations;
+    private Set<Integer> visitedRooms;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -32,86 +32,82 @@ public class GameLocations {
 
     public GameLocations(Cave cave) {
         this.cave = cave;
-        this.random = new Random();
+        this.secrets = new SecretsManager(this);
+        this.occupiedLocations = new HashSet<>();
+        this.visitedRooms = new HashSet<>();
         initializeLocations();
-        
     }
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
 
-    // Uses random utility to get a random room coordinate 0-29
+    // Uses the secret manager to make a new secret from the current game state
+    // Returns the filled in secret as a string
+    public String newSecret(){
+        return secrets.makeSecret();
+    }
+
+    // Returns a random room coordinate between 0 and 29
     public int getRandomLocation() {
-        int val = random.nextInt(30);
-        return val;
+        return (int) (Math.random() * 30);
     }
 
-    // Interates through all in game types to see if 1+ is in room x,y
-    // Returns true if there is, false otherwise;
+    // Checks if there is any type of entity in the specified room
+    // Returns true if there is, false otherwise
     public boolean somethingThere(int roomNum) {
-
-        for (int type = 0; type < locsTable.length; type++) {
-            for (int instance = 0; instance < locsTable[type].length; instance++) {
-                if (locsTable[type][instance] == roomNum)
-                    return true;
-            }
-        }
-        return false;
+        return occupiedLocations.contains(roomNum);
     }
 
-    // Gets a new random location, checks if there is already something there
+    public boolean inNewRoom(int roomNum){
+        return !visitedRooms.contains(roomNum);
+    }
+
+    // Gets a new random location that is not already occupied
     // Returns the random location if nothing is there, retries otherwise
     private int getNovelLocation() {
-        int randLoc = getRandomLocation();
-        if (somethingThere(randLoc))
-            return getNovelLocation();
+        int randLoc;
+        do {
+            randLoc = getRandomLocation();
+        } while (somethingThere(randLoc));
         return randLoc;
     }
 
-    // Fills the location table with random, nonrepeating rooms
+    // Initializes the locations table with random, non-repeating rooms
     private void initializeLocations() {
         for (int type = 0; type < TYPES.length; type++) {
             int instanceNum = (type >= 2) ? 2 : 1;
             for (int instance = 0; instance < instanceNum; instance++) {
-                this.locsTable[type][instance] = getNovelLocation();
+                int loc = getNovelLocation();
+                locsTable[type][instance] = loc;
+                occupiedLocations.add(loc);
             }
         }
     }
 
-    // tells you the type of hazard(s) that exists in the room
-    // returns the string reprisentation of those hazards
+    // Returns the types of hazards that exist in the specified room
     public String[] getHazards(int room) {
-        ArrayList<String> hazards = new ArrayList<String>();
-        // Starts at one to skip player's location
-        for (int type = 1; type < locsTable.length; type++) {
-            for (int inst = 0; inst < locsTable[type].length; inst++) {
-                if (locsTable[type][inst] == room)
+        ArrayList<String> hazards = new ArrayList<>();
+        for (int type = 1; type < locsTable.length; type++) { // Start at 1 to skip player's location
+            for (int loc : locsTable[type]) {
+                if (loc == room) {
                     hazards.add(TYPES[type]);
+                }
             }
         }
-        return hazards.toArray(new String[hazards.size()]);
+        return hazards.toArray(new String[0]);
     }
 
-    // tells you the type of hazard(s) that exist in the room the player is in
-    // returns the string reprisentation of those hazards
+    // Returns the types of hazards that exist in the player's room
     public String[] getHazards() {
-        ArrayList<String> hazards = new ArrayList<String>();
-        int playerLoc = getPlayerLoc();
-        //Starts at one to skip player location
-        for(int type = 1; type < locsTable.length; type++){
-            for(int inst = 0; inst < locsTable[type].length; inst++){
-                if(locsTable[type][inst] == playerLoc) hazards.add(TYPES[type]);
-            }
-        }
-        return hazards.toArray(new String[hazards.size()]);
+        return getHazards(getPlayerLoc());
     }
 
-    // looks through all rooms surrounding the player 
-    // return string array of all the hazards present in them
-    public String[] checkForHazards(){
+    // Checks the rooms adjacent to the player for hazards
+    // Returns a list of hazards present in the adjacent rooms
+    public String[] checkForHazards() {
         int playerLoc = getPlayerLoc();
-        ArrayList<String> hazardsPresent = new ArrayList<String>();
+        ArrayList<String> hazardsPresent = new ArrayList<>();
         int[] adjacentRooms = cave.possibleMoves(playerLoc);
         for (int room : adjacentRooms) {
             if (somethingThere(room)) {
@@ -120,101 +116,113 @@ public class GameLocations {
                 }
             }
         }
-
-        return hazardsPresent.toArray(new String[hazardsPresent.size()]);
+        return hazardsPresent.toArray(new String[0]);
     }
 
-    // picks a random room from the possible rooms to move to
-    // moves the wumpus to that room
-    // returns the Wumpus' new location
+    // Moves the Wumpus randomly to a new room
+    // Returns the Wumpus's new location
     public int moveWumpus(int turnNum) {
-        if(turnNum% 20 < 3){
-            int[] possibleLocs = this.cave.possibleMoves(getWumpusLoc());
-            int rand = random.nextInt(possibleLocs.length);
-            int loc = possibleLocs[rand];
-            setWumpusLoc(loc);
-            return loc;
+        if (turnNum % 20 < 3) {
+            return moveWumpus();
         }
-        return -1;
+        return getWumpusLoc();
     }
 
-    public int moveWumpus(){
-        int[] possibleLocs = this.cave.possibleMoves(getWumpusLoc());
-        int rand = random.nextInt(possibleLocs.length);
-        int loc = possibleLocs[rand];
+    // Moves the Wumpus to a random adjacent room
+    public int moveWumpus() {
+        int[] possibleLocs = cave.possibleMoves(getWumpusLoc());
+        int loc = possibleLocs[(int) (Math.random() * possibleLocs.length)];
         setWumpusLoc(loc);
         return loc;
     }
 
-    // makes the Wumpus move randomly 2-4 times after being "injured"
-    // return's their final position
+    // Moves the Wumpus randomly 2-4 times after being "injured"
+    // Returns the Wumpus's final position
     public int fleeingWumpus() {
         int origin = getWumpusLoc();
-        int spacesRan = random.nextInt(2, 5);
-        int loc = getWumpusLoc();
-        for(int i = 0; i < spacesRan; i++){
+        int spacesRan = (int) (Math.random() * 3) + 2; // Random number between 2 and 4
+        int loc = origin;
+        for (int i = 0; i < spacesRan; i++) {
             loc = moveWumpus();
         }
-        if(origin == loc) return fleeingWumpus();
-        return loc;
+        return (origin == loc) ? fleeingWumpus() : loc; // Ensure Wumpus moves
     }
 
-    // A bat transfers the player to a random location in the cave
+    // Transports the player to a random location in the cave
     // Returns the player's new location
     public int batTransport() {
-        int rand = getRandomLocation();
+        int rand = getNovelLocation();
         setPlayerLoc(rand);
         return rand;
     }
 
-    public int getWumpusLoc(){
+    // Returns the Wumpus's current location
+    public int getWumpusLoc() {
         return locsTable[1][0];
     }
 
+    // Sets the Wumpus's location if the move is valid
+    // Returns true if the move is successful, false otherwise
     public boolean setWumpusLoc(int room) {
-        int wumpusPos = locsTable[1][0];
-        if (cave.canMove(wumpusPos, room)) {
+        if (cave.canMove(getWumpusLoc(), room)) {
+            occupiedLocations.remove(locsTable[1][0]);
             locsTable[1][0] = room;
+            occupiedLocations.add(room);
             return true;
         }
         return false;
     }
 
+    // Returns the player's current location
     public int getPlayerLoc() {
         return locsTable[0][0];
     }
 
+    // Sets the player's location if the move is valid
+    // Returns true if the move is successful, false otherwise
     public boolean setPlayerLoc(int room) {
-        int playerPos = locsTable[0][0];
-        if (cave.canMove(playerPos, room)) {
+        if (cave.canMove(getPlayerLoc(), room)) {
+            occupiedLocations.remove(locsTable[0][0]);
+            visitedRooms.add(locsTable[0][0]);
             locsTable[0][0] = room;
+            occupiedLocations.add(room);
             return true;
         }
         return false;
     }
 
-    public int getBatLoc(int inst){
-        return this.locsTable[2][inst];
+    // Returns the location of a specific bat instance
+    public int getBatLoc(int inst) {
+        return locsTable[2][inst];
     }
 
-    public int getRandomBatLoc(){
-        return this.locsTable[2][random.nextInt(2)];
+    // Returns the location of a random bat
+    public int getRandomBatLoc() {
+        return locsTable[2][(int) (Math.random() * 2)];
     }
 
-    public int getPitLoc(int inst){
-        return this.locsTable[3][inst];
+    // Returns the location of a specific pit instance
+    public int getPitLoc(int inst) {
+        return locsTable[3][inst];
     }
 
-    public int getRandomPitLoc(){
-        return this.locsTable[3][random.nextInt(2)];
+    // Returns the location of a random pit
+    public int getRandomPitLoc() {
+        return locsTable[3][(int) (Math.random() * 2)];
     }
 
+    // Returns the cave instance
     public Cave getCave() {
         return this.cave;
     }
 
-    public String[] getTYPES(){
+    // Returns the array of type names
+    public String[] getTYPES() {
         return this.TYPES;
     }
 
+    // Returns the locations table
+    public int[][] getLocsTable() {
+        return locsTable;
+    }
 }

@@ -1,23 +1,37 @@
-//Toki
-
+import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class SoundManager {
-    private File f;
-    /*
-     * I assume the general purpose for this class is to play sounds
-     * when something happens. Most likely going to be used by GameControl.
-     * I guess this class will just have a bunch of sounds in a list
-     * and have a method that'll iterate over the list
-     * to find the correct sfx for whatever the GControl needed.
-     */
+    private ArrayList<File> soundFiles;
 
-     /*
-      * I need to find a way to make a bunch of sound files
-      Prefereably by ripping them off youtube. 
-      Then can use File to use them or something.
-      */
-    public SoundManager(){
-        
+    public SoundManager() {
+        this.soundFiles = new ArrayList<File>();
+        this.soundFiles.add(new File("./gameOver.wav"));
+        this.soundFiles.add(new File("./Ambiance.wav"));
+        this.soundFiles.add(new File("./correctAnswer.wav"));
+        this.soundFiles.add(new File("./disappointment.wav"));
+        this.soundFiles.add(new File("./wrongAnswer.wav"));
+    }
+
+    public void playSound(int index) {
+        try {
+            if (index < 0 || index >= soundFiles.size()) {
+                System.err.println("Invalid index");
+                return;
+            }
+
+            File soundFile = soundFiles.get(index);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+            // Allow sound to finish playing before moving to the next one
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+            clip.stop(); // Stop the clip after it's done playing
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
