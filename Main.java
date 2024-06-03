@@ -6,7 +6,7 @@ public class Main {
             throws FontFormatException, IOException {
         System.setProperty("sun.java2d.uiScale", "0.7");
         new GameControl();
-        SoundManager sm = new SoundManager();
+        
         
         // making sure highscore works!
         // String[] test = new String[] {"bobby", "3", "2", "3", "7", "cave"};
