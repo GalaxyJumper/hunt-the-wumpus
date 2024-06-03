@@ -1,3 +1,4 @@
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -8,21 +9,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.util.ArrayList;
 
-/*
- * ./gameOver.wav
- * ./disappointment.wav
- * ./wrongAnswer.wav
- * ./correctAnswer.wav
- * ./caveNoise.wav
- */
 public class SoundManager {
     private Clip clip;
-    private ArrayList<File> sfx;
-    public SoundManager() {
+    public SoundManager(String fileName) {
         // specify the sound to play
         // (assuming the sound can be played by the audio system)
         // from a wave File
-        this.sfx = new ArrayList<File>();
         try {
             sfx.add("./gameOver.wav");
             sfx.add("./disappointment.wav");
@@ -36,25 +28,17 @@ public class SoundManager {
                 clip = AudioSystem.getClip();
                 clip.open(sound);
             }
-            else {
-                throw new RuntimeException("Sound: file not found: " + fileName);
-            }
-        }
-        catch (MalformedURLException e) {
+
+            File soundFile = soundFiles.get(index);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+            // Allow sound to finish playing before moving to the next one
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+            clip.stop(); // Stop the clip after it's done playing
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Malformed URL: " + e);
-        }
-        catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Sound: Unsupported Audio File: " + e);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Sound: Input/Output Error: " + e);
-        }
-        catch (LineUnavailableException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Sound: Line Unavailable Exception Error: " + e);
         }
 
     // play, stop, loop the sound clip

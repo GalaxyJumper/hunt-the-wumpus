@@ -4,6 +4,7 @@
 // Toki
 // 2/12/2024
 // Game Control Object
+// correct file!!!!!!!!!!!!!!
 
 //taking in inputs for all classes and running the game
 //connecting the ui to the game itself
@@ -11,7 +12,6 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.awt.Color;
-import java.util.Arrays;
 
 public  class GameControl {
     ///////////////////////////////////////////////
@@ -24,22 +24,9 @@ public  class GameControl {
     private Trivia trivia;
     private HighScore scores;
     private Cave cave;
-    
+    private SoundManager sManager;
 
-    private final String[] secrets = {
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-    };
-
-    private String[][] questions = new String[5][6];
+    private String[][] questions = new String[5][7];
     private boolean[] answers = new boolean[5];
     private int currentQuestion = 0;
 
@@ -63,34 +50,54 @@ public  class GameControl {
         gameLocs = new GameLocations(cave);
         trivia = new Trivia();
         scores = new HighScore(player);
+        sManager = new SoundManager();
         
         
         if (!GraphicsEnvironment.isHeadless()){
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
         }
 
-        gui.updateActionText(gameLocs.getBatLoc(0) + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getBatLoc(1) + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getWumpusLoc() + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getPitLoc(0) + "", new Color(255,255,255));
-        gui.updateActionText(gameLocs.getPitLoc(1) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getBatLoc(0) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getBatLoc(1) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getWumpusLoc() + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getPitLoc(0) + "", new Color(255,255,255));
+        //gui.updateActionText(gameLocs.getPitLoc(1) + "", new Color(255,255,255));
     }
 
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
 
+    public String getHint(int questionNum){
+        return questions[questionNum][6];
+    }
+
+    public void move(int playerInput){
+        gui.move(playerInput);
+        if (gameLocs.inNewRoom(playerInput))
+                player.addCoins(1);
+        String[] hazards = gameLocs.checkForHazards();
+        for (String hazard : hazards){
+            if (hazard.equals("Wumpus")){
+                gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
+            } else if (hazard.equals("Pit")){
+                gui.updateActionText("You feel a current pulling your ship...", new Color(255,255,255));
+            } else if (hazard.equals("Bat")) {
+                gui.updateActionText("BATMANNNNN...", new Color(255,255,255));
+            }
+        }
+    }
+
     // 0 - 29 (inclusive) is a room number being moved to
     public void turn(int playerInput){
-        gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
-        System.out.println("I'm here8");
+        //gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
         if (gameLocs.setPlayerLoc(playerInput)){
-            System.out.println("I'm here9");
-            gui.move(playerInput);
-            System.out.println("I'm here10");
+            player.addTurnsTaken();
+            move(playerInput);
+            
 
             hazards = gameLocs.getHazards();
-            gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
+            //gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
             
             if (hazards.length == 0){
                 endTurn();
@@ -105,7 +112,7 @@ public  class GameControl {
                 }
                 questionType = 3;
                 createQuestions();
-                gui.openTriviaMenu(questions[0], 5);
+                gui.openTriviaMenu("Wumpus Encounter", questions[0], 5);
                 return;
             }
 
@@ -120,7 +127,7 @@ public  class GameControl {
 
     public void endTurn(){
         gameLocs.moveWumpus(player.getTurnsTaken());
-        player.addTurnsTaken();
+        answers = new boolean[5];
         //gui.updateTurnCounter();
     }
 
@@ -128,8 +135,9 @@ public  class GameControl {
         answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
         currentQuestion++;
         if (currentQuestion == 5){
-            gui.nextTriviaQuestion(answers[4], new String[] {"", "", "", "", ""}, true, 4);
+            gui.nextTriviaQuestion(answers[4], new String[] {"", "", "", "", ""}, true, 5);
             currentQuestion = 0;
+            return;
         }
         gui.nextTriviaQuestion(answers[currentQuestion - 1], questions[currentQuestion], false, currentQuestion - 1);
     }
@@ -146,19 +154,20 @@ public  class GameControl {
 
         if (hazards == null){
             endTurn();
+            return;
         }
         if (hazards[0].equals("Pit")){
             hazards = null;
             questionType = 2;
             createQuestions();
-            gui.openTriviaMenu(questions[0], 5);
+            gui.openTriviaMenu("Pit Encounter", questions[0], 5);
             return;
         }
         if (hazards[0].equals("Bat")){
             hazards = null;
             questionType = 4;
             createQuestions();
-            gui.openTriviaMenu(questions[0], 5);
+            gui.openTriviaMenu("Bat Encounter", questions[0], 5);
             return;
         }
     }
@@ -168,13 +177,15 @@ public  class GameControl {
     // 1 + false - purchase secret
     public void turn(int playerInput, boolean isShooting){
         if (isShooting){
-            if (cave.canMove(gameLocs.getPlayerLoc(),playerInput)){
+            if (cave.canMove(gameLocs.getPlayerLoc(),playerInput) && player.getArrows() > 0){
                 player.addTurnsTaken();
                 player.addArrows(-1);
                 // gui.updateTurnCounter(player.getTurnsTaken());
                 String[] hazards = gameLocs.getHazards(playerInput);
                 boolean wumpusShot = false;
                 boolean missed = false;
+                gui.updateActionText("Arrow Fired...", new Color(255,255,255));
+                gui.updateActionText(player.getArrows() + " arrows left", new Color(255,255,255));
                 if (hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
@@ -190,12 +201,15 @@ public  class GameControl {
                 } else {
                     gui.updateActionText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
                 }
+            } else {
+                gui.updateActionText("No Arrows Remaining", new Color(255,0,0));
             }
         } else {
             questionType = playerInput;
-            //triviaTime();
+            createQuestions();
+            hazards = null;
+            gui.openTriviaMenu((playerInput == 1)? "Purchase Secret" : "Purchase Arrow", questions[0], 5);
         }
-        gameLocs.moveWumpus(player.getTurnsTaken());
     }
 
     public void updateNumRight(){
@@ -210,17 +224,17 @@ public  class GameControl {
     // response is "A", "B", "C", or "D"
     public void triviaAction(boolean triviaSuccess){
         if (questionType == 0){
+            player.addCoins(-1);
             if (triviaSuccess){
-                player.purchaseArrow();
+                player.addArrows(1);
                 gui.updateActionText("Arrow Gained", new Color(255,0,255));
             }
-            player.addTurnsTaken();
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 1){
-            if (triviaSuccess){ 
-                // gui.displaySecret(writeSecret((int) (Math.random() * 10 + 1)));
+            player.addCoins(-1);
+            if (triviaSuccess){                
+                gui.updateActionText(gameLocs.newSecret(), new Color(255,255,255));
             }
-            player.addTurnsTaken();
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 2){
             if (!triviaSuccess){
@@ -235,23 +249,20 @@ public  class GameControl {
                 gameEnd();
             } else {
                 gui.updateActionText("The Wumpus is Wounded!", new Color(0, 255, 0));
+                gameLocs.fleeingWumpus();
             }
         } else if (questionType == 4){
             if (!triviaSuccess){
                 int newRoom = gameLocs.batTransport();
-                gui.move(newRoom);
+                move(newRoom);
                 gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
             }
         }
-        triviaSuccess = false;
     }
 
-    public String writeSecret(int secretIndex){
-        String secret = secrets[secretIndex];
-        return secret;
-    }
+    
 
     public void gameEnd(){
         gui.updateActionText("Game Over", new Color(255,255,255));
