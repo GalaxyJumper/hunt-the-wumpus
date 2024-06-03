@@ -178,13 +178,14 @@ public  class GameControl {
     // 1 + false - purchase secret
     public void turn(int playerInput, boolean isShooting){
         if (isShooting){
-            if (cave.canMove(gameLocs.getPlayerLoc(),playerInput)){
+            if (cave.canMove(gameLocs.getPlayerLoc(),playerInput) && player.getArrows() > 0){
                 player.addTurnsTaken();
                 player.addArrows(-1);
                 // gui.updateTurnCounter(player.getTurnsTaken());
                 String[] hazards = gameLocs.getHazards(playerInput);
                 boolean wumpusShot = false;
                 boolean missed = false;
+                gui.updateActionText("Arrow Fired...", new Color(255,255,255));
                 if (hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
@@ -200,6 +201,8 @@ public  class GameControl {
                 } else {
                     gui.updateActionText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
                 }
+            } else {
+                gui.updateActionText("No Arrows Remaining", new Color(255,0,0));
             }
         } else {
             questionType = playerInput;
