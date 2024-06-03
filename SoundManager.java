@@ -8,11 +8,11 @@ public class SoundManager {
 
     public SoundManager() {
         this.soundFiles = new ArrayList<File>();
-        this.soundFiles.add(new File("./gameOver.wav"));
-        this.soundFiles.add(new File("./Ambiance.wav"));
-        this.soundFiles.add(new File("./correctAnswer.wav"));
-        this.soundFiles.add(new File("./disappointment.wav"));
-        this.soundFiles.add(new File("./wrongAnswer.wav"));
+        this.soundFiles.add(new File("sound/gameOver.wav"));
+        this.soundFiles.add(new File("sound/Ambiance.wav"));
+        this.soundFiles.add(new File("sound/correctAnswer.wav"));
+        this.soundFiles.add(new File("sound/disappointment.wav"));
+        this.soundFiles.add(new File("sound/wrongAnswer.wav"));
     }
 
     public void playSound(int index) {
