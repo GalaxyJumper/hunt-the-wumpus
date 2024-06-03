@@ -53,7 +53,7 @@
                 "Tough Skin"
             ],
             "Key": "B",
-            "Hint": "Under the crushing pressure of the ocean, interestingly, strength is a curse. Plasticity, on the other hand, allows a handful of curious creatures to thrive in an environment that capable of shattering an elephant's bones."
+            "Hint": "Under the crushing pressure of the ocean, interestingly, strength is a curse. Plasticity, on the other hand, allows a handful of curious creatures to thrive in an environment capable of shattering an elephant's bones."
         },
         {
             "Question": "Which deep-sea creature is known for its bioluminescent lure used to attract prey?",
@@ -65,6 +65,83 @@
             ],
             "Key": "C",
             "Hint": "A tiny beacon in the abyss, a glimmer of hope—or doom—for those who seek it. Beware the light, for it masks a deadly maw."
+        },
+        {
+            "Question": "Which formation is created by dripping water depositing minerals over time",
+            "Answers": [
+                "Stalagmites",
+                "Sinkholes",
+                "Petrified Wood",
+                "Lava Tubes"
+            ],
+            "Key": "A",
+            "Hint": "The Greeks called them 'stalassein': 'to drip'. I think the name 'odóntes' would be more befitting - they look like teeth to me."
+        },
+        {
+            "Question": "What phenomenon causes the eerie, rhythmic sounds often heard in deep ocean trenches?",
+            "Answers": [
+                "Tectonic Activity",
+                "Whales Singing",
+                "Underwater Waterfalls",
+                "Thermal Vents"
+            ],
+            "Key": "A",
+            "Hint": "Deep below, the earth is restless. Its movements send out a low, haunting moan that echoes through the water."
+        },
+        {
+            "Question": "Which deep-sea organism is known for its ability to survive in both freezing temperatures and near-boiling hydrothermal vents?",
+            "Answers": [
+                "Tardigrades",
+                "Deep-Sea Crabs",
+                "Tube Worms",
+                "Brine Shrimp"
+            ],
+            "Key": "A",
+            "Hint": "With a name meaning 'slow walker' paying homage to their ability of long-term hibernation, these microorganisms can survive in the vaccum of space."
+        },
+        {
+            "Question": "What is the primary reason why many cave-dwelling creatures are colorless or white?",
+            "Answers": [
+                "Lack of Predators",
+                "High Calcium Content",
+                "Absence of Light",
+                "Abundant Minerals"
+            ],
+            "Key": "C",
+            "Hint": "Without the presence of light, color loses its purpose. These creatures have no need for pigmentation in their perpetual twilight."
+        },
+        {
+            "Question": "Which ancient marine reptile, known for its elongated neck, roamed the seas during the Mesozoic era?",
+            "Answers": [
+                "Plesiosaur",
+                "Ichthyosaur",
+                "Mosasaur",
+                "Tylosaurus"
+            ],
+            "Key": "A",
+            "Hint": "Resembling a dragon of myth, this creature's long neck allowed it to snatch prey while its body remained concealed, a fearsome predator of its time."
+        },
+        {
+            "Question": "What is the main cause of the phenomenon known as 'red tide'?",
+            "Answers": [
+                "Algal Blooms",
+                "Oil Spills",
+                "Underwater Volcanoes",
+                "Human Pollution"
+            ],
+            "Key": "A",
+            "Hint": "When the sea turns crimson, it’s not blood but a bloom of microscopic organisms, painting the waves in deadly beauty."
+        },
+        {
+            "Question": "What strange phenomenon involves the ocean emitting a continuous, low-frequency hum heard globally?",
+            "Answers": [
+                "Ocean Murmur",
+                "Thrum of the Deep",
+                "Marine Drone",
+                "Earth’s Hum"
+            ],
+            "Key": "D",
+            "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep."
         },
         {
             "Question": "How much of the ocean have we explored in total?",

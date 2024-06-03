@@ -14,7 +14,6 @@ class Trivia {
 
     private String[][] questionsAndInfo;
     private boolean[] usedQuestions;
-    private final String[] answerTable = new String[]{"A", "B", "C", "D"};
 
     public Trivia(){
 

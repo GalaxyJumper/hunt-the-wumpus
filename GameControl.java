@@ -11,7 +11,6 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.awt.Color;
-import java.util.Arrays;
 
 public  class GameControl {
     ///////////////////////////////////////////////
