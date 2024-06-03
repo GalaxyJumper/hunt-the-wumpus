@@ -74,6 +74,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     double[] mapOffset = new double[] {0, 0};
     double[] distanceMovingTo = new double[] {0, 0};
     double[] lastOffset;
+
+    int[] mousePos = new int[2];
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -180,6 +182,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         }
         g2d.setColor(new Color(255, 255, 255));
         g2d.drawString("" + testCounter, 300, 90);
+        g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -478,7 +481,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         this.repaint();
         double mouseX = e.getX();
         double mouseY = e.getY();
-        System.out.println(" at " + mouseX + ", " + mouseY);
+        int buttonClicked = e.getButton();
         /////////// MAP INPUT ////////////
         /* 
          * Uses a tiling grid of rectangles to represent hexagons. 
@@ -512,11 +515,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 15 / 128);
                     System.out.println("Hitbox Triangle Pos: " + hitBoxX + ", " + hitBoxY);
                     if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
-                        
+                        //Bottom triangle
                         //Special case - the room at the triangle's location will be at a different Y than this hexagon.
                         if(mapInputX == 0){
-                            roomNumClicked = (twoToOneD(mapInputY, mapInputX) + 5) % 30;
-                            mapStartX -= (mapRoomSize * 9.5);
+                            roomNumClicked = (twoToOneD(mapInputY, 5));
+                            mapStartX -= (mapRoomSize * 9);
                         }
 
                         else {
@@ -530,13 +533,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                         
                     }
                     else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
-                        System.out.println("Hit top triangle");
+                        // TOP triangle
                     
                         roomNumClicked = (twoToOneD(mapInputY, mapInputX) - ((mapInputX % 2 == 0)? 7 : 1)) % 30;
 
                         if(roomNumClicked < 0){
                             roomNumClicked += 30;
-                            mapStartX -= (mapRoomSize * 9.5);
+                            mapStartX -= (mapRoomSize * 9);
                         }
                         
 
@@ -544,9 +547,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     } else {
                         roomNumClicked = twoToOneD(mapInputY, mapInputX);
                     }
-                    System.out.println(twoToOneD(mapInputY, mapInputX));
+                    if()
                     double[] screenSpaceCoords = twoDToScreenSpace(mapInputX, mapInputY);
-                    System.out.println(screenSpaceCoords[0] + "    " + screenSpaceCoords[1]);
                     gameControl.turn(roomNumClicked);
                     
                 
@@ -673,10 +675,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         // Update mouse position
         mouseX = MouseInfo.getPointerInfo().getLocation().getX();
         mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+        mousePos = new int[] {(int)mouseX, (int)mouseY};
         //Constantly fade out action text
         for(int i = 0; i < actionTextFades.length; i++){
             if(actionTextFades[i] > 30){
-                actionTextFades[i] -= 1.3;
+                actionTextFades[i] -= 1;
             }
         }
         testCounter++;
@@ -702,12 +705,12 @@ RenderingHints.VALUE_ANTIALIAS_ON);
 
             
         }
-        if(moveAnimStart != -1 && now - moveAnimStart <= 3000){
-            t = (double)((double)(now - moveAnimStart) / (double)1000);
+        if(moveAnimStart != -1 && now - moveAnimStart <= 1500){
+            t = (double)((double)(now - moveAnimStart) / (double)500);
             d = D/2 * ((double)1 - (double)Math.cos((Math.PI / 3) * t));
             mapOffset = new double[] {lastOffset[0] + d * distanceMovingTo[0], lastOffset[1] + d * distanceMovingTo[1]};
             System.out.println(t);
-        } else if(moveAnimStart != -1 && now - moveAnimStart > 3000){
+        } else if(moveAnimStart != -1 && now - moveAnimStart > 1500){
             disableClicks = false;
         } else {
             moveAnimStart = -1;

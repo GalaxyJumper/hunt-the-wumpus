@@ -73,6 +73,8 @@ public  class GameControl {
 
     public void move(int playerInput){
         gui.move(playerInput);
+        if (gameLocs.inNewRoom(playerInput))
+                player.addCoins(1);
         String[] hazards = gameLocs.checkForHazards();
         for (String hazard : hazards){
             if (hazard.equals("Wumpus")){
@@ -90,8 +92,6 @@ public  class GameControl {
         //gui.updateActionText(Arrays.toString(cave.possibleMoves(playerInput)), new Color(255,255,255));
         System.out.println("I'm here8");
         if (gameLocs.setPlayerLoc(playerInput)){
-            if (gameLocs.inNewRoom(playerInput))
-                player.addCoins(1);
             player.addTurnsTaken();
             System.out.println("I'm here9");
             move(playerInput);
@@ -246,19 +246,17 @@ public  class GameControl {
                 gameEnd();
             } else {
                 gui.updateActionText("The Wumpus is Wounded!", new Color(0, 255, 0));
+                gameLocs.fleeingWumpus();
             }
         } else if (questionType == 4){
             if (!triviaSuccess){
                 int newRoom = gameLocs.batTransport();
                 move(newRoom);
                 gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
-                if (gameLocs.inNewRoom(newRoom))
-                    player.addCoins(1);
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
             }
         }
-        triviaSuccess = false;
     }
 
     
