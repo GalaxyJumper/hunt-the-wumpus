@@ -31,20 +31,14 @@
             "Hint": ""
         },
         {
-            "Question": "What is the name of the deepest underwater cave explored by man?",
+            "Question": "What is the name of the deepest underwater cave?",
             "Answers": ["Krubera-Voronja cave", "Sarma cave", "Hranicka Propast cave", "Abisso Paolo Roversi cave "],
             "Key": "C",
             "Hint": ""
         },
         {
-            "Question": "What type of rock is most commonly associated with cave formations?",
+            "Question": "What type of rock is commonly found in cave formations?",
             "Answers": ["Granite", "Basalt", "Olivine", "Limestone"],
-            "Key": "D",
-            "Hint": ""
-        },
-        {
-            "Question": "What fish goes through decompression sickness when brought out of their habitat?",
-            "Answers": ["Pufferfish", "Oarfish", "Swordfish", "Blobfish"],
             "Key": "D",
             "Hint": ""
         },
