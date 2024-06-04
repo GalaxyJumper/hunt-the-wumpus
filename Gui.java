@@ -20,9 +20,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     Cave cave;
     int trivChoice = -1;
     boolean disableClicks = false;
-
     Timer frameTimer = new Timer(17, this);
-    
     // Drawing variables
     ArrayList<Integer> exploredRooms = new ArrayList<Integer> ();
     // {How long into the animation, location}
@@ -45,39 +43,26 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int triviaMenuX, triviaMenuY, triviaMenuHeight, triviaMenuWidth = 3000;
     // Input variables
     boolean inTriviaMenu = false;
-    
     long moveAnimStart = -1;
-
     String triviaCause;
-
     long triviaMenuOpened = 0;
-
     long triviaFeedbackAnimStart = 0;
-
     long now;
-
     long failMoveStart = 0;
-
     boolean isLastQ;
-
     String[] tempQuestion;
-
     String[] actionText = new String[] {"Entered room 23.", "Survived a Wumpus attack.", "You smell a foul stench.", "Gary requires attention.", "I am getting tired."};
     int[] actionTextFades = {255, 255, 255, 255, 255};
     Color[] actionTextColors = new Color[] {new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31)};
     ArrayList<Integer> tempFadeIndices = new ArrayList<Integer>();
     int testCounter = 0;
-
     String b = new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     SoundManager sounds = new SoundManager();
-
     double[] mapOffset = new double[] {0, 0};
     double[] distanceMovingTo = new double[] {0, 0};
     double[] lastOffset;
-
     int[] mousePos = new int[2];
-
-    int[] a = new int[2];
+    int[] mapLoopShift = new int[]{0, 0};
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -187,7 +172,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(30f));
-        g2d.drawLine(a[0], a[1], a[0] + 1, a[1] + 1);
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -519,8 +503,6 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 int roomNumClicked = 99;
                     double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
                     double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 16 / 128);
-                    a[0] = (int)hitBoxX;
-                    a[1] = (int)hitBoxY;
                     if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
                         System.out.println("Hit bottom triangle");
                         //Bottom triangle
@@ -673,6 +655,7 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             if(now - triviaFeedbackAnimStart > 2050 && now - triviaFeedbackAnimStart < 2100){
                 disableClicks = false;
             }
+            
         }
 
         double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
