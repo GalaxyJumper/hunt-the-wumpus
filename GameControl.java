@@ -39,7 +39,6 @@ public  class GameControl {
     // escaping bats - 4
 
     private int questionType = -1;
-    private int numRight = 0;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -76,8 +75,8 @@ public  class GameControl {
         gui.move(playerInput);
         if (gameLocs.inNewRoom(playerInput))
                 player.addCoins(1);
-        String[] hazards = gameLocs.checkForHazards();
-        for (String hazard : hazards){
+        String[] nearHazards = gameLocs.checkForHazards();
+        for (String hazard : nearHazards){
             if (hazard.equals("Wumpus")){
                 gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
             } else if (hazard.equals("Pit")){
@@ -94,7 +93,6 @@ public  class GameControl {
         if (gameLocs.setPlayerLoc(playerInput)){
             player.addTurnsTaken();
             move(playerInput);
-            
 
             hazards = gameLocs.getHazards();
             //gui.updateActionText(Arrays.toString(hazards), new Color(255,255,255));
@@ -143,14 +141,15 @@ public  class GameControl {
     }
 
     public void continueTurn(){
-        int numCorrect = 0;
-        for (int i = 0; i < 5; i++){
-            if (answers[i]){
-                numCorrect++;
+        if (questionType != -1){
+            int numCorrect = 0;
+            for (int i = 0; i < 5; i++){
+                if (answers[i]){
+                    numCorrect++;
+                }
             }
+            triviaAction(numCorrect >= 3);
         }
-        triviaAction(numCorrect >= 3);
-        
 
         if (hazards == null){
             endTurn();
@@ -212,15 +211,6 @@ public  class GameControl {
         }
     }
 
-    public void updateNumRight(){
-        numRight++;
-    }
-
-    public void allQuestionsAsked(){
-        triviaAction(numRight > 3);
-        numRight = 0;
-    }
-
     // response is "A", "B", "C", or "D"
     public void triviaAction(boolean triviaSuccess){
         if (questionType == 0){
@@ -260,17 +250,15 @@ public  class GameControl {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
             }
         }
+
+        questionType = -1;
     }
 
     
 
     public void gameEnd(){
         gui.updateActionText("Game Over", new Color(255,255,255));
-        try {
-            String[][] leaderboardInfo = scores.endOfGame();
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
+        String[][] leaderboardInfo = scores.endOfGame();
         // gui.displayLeaderboard(leaderboardInfo);
         System.exit(0);
     }

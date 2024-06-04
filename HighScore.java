@@ -29,10 +29,16 @@ public class HighScore {
   /// Methods///
 
   // checks if the current player has a high score, updates data table
-  public String[][] endOfGame() throws IOException{
-    endOfGameUpdate();
-    updateFile();
-    return twoDArray();
+  public String[][] endOfGame() {
+    try {
+      endOfGameUpdate();
+      updateFile();
+      return twoDArray();
+    }
+    catch (Exception e){
+      e.printStackTrace();
+    }
+    return null;
   }
 
   // adds all players into array
