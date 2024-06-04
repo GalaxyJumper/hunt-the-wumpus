@@ -178,8 +178,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(30f));
         g2d.drawLine(mapLoopShift[0], mapLoopShift[1], mapLoopShift[0], mapLoopShift[1]);
-        g2d.setColor(new Color(31, 31, 31));
-        g2d.fillRect(width - (int)buyMenuX, 0, (width / 5), height);
+        drawBuyMenu(turn, 0, 0, g2d);
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -452,7 +451,17 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
     }
     
-    public void drawBuyMenu(int tuen){
+    public void drawBuyMenu(int turn, Graphics2D g2d, int buttonSelected){
+        g2d.setColor(new Color(31, 31, 31));
+        g2d.fillRect(width - (int)buyMenuX, 0, (width / 4), height);
+        g2d.setFont(calibri.deriveFont(70f));
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.drawString("Turn " + gameControl.getTurn(), (int)((width) - buyMenuX + 70), 100);
+        g2d.setFont(calibri.deriveFont(40f));
+        g2d.drawString("Coins: " + gameControl.getCoins(), (int)(width - buyMenuX + 70), 160);
+        g2d.drawString("Arrows: " + gameControl.getArrows(), (int)(width - buyMenuX + 70), 220);
+        g2d.setColor(new Color(43, 43, 43));
+        g2d.fillRect(240 + buttonSelected * )
         
     }
     // Pirated from Avi's cave class
@@ -738,7 +747,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         }
         if(buyMenuOpened != -1 && now - buyMenuOpened < 250){
             long time = (now - buyMenuOpened);
-            buyMenuX = ((double)width / 5.0) * (double)Math.sqrt((double)time / 250.0);
+            buyMenuX = ((double)width / 4.0) * (double)Math.sqrt((double)time / 250.0);
 
 
             System.out.println(buyMenuX);
