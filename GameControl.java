@@ -269,6 +269,10 @@ public  class GameControl {
         return player.getArrows();
     }
 
+    public int getTurn(){
+        return player.getTurnsTaken();
+    }
+
     public void gameEnd(boolean won){
         String[][] leaderboardInfo = scores.endOfGame();
         // closeTriviaMenu
