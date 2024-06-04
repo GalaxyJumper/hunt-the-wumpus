@@ -194,7 +194,7 @@ public  class GameControl {
                 }
                 if (wumpusShot){
                     gui.updateActionText("You Won!", new Color(0,255,0));
-                    gameEnd();
+                    gameEnd(true);
                 } else if (missed) {
                     gui.updateActionText("You Missed!", new Color(255,255,0));
                 } else {
@@ -233,14 +233,14 @@ public  class GameControl {
         } else if (questionType == 2){
             if (!triviaSuccess){
                 gui.updateActionText("You died!", new Color(255, 0 , 0));
-                gameEnd();
+                gameEnd(false);
             } else {
                 gui.updateActionText("You lived!", new Color(0, 255, 0));
             }
         } else if (questionType == 3){
             if (!triviaSuccess){
                 gui.updateActionText("You died!", new Color(255, 0 , 0));
-                gameEnd();
+                gameEnd(false);
             } else {
                 gui.updateActionText("The Wumpus is Wounded!", new Color(0, 255, 0));
                 gameLocs.fleeingWumpus();
@@ -249,7 +249,7 @@ public  class GameControl {
             if (!triviaSuccess){
                 int newRoom = gameLocs.batTransport();
                 move(newRoom);
-                gui.updateActionText("You Were Transported Into Room #" + newRoom + "!", new Color(255,255,0));
+                gui.updateActionText("You Were Transported Into Room #" + (newRoom + 1) + "!", new Color(255,255,0));
             } else {
                 gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
             }
@@ -260,10 +260,11 @@ public  class GameControl {
 
     
 
-    public void gameEnd(){
-        gui.updateActionText("Game Over", new Color(255,255,255));
+    public void gameEnd(boolean won){
         String[][] leaderboardInfo = scores.endOfGame();
-        // gui.displayLeaderboard(leaderboardInfo);
+        //gui.gameEndSequence(won, leaderboardInfo);
+        // TEMPORARY
+        gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255,won? 255 : 0,0));
         System.exit(0);
     }
 }
