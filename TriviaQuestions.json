@@ -174,7 +174,7 @@
                 "Ultraviolet"
             ],
             "Key": "A",
-            "Hint": ""
+            "Hint": "This here ship is called a steel whale for good reason. Just like a whale, it uses sonar to find its way in the dark."
         },
         {
             "Question": "What is the saltiest body of water?",
@@ -207,7 +207,7 @@
                 "Abisso Paolo Roversi cave "
             ],
             "Key": "C",
-            "Hint": ""
+            "Hint": "In the mountains of Moravia, Propast sinks into the very bowels of the earth."
         },
         {
             "Question": "What type of rock is most commonly associated with cave formations?",
@@ -218,7 +218,7 @@
                 "Limestone"
             ],
             "Key": "D",
-            "Hint": ""
+            "Hint": "Caves can only form in the weakest of stones, and among the weakest is limestone."
         },
         {
             "Question": "What fish goes through decompression sickness when brought out of their habitat?",
@@ -240,7 +240,7 @@
                 "Radiation"
             ],
             "Key": "B",
-            "Hint": ""
+            "Hint": "In this dark, some animals have evolved proteins that luminesce, breaking the void like stars in the night."
         },
         {
             "Question": "How many species of sharks are there?",
@@ -262,123 +262,8 @@
                 "Architeuthus"
             ],
             "Key": "A",
-            "Hint": ""
-        },
-        {
-            "Question": "How much of the ocean have we explored in total?",
-            "Answers": [
-                "1%",
-                "5%",
-                "10%",
-                "50%"
-            ],
-            "Key": "B",
-            "Hint": ""
-        },
-        {
-            "Question": "What is the deepest trench in the sea?",
-            "Answers": [
-                "Marina Trench",
-                "Mariana Trench",
-                "Sierena deep",
-                "Marinara Trench"
-            ],
-            "Key": "B",
-            "Hint": ""
-        },
-        {
-            "Question": "The technology that allows submarines to detect objects is?",
-            "Answers": [
-                "Sonar",
-                "Radar",
-                "Gamma",
-                "Ultraviolet"
-            ],
-            "Key": "A",
-            "Hint": ""
-        },
-        {
-            "Question": "What is the saltiest body of water?",
-            "Answers": [
-                "Don Juan Pond",
-                "Alantic Ocean",
-                "Dead Sea",
-                "Great Salt Lake"
-            ],
-            "Key": "A",
-            "Hint": ""
-        },
-        {
-            "Question": "What war were submarines first used?",
-            "Answers": [
-                "World War I",
-                "World War II",
-                "Civil War",
-                "The Napoleonic Wars"
-            ],
-            "Key": "C",
-            "Hint": ""
-        },
-        {
-            "Question": "What is the name of the deepest underwater cave?",
-            "Answers": [
-                "Krubera-Voronja cave",
-                "Sarma cave",
-                "Hranicka Propast cave",
-                "Abisso Paolo Roversi cave "
-            ],
-            "Key": "C",
-            "Hint": ""
-        },
-        {
-            "Question": "What type of rock is commonly found in cave formations?",
-            "Answers": [
-                "Granite",
-                "Basalt",
-                "Olivine",
-                "Limestone"
-            ],
-            "Key": "D",
-            "Hint": ""
-        },
-        {
-            "Question": "What fish goes through decompression sickness when brought out of their habitat?",
-            "Answers": ["Pufferfish", "Oarfish", "Swordfish", "Blobfish"],
-            "Key": "D",
-            "Hint": ""
-        },
-        {
-            "Question": "What property makes certain marine life glow?",
-            "Answers": [
-                "Refraction",
-                "Bioluminescence",
-                "Radiance",
-                "Radiation"
-            ],
-            "Key": "B",
-            "Hint": ""
-        },
-        {
-            "Question": "How many species of sharks are there?",
-            "Answers": [
-                "100",
-                "50",
-                "500",
-                "63"
-            ],
-            "Key": "C",
-            "Hint": ""
-        },
-        {
-            "Question": "what is the scientific name for a giant squid?",
-            "Answers": [
-                "Architeuthidae",
-                "Cephalopoda",
-                "Megaloteuthis",
-                "Architeuthus"
-            ],
-            "Key": "A",
-            "Hint": ""
+            "Hint": "Such a terrible animal deserves the moniker, 'mega'."
         }
+       
     ]
 }
