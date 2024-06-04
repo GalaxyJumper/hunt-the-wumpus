@@ -68,6 +68,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     long buyMenuClosed = -1;
     double buyMenuX = this.width;
     int turn;
+    int buttonSelected = 0;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -178,7 +179,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(30f));
         g2d.drawLine(mapLoopShift[0], mapLoopShift[1], mapLoopShift[0], mapLoopShift[1]);
-        drawBuyMenu(turn, 0, 0, g2d);
+        drawBuyMenu(turn, g2d, 1);
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -448,6 +449,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     /////////////////////////////////////////    
     public void openPurchaseMenu(){
         buyMenuOpened = System.currentTimeMillis();
+        inBuyMenu = true;
 
     }
     
@@ -461,7 +463,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.drawString("Coins: " + gameControl.getCoins(), (int)(width - buyMenuX + 70), 160);
         g2d.drawString("Arrows: " + gameControl.getArrows(), (int)(width - buyMenuX + 70), 220);
         g2d.setColor(new Color(43, 43, 43));
-        g2d.fillRect(240 + buttonSelected * )
+        g2d.fillRect(width - (int) buyMenuX, 240 + (buttonSelected - 1) * 120, width, 120);
         
     }
     // Pirated from Avi's cave class
@@ -519,7 +521,19 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
          * By checking both of the triangles we can figure out whether the mouse is in this hexagon or one of its neighbors.
         */
         if(!disableClicks){
-            if(!inTriviaMenu){
+            if(inBuyMenu){
+                if(mouseX > (width * 3 / 4) && mouseX < width){
+                    if(mouseY > 240 && mouseY < 480){
+                        if(mouseY > 360){
+                            gameControl.turn(1, false);
+                        } else {
+                            gameControl.turn(0, false);
+                        }
+                    }
+                }
+
+            }
+            else if(!inTriviaMenu){
                 double mapLeftEdge = mapStartX + mapOffset[0] - (mapRoomSize);
                 double mapTopEdge = mapStartY + mapOffset[1] - (mapRoomSize);
                 double mapRoomHeight = (mapRoomSize) * Math.sqrt(3);
@@ -611,9 +625,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                 
 
             }
-            if(inBuyMenu){
 
-            }
         }
         
 
@@ -654,7 +666,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         double t; // Time elapsed
         double D = 1;
         double d;
-        
+
         now = System.currentTimeMillis();
         //Trivia fade-in animation
         if(now - triviaMenuOpened < 500){
@@ -714,7 +726,18 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         }
         testCounter++;
         this.repaint();
+        if(inBuyMenu){
+            if(mouseX > (width * 3 / 4) && mouseX < width){
+                if(mouseY > 240 && mouseY < 480){
+                    if(mouseY > 360){
+                        buttonSelected = 1;
+                    } else {
+                        gameControl.turn(0, false);
+                    }
+                }
+            }
 
+        }
         if(inTriviaMenu){
             // TRIVIA UI UPDATING
             
