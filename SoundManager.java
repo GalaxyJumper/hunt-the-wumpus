@@ -8,13 +8,13 @@ public class SoundManager {
 
     public SoundManager() {
          // Need to convert the wav files into somthing more generic like a .pcm file.
-
+        //TODO: Find a file format that plays nicely with the java. As of current, errors appear.
         this.soundFiles = new ArrayList<File>();
-        this.soundFiles.add(new File("sound/gameOver.wav"));
-        this.soundFiles.add(new File("sound/Ambiance.wav"));
-        this.soundFiles.add(new File("sound/correctAnswer.wav"));
-        this.soundFiles.add(new File("sound/disappointment.wav"));
-        this.soundFiles.add(new File("sound/wrongAnswer.wav"));
+        this.soundFiles.add(new File("sound/gameOver.pcm"));
+        this.soundFiles.add(new File("sound/Ambiance.pcm"));
+        this.soundFiles.add(new File("sound/correctAnswer.pcm"));
+        this.soundFiles.add(new File("sound/disappointment.pcm"));
+        this.soundFiles.add(new File("sound/wrongAnswer.pcm"));
     }
 
     public void playSound(int index) {
