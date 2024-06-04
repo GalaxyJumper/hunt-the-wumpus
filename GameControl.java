@@ -55,7 +55,7 @@ public  class GameControl {
         
         
         if (!GraphicsEnvironment.isHeadless()){
-            gui = new Gui("HUNT THE WUMPUS", 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
+            gui = new Gui("HUNT THE WUMPUS - " + cave.getCaveName(), 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
         }
 
         //gui.updateActionText(gameLocs.getBatLoc(0) + "", new Color(255,255,255));
