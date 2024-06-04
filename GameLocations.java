@@ -152,7 +152,10 @@ public class GameLocations {
     // Returns the player's new location
     public int batTransport() {
         int rand = getNovelLocation();
-        setPlayerLoc(rand);
+        occupiedLocations.remove(locsTable[0][0]);
+        visitedRooms.add(locsTable[0][0]);
+        locsTable[0][0] = rand;
+        occupiedLocations.add(rand);
         return rand;
     }
 
