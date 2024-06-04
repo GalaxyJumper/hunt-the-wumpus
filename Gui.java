@@ -63,6 +63,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     double[] lastOffset;
     int[] mousePos = new int[2];
     int[] mapLoopShift = new int[]{0, 0};
+    boolean inBuyMenu = false;
+    long buyMenuOpened = -1;
+    long buyMenuClosed = -1;
+    double buyMenuX = this.width;
+    int turn;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -111,6 +116,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setVisible(true);
         this.failMove(2);
         sounds.playSound(2);
+        openPurchaseMenu();
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -144,14 +150,13 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         
         g2d = (Graphics2D)g;
         //Antialiasing
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-RenderingHints.VALUE_ANTIALIAS_ON); 
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
         //Background + map
         g2d.setColor(new Color(10, 10, 10));
         g2d.setFont(calibri);
         g2d.fillRect(0, 0, width * 3, height * 3);
         drawMap((int)(mapStartX + mapOffset[0]), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
-        drawMap((int)(mapStartX + mapOffset[0] - (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
+        //drawMap((int)(mapStartX + mapOffset[0] - (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
         //drawMap((int)(mapStartX + mapOffset[0] + (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
 
         if(failMoveHex[0] != -1 && failMoveHex[1] != -1){
@@ -172,6 +177,8 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(30f));
+        g2d.drawLine(mapLoopShift[0], mapLoopShift[1], mapLoopShift[0], mapLoopShift[1]);
+        drawBuyMenu(turn, 0, 0, g2d);
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -436,10 +443,27 @@ RenderingHints.VALUE_ANTIALIAS_ON);
         triviaScoreData = new int[] {-1, -1, -1, -1, -1, -1, -1};
         correctAnsRectDim = -1;
     }
+    ////////////////////////////////////////
+    // Buy menu methods
+    /////////////////////////////////////////    
+    public void openPurchaseMenu(){
+        buyMenuOpened = System.currentTimeMillis();
 
+    }
     
-    
-    
+    public void drawBuyMenu(int turn, Graphics2D g2d, int buttonSelected){
+        g2d.setColor(new Color(31, 31, 31));
+        g2d.fillRect(width - (int)buyMenuX, 0, (width / 4), height);
+        g2d.setFont(calibri.deriveFont(70f));
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.drawString("Turn " + gameControl.getTurn(), (int)((width) - buyMenuX + 70), 100);
+        g2d.setFont(calibri.deriveFont(40f));
+        g2d.drawString("Coins: " + gameControl.getCoins(), (int)(width - buyMenuX + 70), 160);
+        g2d.drawString("Arrows: " + gameControl.getArrows(), (int)(width - buyMenuX + 70), 220);
+        g2d.setColor(new Color(43, 43, 43));
+        g2d.fillRect(240 + buttonSelected * )
+        
+    }
     // Pirated from Avi's cave class
     private int twoToOneD(int y, int x){
         return x + (6 * y);
@@ -467,6 +491,10 @@ RenderingHints.VALUE_ANTIALIAS_ON);
     public void mouseClicked(MouseEvent e){
         double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
         double answerHitboxHeight = answerSelectionHeight / 4;
+        int[] mapLoopOver = new int[] {0, 0};
+        //Y: 0 = no shift 1 = up 2 = down
+        //X: 0 = no shift 1 = left 2 = right
+
         this.repaint();
         double mouseX = e.getX();
         double mouseY = e.getY();
@@ -504,11 +532,13 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
                     double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 16 / 128);
                     if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
-                        System.out.println("Hit bottom triangle");
+                        System.out.println("Hit bottom triangle " + (-1 % 2));
                         //Bottom triangle
                         //Special case - the room at the triangle's location will be at a different Y than this hexagon.
-                        if(mapInputX <= 0){
-                            mapStartX -= (mapRoomSize * 9);
+                        if(mapInputX == 0){
+                            roomNumClicked = twoToOneD(mapInputY, 5);
+                            mapLoopOver[0] = 1;
+                            
                         }
                         
                         roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5));
@@ -521,7 +551,11 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                         // TODO: Handle map edge cases
                         System.out.println("Hit top triangle");
                         roomNumClicked = (twoToOneD(mapInputY, mapInputX) - ((mapInputX % 2 == 0)? 7 : 1));
-
+                        if(mapInputX == 0){
+                            roomNumClicked = twoToOneD(mapInputY, mapInputX) - 1;
+                            mapLoopOver[0] = 1;
+                            
+                        }
                         
 
                         
@@ -539,6 +573,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                     }
                     
                 System.out.println(roomNumClicked);
+                System.out.println(mapInputX);
+                mapLoopShift[0] = (int)hitBoxX;
+                mapLoopShift[1] = (int)hitBoxY;
 
             }
 
@@ -572,6 +609,9 @@ RenderingHints.VALUE_ANTIALIAS_ON);
                 gameControl.questionAnswer(abcd.substring(temp, temp + 1));
 
                 
+
+            }
+            if(inBuyMenu){
 
             }
         }
@@ -703,6 +743,21 @@ RenderingHints.VALUE_ANTIALIAS_ON);
             disableClicks = false;
         } else {
             moveAnimStart = -1;
+            
         }
+        if(buyMenuOpened != -1 && now - buyMenuOpened < 250){
+            long time = (now - buyMenuOpened);
+            buyMenuX = ((double)width / 4.0) * (double)Math.sqrt((double)time / 250.0);
+
+
+            System.out.println(buyMenuX);
+
+        }
+    }
+}
+
+class argly {
+    public argly (){
+
     }
 }
