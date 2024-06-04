@@ -26,6 +26,8 @@ public class GameLocations {
     private Set<Integer> occupiedLocations;
     private Set<Integer> visitedRooms;
 
+    private int wumpusAwakenedTurn = -1;
+
     ///////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////
@@ -122,7 +124,7 @@ public class GameLocations {
     // Moves the Wumpus randomly to a new room
     // Returns the Wumpus's new location
     public int moveWumpus(int turnNum) {
-        if (turnNum % 20 < 3) {
+        if (((turnNum - wumpusAwakenedTurn) % 20 < 3) && (wumpusAwakenedTurn >= 0)) {
             return moveWumpus();
         }
         return getWumpusLoc();
@@ -138,14 +140,17 @@ public class GameLocations {
 
     // Moves the Wumpus randomly 2-4 times after being "injured"
     // Returns the Wumpus's final position
-    public int fleeingWumpus() {
+    public int fleeingWumpus(int currentTurn) {
+        if (wumpusAwakenedTurn < 0){
+            wumpusAwakenedTurn = currentTurn;
+        }
         int origin = getWumpusLoc();
         int spacesRan = (int) (Math.random() * 3) + 2; // Random number between 2 and 4
         int loc = origin;
         for (int i = 0; i < spacesRan; i++) {
             loc = moveWumpus();
         }
-        return (origin == loc) ? fleeingWumpus() : loc; // Ensure Wumpus moves
+        return (origin == loc) ? fleeingWumpus(currentTurn) : loc; // Ensure Wumpus moves
     }
 
     // Transports the player to a random location in the cave

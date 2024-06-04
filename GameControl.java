@@ -245,7 +245,7 @@ public  class GameControl {
                 gameEnd(false);
             } else {
                 gui.updateActionText("The Wumpus is Wounded!", new Color(0, 255, 0));
-                gameLocs.fleeingWumpus();
+                gameLocs.fleeingWumpus(player.getTurnsTaken());
             }
         } else if (questionType == 4){
             if (!triviaSuccess){
