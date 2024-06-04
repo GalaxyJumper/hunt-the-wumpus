@@ -14,27 +14,38 @@ public class SoundManager {
         this.soundFiles.add(new File("sound/Ambiance.wav"));
         this.soundFiles.add(new File("sound/correctAnswer.wav"));
         this.soundFiles.add(new File("sound/disappointment.wa"));
-        this.soundFiles.add(new File("sound/wrongAnswer.wav"));
+        this.soundFiles.add(new File("sound/wrongAnswer.pcvm"));
     }
 
     public void playSound(int index) {
         try {
-            if (index < 0 || index >= soundFiles.size()) {
-                System.err.println("Invalid index");
-                return;
-            }
-
-            File soundFile = soundFiles.get(index);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
+            clip.open(AudioSystem.getAudioInputStream(this.soundFiles.get(index)));
             clip.start();
-            // Allow sound to finish playing before moving to the next one
-            Thread.sleep(clip.getMicrosecondLength() / 1000);
-            clip.stop(); // Stop the clip after it's done playing
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
         }
+        
+        
+        
+        
+        // try {
+        //     if (index < 0 || index >= soundFiles.size()) {
+        //         System.err.println("Invalid index");
+        //         return;
+        //     }
+
+        //     File soundFile = soundFiles.get(index);
+        //     AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+        //     Clip clip = AudioSystem.getClip();
+        //     clip.open(audioIn);
+        //     clip.start();
+        //     // Allow sound to finish playing before moving to the next one
+        //     Thread.sleep(clip.getMicrosecondLength() / 1000);
+        //     clip.stop(); // Stop the clip after it's done playing
+        // } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+        //     e.printStackTrace();
+        // }
     }
     
 }
