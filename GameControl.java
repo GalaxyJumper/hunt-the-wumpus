@@ -177,6 +177,7 @@ public  class GameControl {
     // 0 + false - purchase arrow
     // 1 + false - purchase secret
     public void turn(int playerInput, boolean isShooting){
+        System.out.println("I'm here1");
         if (isShooting){
             if (cave.canMove(gameLocs.getPlayerLoc(),playerInput) && player.getArrows() > 0){
                 player.addTurnsTaken();
@@ -260,11 +261,21 @@ public  class GameControl {
         questionType = -1;
     }
 
-    
+    public int getCoins(){
+        return player.getCoins();
+    }
+
+    public int getArrows(){
+        return player.getArrows();
+    }
 
     public void gameEnd(boolean won){
         String[][] leaderboardInfo = scores.endOfGame();
-        //gui.gameEndSequence(won, leaderboardInfo); -- CLOSE TRIVIA MENU, DISPLAY WON OR LOST (with animation maybe), DISPLAY LEADERBOARD, pause a bit for each
+        // closeTriviaMenu
+        // display for win or lost
+        // display leaderboard
+        // call gameFullEnd
+        //gui.gameEndSequence(won, leaderboardInfo);
         // TEMPORARY
         gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255,won? 255 : 0,0));
         try {
@@ -272,6 +283,9 @@ public  class GameControl {
         } catch (Exception t){
             t.printStackTrace();
         }
+    }
+
+    public void gameFullEnd(){
         System.exit(0);
     }
 }
