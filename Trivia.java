@@ -58,11 +58,15 @@ class Trivia {
                 tempIndexes.add(i);
             }
         }
-        if (tempIndexes.size() == usedQuestions.length){
+        if (tempIndexes.size() == 0){
             usedQuestions = new boolean[questionsAndInfo.length];
+            int indexToReturn = (int) (Math.random() * questionsAndInfo.length);
+            usedQuestions[indexToReturn] = true;
+            return indexToReturn;
         }
+        
         int indexToReturn = (int) (Math.random() * tempIndexes.size());
         usedQuestions[tempIndexes.get(indexToReturn)] = true;
-        return indexToReturn;
+        return tempIndexes.get(indexToReturn);
     }
 }
