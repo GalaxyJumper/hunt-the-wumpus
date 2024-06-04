@@ -201,7 +201,11 @@ public  class GameControl {
                     gui.updateActionText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
                 }
             } else {
-                gui.updateActionText("No Arrows Remaining", new Color(255,0,0));
+                if (player.getArrows() <= 0){
+                    gui.updateActionText("No Arrows Remaining", new Color(255,0,0));
+                } else {
+                    gui.updateActionText("You can't get a good angle there...", new Color(255,255,255));
+                }
             }
         } else {
             questionType = playerInput;
