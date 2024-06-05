@@ -1,51 +1,54 @@
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+    import javax.sound.sampled.*; 
+    import java.util.ArrayList;
+    import java.io.File; 
+    import java.io.IOException; 
+    
+    public class SoundManager { 
 
-public class SoundManager {
-    private ArrayList<File> soundFiles;
+        private ArrayList<String> filePaths; 
+        private Clip clip; 
+        
+        //Adds all of our filepaths in the constructor of SoundManager
+        public SoundManager() { 
+        this.filePaths.add("sound/gameOver.wav");
+        this.filePaths.add("sound/Ambiance.wav");
+        this.filePaths.add("sound/correctAnswer.wav");
+        this.filePaths.add("sound/disappointment.wav");
+        this.filePaths.add("sound/wrongAnswer.wav");
+        } 
+        
+        //Plays a sound gathered by taking an index for a specific filepath
+        //Turning the sound into a clip and playing it
+        public void playSound(int index) {
+             if (index < 0 || index >= filePaths.size()) { 
+                System.out.println("Invalid index."); 
+                return; 
+            } 
+         
+            //quits trying to play if the index is invalid
+            stop(); 
 
-    public SoundManager() {
-         // Need to convert the wav files into somthing more generic like a .pcm file.
-        //TODO: Find a file format that plays nicely with the java. As of current, errors appear.
-        this.soundFiles = new ArrayList<File>();
-        this.soundFiles.add(new File("sound/gameOver.wav"));
-        this.soundFiles.add(new File("sound/Ambiance.wav"));
-        this.soundFiles.add(new File("sound/correctAnswer.wav"));
-        this.soundFiles.add(new File("sound/disappointment.wa"));
-        this.soundFiles.add(new File("sound/wrongAnswer.pcvm"));
-    }
-
-    public void playSound(int index) {
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(this.soundFiles.get(index)));
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        
-        
-        
-        
-        // try {
-        //     if (index < 0 || index >= soundFiles.size()) {
-        //         System.err.println("Invalid index");
-        //         return;
-        //     }
-
-        //     File soundFile = soundFiles.get(index);
-        //     AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-        //     Clip clip = AudioSystem.getClip();
-        //     clip.open(audioIn);
-        //     clip.start();
-        //     // Allow sound to finish playing before moving to the next one
-        //     Thread.sleep(clip.getMicrosecondLength() / 1000);
-        //     clip.stop(); // Stop the clip after it's done playing
-        // } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
-        //     e.printStackTrace();
-        // }
+            try { File soundFile = new File(filePaths.get(index));
+                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile); 
+                 clip = AudioSystem.getClip(); 
+                 clip.open(audioInputStream); 
+                 clip.start(); 
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) 
+                { e.printStackTrace(); 
+            } 
+        } 
+            
+        //Stops a CURRENTLY RUNNING audio clip
+        public void stop() {
+                 if (clip != null && clip.isRunning()) {
+                    clip.stop(); 
+                } 
+            } 
+                
+            //Restarts a clip
+            public void rewind() { 
+                if (clip != null) { clip.setMicrosecondPosition(0);
+            } 
+        } 
     }
     
-}
