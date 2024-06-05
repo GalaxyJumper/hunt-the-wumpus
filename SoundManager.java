@@ -1,4 +1,4 @@
- import javax.sound.sampled.*; 
+    import javax.sound.sampled.*; 
     import java.util.ArrayList;
     import java.io.File; import java.io.IOException; 
     
@@ -7,6 +7,7 @@
         private ArrayList<String> filePaths; 
         private Clip clip; 
         
+        //Adds all of our filepaths in the constructor of SoundManager
         public SoundManager() { 
         this.filePaths.add("sound/gameOver.wav");
         this.filePaths.add("sound/Ambiance.wav");
@@ -15,11 +16,14 @@
         this.filePaths.add("sound/wrongAnswer.wav");
         } 
         
+        //Plays a sound gathered by taking an index for a specific filepath
+        //Turning the sound into a clip and playing it
         public void playSound(int index) {
              if (index < 0 || index >= filePaths.size()) { 
                 System.out.println("Invalid index."); 
                 return; 
             } 
+         
             //quits trying to play if the index is invalid
             stop(); 
 
@@ -30,13 +34,19 @@
                  clip.start(); 
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) 
                 { e.printStackTrace(); 
-            } } 
+            } 
+        } 
             
-            public void stop() {
+        //Stops a CURRENTLY RUNNING audio clip
+        public void stop() {
                  if (clip != null && clip.isRunning()) {
                     clip.stop(); 
-                } } 
+                } 
+            } 
                 
-                public void rewind() { 
-                    if (clip != null) { clip.setMicrosecondPosition(0);
-             } } }
+            //Restarts a clip
+            public void rewind() { 
+                if (clip != null) { clip.setMicrosecondPosition(0);
+            } 
+        } 
+    }

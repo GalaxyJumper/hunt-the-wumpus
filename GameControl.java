@@ -28,6 +28,7 @@ public  class GameControl {
     public GameControl() throws FontFormatException, IOException{
         gameLocs = new GameLocations();
         Scanner scan = new Scanner(System.in);
+        
         this.soundManager = new SoundManager();
         soundManager.playSound(1);
 
