@@ -1,6 +1,7 @@
     import javax.sound.sampled.*; 
     import java.util.ArrayList;
-    import java.io.File; import java.io.IOException; 
+    import java.io.File; 
+    import java.io.IOException; 
     
     public class SoundManager { 
 
@@ -50,3 +51,4 @@
             } 
         } 
     }
+    
