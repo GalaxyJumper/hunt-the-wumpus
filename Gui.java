@@ -116,7 +116,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setTitle(name);
         frame.setVisible(true);
         this.failMove(2);
-        sounds.playSound(2);
+        //sounds.playSound(2);
         openPurchaseMenu();
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
@@ -431,9 +431,9 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
         triviaFeedbackAnimStart = System.currentTimeMillis();
         if(lastQCorrect){
-            sounds.playSound(4);
+            //sounds.playSound(4);
         } else {
-            sounds.playSound(3);
+            //sounds.playSound(3);
         }
 
     }
