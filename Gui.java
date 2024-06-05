@@ -69,6 +69,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     double buyMenuX = this.width;
     int turn;
     int buttonSelected = 0;
+    int[] mapLoopOver = new int[] {0, 0};
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -116,8 +117,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setTitle(name);
         frame.setVisible(true);
         this.failMove(2);
-        sounds.playSound(2);
-        openPurchaseMenu();
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -157,8 +156,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setFont(calibri);
         g2d.fillRect(0, 0, width * 3, height * 3);
         drawMap((int)(mapStartX + mapOffset[0]), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
-        //drawMap((int)(mapStartX + mapOffset[0] - (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
-        //drawMap((int)(mapStartX + mapOffset[0] + (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
+        drawMap((int)(mapStartX + mapOffset[0] - (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
+        drawMap((int)(mapStartX + mapOffset[0] + (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
 
         if(failMoveHex[0] != -1 && failMoveHex[1] != -1){
             drawFailMoveHex(failMoveHex[0], failMoveHex[1]);
@@ -179,7 +178,14 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(30f));
         g2d.drawLine(mapLoopShift[0], mapLoopShift[1], mapLoopShift[0], mapLoopShift[1]);
-        drawBuyMenu(turn, g2d, 1);
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.setStroke(new BasicStroke(7));
+        // Buy menu icon
+        for(int i = 1; i <= 3; i++){
+            g2d.drawLine(width - 150, i * 20 + 50, width - 100, i * 20 + 50);
+        }
+        drawBuyMenu(turn, g2d, buttonSelected);
+
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -279,8 +285,21 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         
     }
     public void move(int whereTo){
+
         playerLoc = whereTo;
         this.repaint();
+        if(mapLoopOver[0] != 0){
+            if(mapLoopOver[0] == 1){ 
+                mapOffset[0] -= (9 * mapRoomSize); 
+            }
+
+            else if(mapLoopOver[0] == 2){
+                 mapOffset[0] += (18 * mapRoomSize); 
+                 System.out.println("BRUH"); 
+            }
+            mapLoopOver[0] = 0; 
+            mapLoopOver[1] = 0;
+        }
         disableClicks = true;
         moveAnimStart = System.currentTimeMillis();
         int[] mapCoords = oneToTwoD(whereTo);
@@ -447,7 +466,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     ////////////////////////////////////////
     // Buy menu methods
     /////////////////////////////////////////    
-    public void openPurchaseMenu(){
+    public void openBuyMenu(){
         buyMenuOpened = System.currentTimeMillis();
         inBuyMenu = true;
 
@@ -462,9 +481,22 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setFont(calibri.deriveFont(40f));
         g2d.drawString("Coins: " + gameControl.getCoins(), (int)(width - buyMenuX + 70), 160);
         g2d.drawString("Arrows: " + gameControl.getArrows(), (int)(width - buyMenuX + 70), 220);
-        g2d.setColor(new Color(43, 43, 43));
-        g2d.fillRect(width - (int) buyMenuX, 240 + (buttonSelected - 1) * 120, width, 120);
-        
+        g2d.setFont(calibri.deriveFont(50f));
+
+        if(buttonSelected != 0){
+            g2d.setColor(new Color(43, 43, 43));
+            g2d.fillRect(width - (int) buyMenuX, 240 + (buttonSelected - 1) * 120, width, 120);
+        }
+        g2d.setFont(calibri.deriveFont(50f));
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.drawString("Buy an arrow (1 gold)", (int)(width - buyMenuX + 70), 320);
+        g2d.drawString("Buy a secret (1 gold)", (int)(width - buyMenuX + 70), 430);
+    }
+
+    public void closeBuyMenu(){
+        buyMenuOpened = -1;
+        buyMenuClosed = System.currentTimeMillis();
+        inBuyMenu = false;
     }
     // Pirated from Avi's cave class
     private int twoToOneD(int y, int x){
@@ -493,10 +525,9 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     public void mouseClicked(MouseEvent e){
         double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
         double answerHitboxHeight = answerSelectionHeight / 4;
-        int[] mapLoopOver = new int[] {0, 0};
+        
         //Y: 0 = no shift 1 = up 2 = down
         //X: 0 = no shift 1 = left 2 = right
-
         this.repaint();
         double mouseX = e.getX();
         double mouseY = e.getY();
@@ -521,32 +552,50 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
          * By checking both of the triangles we can figure out whether the mouse is in this hexagon or one of its neighbors.
         */
         if(!disableClicks){
+
             if(inBuyMenu){
                 if(mouseX > (width * 3 / 4) && mouseX < width){
                     if(mouseY > 240 && mouseY < 480){
                         if(mouseY > 360){
                             gameControl.turn(1, false);
+                            closeBuyMenu();
                         } else {
                             gameControl.turn(0, false);
+                            closeBuyMenu(); 
                         }
                     }
+                }
+                else {
+                    closeBuyMenu();
                 }
 
             }
             else if(!inTriviaMenu){
+                if(!inBuyMenu){
+                    if(mouseX > (width * 18.5 / 20) && mouseY < (width * 1.5 / 20)){
+                        openBuyMenu();
+                    } else {
+                
                 double mapLeftEdge = mapStartX + mapOffset[0] - (mapRoomSize);
                 double mapTopEdge = mapStartY + mapOffset[1] - (mapRoomSize);
                 double mapRoomHeight = (mapRoomSize) * Math.sqrt(3);
                 
-                
-                int mapInputX = (int)((mouseX - mapLeftEdge) / (1.5 * mapRoomSize));
-                int mapInputY = (int)((mouseY - mapTopEdge - (mapInputX % 2 * (0.5 * mapRoomHeight))) / (mapRoomHeight));
 
+                int mapInputX = (int)((mouseX - mapLeftEdge) / (1.5 * mapRoomSize));
+                if(mouseX - mapLeftEdge < 0){
+                    mapInputX = -1;
+                }
+                int mapInputY = (int)((mouseY - mapTopEdge - (Math.abs(mapInputX % 2) * (0.5 * mapRoomHeight))) / (mapRoomHeight));
+                if(mouseY - mapTopEdge < 0){
+                    mapInputY = -1;
+                }
+                System.out.println(mapInputX);
                 int roomNumClicked = 99;
                     double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
                     double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 16 / 128);
+                   
                     if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
-                        System.out.println("Hit bottom triangle " + (-1 % 2));
+                        System.out.println("Hit bottom triangle " + (-2 % 2));
                         //Bottom triangle
                         //Special case - the room at the triangle's location will be at a different Y than this hexagon.
                         if(mapInputX == 0){
@@ -554,7 +603,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                             mapLoopOver[0] = 1;
                             
                         }
-                        
+                        else if(mapInputX >= 6){
+                            roomNumClicked -= 6;
+                            mapLoopOver[0] = 2; 
+                        }
                         roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5));
 
                         
@@ -571,26 +623,50 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                             
                         }
                         
+                        else if(mapInputX >= 6){
+                            roomNumClicked -= 6;
+                            mapLoopOver[0] = 2;
+                        }
+                        
+                        if(mapInputY < 0){
+                            roomNumClicked = playerLoc - 24;
+                            mapLoopOver[1] = 1;
+                        }
 
                         
                     } else {
                         roomNumClicked = twoToOneD(mapInputY, mapInputX);
                         // TODO: Handle edge cases
+                        if(mapInputX == -1 && oneToTwoD(playerLoc)[0] == 0){
+                            roomNumClicked += 6;
+                            mapLoopOver[0] = 1;
+                        }
+                        
+                        else if(mapInputX >= 6 && oneToTwoD(playerLoc)[0] == 5){
+                            roomNumClicked -= 6;
+                            mapLoopOver[1] = 2;
+                        }
+                        if(mapInputY < 0){
+
+                        }
                     }
+
                     roomNumClicked = roomNumClicked % 30;
                     if(buttonClicked == 1){
-                        double[] screenSpaceCoords = twoDToScreenSpace(mapInputX, mapInputY);
                         gameControl.turn(roomNumClicked);
                     } 
                     else if(buttonClicked == 2){
                         gameControl.turn(roomNumClicked, true);
                     }
                     
-                System.out.println(roomNumClicked);
-                System.out.println(mapInputX);
+                System.out.println("Room num: " + roomNumClicked);
+                System.out.println("MInputX: " + mapInputX);
+                System.out.println("MInputY: " + mapInputY);
                 mapLoopShift[0] = (int)hitBoxX;
                 mapLoopShift[1] = (int)hitBoxY;
 
+                    }
+                }
             }
 
             /////////////////////////////////////////////////
@@ -598,11 +674,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             //////////////////////////////////////////////////
 
 
-            else if (inTriviaMenu) { 
-                System.out.println(triviaMenuX);
-                System.out.println(triviaMenuX + triviaMenuWidth);
-                System.out.println(triviaMenuY + triviaMenuHeight / 4);
-                System.out.println(triviaMenuY + (triviaMenuHeight * 23 / 30));
+            else if (inTriviaMenu) {
                 if(mouseX > triviaMenuX && 
                 mouseX < triviaMenuX + triviaMenuWidth &&
                 mouseY > triviaMenuY + triviaMenuHeight / 4 
@@ -614,13 +686,14 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
                     int answerSelected = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4)) / answerHitboxHeight);
                     trivChoice = answerSelected;
+                    String abcd = "ABCD";
+                    int temp = trivChoice;
+                    trivChoice = -1;
+                    selectRectPos = -1;
+                    selectedAnswerData[0] = temp;
+                    gameControl.questionAnswer(abcd.substring(temp, temp + 1));
                 }
-                String abcd = "ABCD";
-                int temp = trivChoice;
-                trivChoice = -1;
-                selectRectPos = -1;
-                selectedAnswerData[0] = temp;
-                gameControl.questionAnswer(abcd.substring(temp, temp + 1));
+
 
                 
 
@@ -728,14 +801,17 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.repaint();
         if(inBuyMenu){
             if(mouseX > (width * 3 / 4) && mouseX < width){
-                if(mouseY > 240 && mouseY < 480){
-                    if(mouseY > 360){
+                if(mouseY > 300 && mouseY < 540){
+                    if(mouseY > 420){
+                        buttonSelected = 2;
+                    } else {                       
                         buttonSelected = 1;
-                    } else {
-                        gameControl.turn(0, false);
                     }
+                } else {
+                    buttonSelected = 0;
                 }
             }
+            
 
         }
         if(inTriviaMenu){
@@ -758,6 +834,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
             
         }
+        long time;
         if(moveAnimStart != -1 && now - moveAnimStart <= 1500){
             t = (double)((double)(now - moveAnimStart) / (double)500);
             d = D/2 * ((double)1 - (double)Math.cos((Math.PI / 3) * t));
@@ -769,12 +846,16 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             
         }
         if(buyMenuOpened != -1 && now - buyMenuOpened < 250){
-            long time = (now - buyMenuOpened);
+            time = (now - buyMenuOpened);
             buyMenuX = ((double)width / 4.0) * (double)Math.sqrt((double)time / 250.0);
 
 
-            System.out.println(buyMenuX);
+            
 
+        }
+        if(buyMenuClosed != -1 && now - buyMenuClosed < 250){
+            time = now - buyMenuClosed;
+            buyMenuX = ((double)width / 4.0) - ((double)width / 4.0) * (double)Math.sqrt((double)time / 250.0);
         }
     }
 }
@@ -782,5 +863,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 class argly {
     public argly (){
 
-    }
+        argly bargly
+        
+        
+        ;}
 }
