@@ -20,7 +20,6 @@ public  class GameControl {
 
     private GameLocations gameLocs;
     private Gui gui;
-    private ArrayList<String> filePaths = new ArrayList<String>();
     public SoundManager soundManager;
 
     ///////////////////////////////////////////////
@@ -29,14 +28,7 @@ public  class GameControl {
     public GameControl() throws FontFormatException, IOException{
         gameLocs = new GameLocations();
         Scanner scan = new Scanner(System.in);
-        this.filePaths.add("sound/gameOver.wav");
-        this.filePaths.add("sound/Ambiance.wav");
-        this.filePaths.add("sound/correctAnswer.wav");
-        this.filePaths.add("sound/disappointment.wav");
-        this.filePaths.add("sound/wrongAnswer.wav");
-
-        this.soundManager = new SoundManager(filePaths);
-        
+        this.soundManager = new SoundManager();
         soundManager.playSound(1);
 
         if (!GraphicsEnvironment.isHeadless()){ 
@@ -126,8 +118,5 @@ public  class GameControl {
         return 1;
     }
 
-    public ArrayList<String> getFilePaths(){
-        return this.filePaths;
-    }
 }
 

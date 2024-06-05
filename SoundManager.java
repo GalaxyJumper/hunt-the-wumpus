@@ -7,8 +7,12 @@
         private ArrayList<String> filePaths; 
         private Clip clip; 
         
-        public SoundManager(ArrayList<String> filePaths) { 
-            this.filePaths = filePaths; 
+        public SoundManager() { 
+        this.filePaths.add("sound/gameOver.wav");
+        this.filePaths.add("sound/Ambiance.wav");
+        this.filePaths.add("sound/correctAnswer.wav");
+        this.filePaths.add("sound/disappointment.wav");
+        this.filePaths.add("sound/wrongAnswer.wav");
         } 
         
         public void playSound(int index) {
