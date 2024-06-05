@@ -1,48 +1,76 @@
-import 
-public class Sound implements Playable {
+import java.io.File;
+import java.io.IOException;
 
-    private final Path wavPath;
-    private final CyclicBarrier barrier = new CyclicBarrier(2);
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 
-    Sound(final Path wavPath) {
+public class Sound {
 
-        this.wavPath = wavPath;
+    private final int BUFFER_SIZE = 128000;
+    private File soundFile;
+    private AudioInputStream audioStream;
+    private AudioFormat audioFormat;
+    private SourceDataLine sourceLine;
+
+    /**
+     * @param filename the name of the file that is going to be played
+     */
+    public Sound(){
+
     }
+    public void playSound(File f){
 
-    @Override
-    public void play() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-
-        try (final AudioInputStream audioIn = AudioSystem.getAudioInputStream(wavPath.toFile());
-             final Clip clip = AudioSystem.getClip()) {
-
-            listenForEndOf(clip);
-            clip.open(audioIn);
-            clip.start();
-            waitForSoundEnd();
-        }
-    }
-
-    private void listenForEndOf(final Clip clip) {
-
-        clip.addLineListener(event -> {
-            if (event.getType() == LineEvent.Type.STOP) waitOnBarrier();
-        });
-    }
-
-    private void waitOnBarrier() {
+        String strFilename = f.getName();
 
         try {
-
-            barrier.await();
-        } catch (final InterruptedException ignored) {
-        } catch (final BrokenBarrierException e) {
-
-            throw new RuntimeException(e);
+            soundFile = new File(strFilename);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
         }
-    }
 
-    private void waitForSoundEnd() {
+        try {
+            audioStream = AudioSystem.getAudioInputStream(soundFile);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-        waitOnBarrier();
+        audioFormat = audioStream.getFormat();
+
+        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+        try {
+            sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+            sourceLine.open(audioFormat);
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        sourceLine.start();
+
+        int nBytesRead = 0;
+        byte[] abData = new byte[BUFFER_SIZE];
+        while (nBytesRead != -1) {
+            try {
+                nBytesRead = audioStream.read(abData, 0, abData.length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (nBytesRead >= 0) {
+                @SuppressWarnings("unused")
+                int nBytesWritten = sourceLine.write(abData, 0, nBytesRead);
+            }
+        }
+
+        sourceLine.drain();
+        sourceLine.close();
     }
 }
