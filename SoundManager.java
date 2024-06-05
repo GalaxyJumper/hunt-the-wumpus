@@ -10,13 +10,11 @@ public class SoundManager {
 
     // Adds all of our filepaths in the constructor of SoundManager
     public SoundManager() {
-
-        this.filePaths.add("sound\\ambiance.wav");
-        this.filePaths.add("sound\\caveNoise.wav");
-        this.filePaths.add("sound\\correctAnswer.wav");
-        this.filePaths.add("sound\\disappointment.wav");
-        this.filePaths.add("sound\\gameOver.wav");
-        this.filePaths.add("sound\\wrongAnswer.wav");
+        this.filePaths.add("./sound/gameOver.wav");
+        this.filePaths.add("./sound/ambiance.wav");
+        this.filePaths.add("./sound/correctAnswer.wav");
+        this.filePaths.add("./sound/disappointment.wav");
+        this.filePaths.add("./sound/wrongAnswer.wav");
     }
 
     // Plays a sound gathered by taking an index for a specific filepath

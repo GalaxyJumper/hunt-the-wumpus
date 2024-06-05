@@ -177,7 +177,7 @@
             "Hint": "This here ship is called a steel whale for good reason. Just like a whale, it uses sonar to find its way in the dark."
         },
         {
-            "Question": "What is the saltiest body of water?",
+            "Question": "What body of water has the highest salinity in the world?",
             "Answers": [
                 "Don Juan Pond",
                 "Alantic Ocean",
@@ -185,7 +185,7 @@
                 "Great Salt Lake"
             ],
             "Key": "A",
-            "Hint": ""
+            "Hint": "The bottom of the world is a place of extremes. When the bitter cold freezes brine, it consentrates to unbeleivable levels."
         },
         {
             "Question": "What war were submarines first used?",
