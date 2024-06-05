@@ -116,6 +116,16 @@ public  class GameControl {
 
     }
 
+    //FIX THIS
+    public int getCoins(){
+        return 1;
+    }
+
+    //FIX THIS
+    public int getTurn(){
+        return 1;
+    }
+
     public ArrayList<String> getFilePaths(){
         return this.filePaths;
     }
