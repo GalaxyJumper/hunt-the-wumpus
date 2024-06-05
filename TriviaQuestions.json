@@ -155,18 +155,7 @@
             "Hint": "This job is important, you know? 95% of this brine is unknown and uncharted. Who know what you'll find..."
         },
         {
-            "Question": "What is the deepest trench in the sea?",
-            "Answers": [
-                "Marina Trench",
-                "Mariana Trench",
-                "Sierena Deep",
-                "Marinara Trench"
-            ],
-            "Key": "B",
-            "Hint": ""
-        },
-        {
-            "Question": "The technology that allows submarines to detect objects is?",
+            "Question": "What technology allows submarines to detect its surroundings?",
             "Answers": [
                 "Sonar",
                 "Radar",
@@ -185,18 +174,7 @@
                 "Great Salt Lake"
             ],
             "Key": "A",
-            "Hint": "The bottom of the world is a place of extremes. When the bitter cold freezes brine, it consentrates to unbeleivable levels."
-        },
-        {
-            "Question": "What war were submarines first used?",
-            "Answers": [
-                "World War I",
-                "World War II",
-                "Civil War",
-                "The Napoleonic Wars"
-            ],
-            "Key": "C",
-            "Hint": ""
+            "Hint": "The bottom of the world is a place of extremes. When the bitter cold freezes brine, it consentrates to unbelievable levels."
         },
         {
             "Question": "What is the name of the deepest underwater cave explored by man?",
@@ -221,17 +199,6 @@
             "Hint": "Caves can only form in the weakest of stones, and among the weakest is limestone."
         },
         {
-            "Question": "What fish goes through decompression sickness when brought out of their habitat?",
-            "Answers": [
-                "Pufferfish",
-                "Oarfish",
-                "Swordfish",
-                "Blobfish"
-            ],
-            "Key": "D",
-            "Hint": ""
-        },
-        {
             "Question": "What property makes certain marine life glow?",
             "Answers": [
                 "Refraction",
@@ -241,17 +208,6 @@
             ],
             "Key": "B",
             "Hint": "In this dark, some animals have evolved proteins that luminesce, breaking the void like stars in the night."
-        },
-        {
-            "Question": "How many species of sharks are there?",
-            "Answers": [
-                "100",
-                "50",
-                "500",
-                "63"
-            ],
-            "Key": "C",
-            "Hint": ""
         },
         {
             "Question": "what is the scientific name for a giant squid?",
