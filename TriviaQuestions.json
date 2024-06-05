@@ -152,7 +152,7 @@
                 "50%"
             ],
             "Key": "B",
-            "Hint": "This job is important, you know? 95% of this brine is unknown and uncharted. Who know what you'll find..."
+            "Hint": "This job is important, you know? 95% of this brine is unknown and uncharted. Who knows what you'll find..."
         },
         {
             "Question": "What technology allows submarines to detect its surroundings?",
@@ -220,6 +220,5 @@
             "Key": "A",
             "Hint": "Such a terrible animal deserves the moniker, 'mega'."
         }
-       
     ]
 }
