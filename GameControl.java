@@ -21,7 +21,7 @@ public  class GameControl {
     private GameLocations gameLocs;
     private Gui gui;
     private ArrayList<String> filePaths = new ArrayList<String>();
-    public SoundManagerTwo soundManager;
+    public SoundManager soundManager;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -35,7 +35,7 @@ public  class GameControl {
         this.filePaths.add("sound/disappointment.wav");
         this.filePaths.add("sound/wrongAnswer.wav");
 
-        this.soundManager = new SoundManagerTwo(filePaths);
+        this.soundManager = new SoundManager(filePaths);
         
         soundManager.playSound(1);
 
