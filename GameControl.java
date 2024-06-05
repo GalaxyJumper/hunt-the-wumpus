@@ -7,6 +7,7 @@
 
 //taking in inputs for all classes and running the game
 //connecting the ui to the game itself
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -19,6 +20,8 @@ public  class GameControl {
 
     private GameLocations gameLocs;
     private Gui gui;
+    private ArrayList<String> filePaths = new ArrayList<String>();
+    public SoundManagerTwo soundManager;
 
     ///////////////////////////////////////////////
     // CONSTRUCTORS
@@ -26,8 +29,16 @@ public  class GameControl {
     public GameControl() throws FontFormatException, IOException{
         gameLocs = new GameLocations();
         Scanner scan = new Scanner(System.in);
+        this.filePaths.add("sound/gameOver.wav");
+        this.filePaths.add("sound/Ambiance.wav");
+        this.filePaths.add("sound/correctAnswer.wav");
+        this.filePaths.add("sound/disappointment.wav");
+        this.filePaths.add("sound/wrongAnswer.wav");
 
+        this.soundManager = new SoundManagerTwo(filePaths);
         
+        soundManager.playSound(1);
+
         if (!GraphicsEnvironment.isHeadless()){ 
             gui = new Gui("HUNT THE WUMPUS", 2560, 1440, gameLocs); 
         }
@@ -103,6 +114,10 @@ public  class GameControl {
 
     public void openTriviaUI(){
 
+    }
+
+    public ArrayList<String> getFilePaths(){
+        return this.filePaths;
     }
 }
 
