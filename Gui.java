@@ -865,7 +865,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 class argly {
     public argly (){
 
-        argly bargly
+        argly bargly;
         
         
         ;}
