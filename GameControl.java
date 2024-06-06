@@ -198,6 +198,7 @@ public  class GameControl {
         } else {
             if (player.getCoins() >= 1){
                 gui.updateActionText("One coin spent", new Color(255,255,255));
+                player.addCoins(-1);
                 questionType = playerInput;
                 createQuestions();
                 hazards = null;
@@ -206,6 +207,7 @@ public  class GameControl {
                 gui.updateActionText("No coins left", new Color(255,0,0));
             }
         }
+        endTurn();
     }
     // response is "A", "B", "C", or "D"
     public void triviaAction(boolean triviaSuccess){
