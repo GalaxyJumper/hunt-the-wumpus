@@ -196,6 +196,7 @@ public  class GameControl {
             }
         } else {
             if (player.getCoins() >= 1){
+                gui.updateActionText("One coin spent", new Color(255,255,255));
                 questionType = playerInput;
                 createQuestions();
                 hazards = null;
