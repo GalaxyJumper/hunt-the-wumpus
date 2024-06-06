@@ -60,7 +60,11 @@ public  class GameControl {
     // METHODS
     ///////////////////////////////////////////////
     public String getHint(int questionNum){
-        return questions[questionNum][6];
+        if (getCoins() >= 1){
+            return questions[questionNum][6];
+        }
+        gui.updateActionText("No coins remaining", new Color(255,0,0));
+        return null;
     }
     public void move(int playerInput){
         gui.move(playerInput);
@@ -69,7 +73,7 @@ public  class GameControl {
         String[] nearHazards = gameLocs.checkForHazards();
         for (String hazard : nearHazards){
             if (hazard.equals("Wumpus")){
-                gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
+                gui.updateActionText("The ship rocks with an ominous rumble...", new Color(155,73,186));
             } else if (hazard.equals("Pit")){
                 gui.updateActionText("You notice the floor dropping away...", new Color(255,255,255));
             } else if (hazard.equals("Bat")) {
@@ -151,6 +155,7 @@ public  class GameControl {
             gui.openTriviaMenu("Maintaining Steering Control", questions[0], 5);
             return;
         }
+
     }
     // 0 - 29 (inclusive) + true location receiving arrow
     // 0 + false - purchase arrow
@@ -167,7 +172,7 @@ public  class GameControl {
                 boolean missed = false;
                 gui.updateActionText("Torpedo fired...", new Color(255,255,255));
                 gui.updateActionText(player.getArrows() + " torpedoes left", new Color(255,255,255));
-                if (hazards[0].equals("Wumpus")){
+                if ((hazards.length > 0) && hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
                     else {
@@ -190,10 +195,14 @@ public  class GameControl {
                 }
             }
         } else {
-            questionType = playerInput;
-            createQuestions();
-            hazards = null;
-            gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
+            if (player.getCoins() >= 1){
+                questionType = playerInput;
+                createQuestions();
+                hazards = null;
+                gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
+            } else {
+                gui.updateActionText("No coins left", new Color(255,0,0));
+            }
         }
     }
     // response is "A", "B", "C", or "D"
