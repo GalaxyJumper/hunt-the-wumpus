@@ -460,7 +460,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     public void openTriviaMenu(String why, String[] question, int numQs){
         triviaMenuOpened = System.currentTimeMillis();
         this.triviaScoreData[0] = numQs;
-        this.triviaScoreData[1] = (int)(numQs * 2/3);
+        this.triviaScoreData[1] = 3;
         this.trivChoice = -1;
         this.triviaQuestion = question;
         nextQTransitionDim = -1;

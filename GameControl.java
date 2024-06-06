@@ -137,7 +137,6 @@ public  class GameControl {
             endTurn();
             return;
         }
-        /*
         if (hazards[0].equals("Pit")){
             hazards = null;
             questionType = 2;
@@ -152,7 +151,7 @@ public  class GameControl {
             gui.openTriviaMenu("Maintaining Steering Control", questions[0], 5);
             return;
         }
-        */
+
     }
     // 0 - 29 (inclusive) + true location receiving arrow
     // 0 + false - purchase arrow
