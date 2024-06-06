@@ -652,7 +652,9 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                         if(mapInputY >= 5){
                             mapLoopOver[1] = 2;
                         }
-                       
+                        if(mapInputY == 4 && (mapInputX % 2 == 1)){
+                            mapLoopOver[1] = 2;
+                        }
                         
                     }
                     else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -SQRT3 && mouseY > hitBoxY - mapRoomHeight / 2){
@@ -687,8 +689,19 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                                 
                             }  
                         }
+                        if(mapInputY == -1){
+
+                            if(mapInputX % 2 == 0){
+                                roomNumClicked = twoToOneD(mapInputY, mapInputX) + 23;
+                                mapLoopOver[1] = 1;
+                            } else {
+                                roomNumClicked = twoToOneD(mapInputY, mapInputX) - 1;
+                                
+                            }  
+
+                        }
                         if(mapInputY >= 5){
-                            
+
                         }
 
 
