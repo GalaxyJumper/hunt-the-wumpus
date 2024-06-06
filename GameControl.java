@@ -65,7 +65,7 @@ public  class GameControl {
             return questions[questionNum][6];
         }
         gui.updateActionText("No coins remaining", new Color(255,0,0));
-        return null;
+        return "";
     }
     public void move(int playerInput){
         gui.move(playerInput);
