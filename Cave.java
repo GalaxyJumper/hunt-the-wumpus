@@ -19,7 +19,7 @@ public class Cave {
         
         try {
             JSONObject a = (JSONObject) parser.parse(new FileReader("Maps.json"));
-            int caveNumber = 1 + (int) (Math.random() * a.size());
+            int caveNumber = 1 + (int) (Math.random() * 3);
             caveName = "Cave " + (caveNumber);
             interpretFile((JSONObject) a.get("Cave " + caveNumber));
         } catch (IOException io) {

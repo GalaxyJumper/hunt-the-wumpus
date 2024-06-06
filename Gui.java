@@ -106,7 +106,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // for later 
         this.addMouseListener(this);
-
+        frame.setLocationRelativeTo(null);
 
 
         //Put this panel into its frame so it can be displayed
@@ -271,7 +271,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     currentColor = new Color(20, 20, 20);
                 }
                 
-                drawRoom(x + startX, (y + ( (k % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
+                drawRoom(x + startX, (y + ( (k % 2) * (Math.sqrt(3)*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum), currentColor);
             }
         }
     
@@ -290,15 +290,19 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
         playerLoc = whereTo;
         this.repaint();
+        System.out.println("/////////////////////////////////////////////////////////////");
         if(mapLoopOver[0] != 0){
-            if(mapLoopOver[0] == 1){ 
+            System.out.println(mapLoopOver[0] + ", " + mapLoopOver[1]);
+            if(mapLoopOver[0] == 2){
+                mapOffset[0] += (9 * mapRoomSize); 
+            }
+            else if(mapLoopOver[0] == 1){ 
                 mapOffset[0] -= (9 * mapRoomSize); 
+                
+
             }
 
-            else if(mapLoopOver[0] == 2){
-                 mapOffset[0] += (18 * mapRoomSize); 
-                 System.out.println("BRUH"); 
-            }
+            
             mapLoopOver[0] = 0; 
             mapLoopOver[1] = 0;
         }
@@ -596,24 +600,26 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     double hitBoxX = mapLeftEdge + (mapInputX * (mapRoomSize * 1.5));
                     double hitBoxY = mapTopEdge + (mapInputX % 2 * (0.5 * mapRoomHeight)) + (mapRoomHeight / 2) + (mapRoomHeight * mapInputY) + (mapRoomSize * 16 / 128);
                    
-                    if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3)){
+                    if(mouseY - hitBoxY > (mouseX - hitBoxX) * Math.sqrt(3) && mouseY < hitBoxY + mapRoomHeight / 2){
                         System.out.println("Hit bottom triangle " + (-2 % 2));
                         //Bottom triangle
                         //Special case - the room at the triangle's location will be at a different Y than this hexagon.
+                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5));
+
                         if(mapInputX == 0){
                             roomNumClicked = twoToOneD(mapInputY, 5);
                             mapLoopOver[0] = 1;
                             
                         }
-                        else if(mapInputX >= 6){
+                        else if(mapInputX > 5){
                             roomNumClicked -= 6;
                             mapLoopOver[0] = 2; 
+                            
                         }
-                        roomNumClicked = (twoToOneD(mapInputY, mapInputX) + ((mapInputX % 2 == 0)? -1 : 5));
-
+                       
                         
                     }
-                    else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3)){
+                    else if(mouseY - hitBoxY < (mouseX - hitBoxX) * -Math.sqrt(3) && mouseY > hitBoxY - mapRoomHeight / 2){
                         // TOP triangle
 
                         // TODO: Handle map edge cases
@@ -625,9 +631,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                             
                         }
                         
-                        else if(mapInputX >= 6){
+                        if(mapInputX >= 6){
                             roomNumClicked -= 6;
+                            System.out.println("Bruder");
                             mapLoopOver[0] = 2;
+                            
                         }
                         
                         if(mapInputY < 0){
@@ -639,14 +647,18 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     } else {
                         roomNumClicked = twoToOneD(mapInputY, mapInputX);
                         // TODO: Handle edge cases
-                        if(mapInputX == -1 && oneToTwoD(playerLoc)[0] == 0){
-                            roomNumClicked += 6;
+                        if(mapInputX == -1){
+                            roomNumClicked = twoToOneD(mapInputY, 5);
+                        
                             mapLoopOver[0] = 1;
+                            ////////////////////////////////////////////////////////////////////////////////////
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            ///////////////////////////////////////////////////////////////////////////////////
                         }
                         
-                        else if(mapInputX >= 6 && oneToTwoD(playerLoc)[0] == 5){
-                            roomNumClicked -= 6;
-                            mapLoopOver[1] = 2;
+                        else if(mapInputX == 6){
+                            roomNumClicked = twoToOneD(mapInputY, 0);
+                            mapLoopOver[0] = 2;
                         }
                         if(mapInputY < 0){
 
