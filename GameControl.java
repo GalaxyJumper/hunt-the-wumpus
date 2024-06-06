@@ -168,7 +168,7 @@ public  class GameControl {
                 boolean missed = false;
                 gui.updateActionText("Torpedo fired...", new Color(255,255,255));
                 gui.updateActionText(player.getArrows() + " torpedoes left", new Color(255,255,255));
-                if (hazards[0].equals("Wumpus")){
+                if ((hazards.length > 0) && hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
                     else {
@@ -191,10 +191,14 @@ public  class GameControl {
                 }
             }
         } else {
-            questionType = playerInput;
-            createQuestions();
-            hazards = null;
-            gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
+            if (player.getArrows() >= 1){
+                questionType = playerInput;
+                createQuestions();
+                hazards = null;
+                gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
+            } else {
+                gui.updateActionText("No coins left", new Color(255,0,0));
+            }
         }
     }
     // response is "A", "B", "C", or "D"
