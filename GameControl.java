@@ -208,7 +208,7 @@ public  class GameControl {
         } else if (questionType == 1){
             player.addCoins(-1);
             if (triviaSuccess){    
-                gui.updateActionText("Purchase complete", new Color(0,255,0);
+                gui.updateActionText("Purchase complete", new Color(0,255,0));
                 gui.updateActionText(gameLocs.newSecret(), new Color(255,255,255));
             }
             // gui.updateTurnCounter(player.getTurnsTaken());
