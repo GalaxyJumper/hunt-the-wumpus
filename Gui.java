@@ -510,7 +510,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setColor(new Color(220, 220, 220));
         g2d.drawString("Turn " + gameControl.getTurn(), (int)((width) - buyMenuX + 70), 100);
         g2d.setFont(calibri.deriveFont(40f));
-        g2d.drawString("Materials: " + gameControl.getCoins(), (int)(width - buyMenuX + 70), 160);
+        g2d.drawString("Coins: " + gameControl.getCoins(), (int)(width - buyMenuX + 70), 160);
         g2d.drawString("Torpedoes Left: " + gameControl.getArrows(), (int)(width - buyMenuX + 70), 220);
         g2d.setFont(calibri.deriveFont(50f));
 
@@ -520,14 +520,17 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         }
         g2d.setFont(calibri.deriveFont(50f));
         g2d.setColor(new Color(220, 220, 220));
-        g2d.drawString("Buy a torpedo (1 materials)", (int)(width - buyMenuX + 70), 320);
-        g2d.drawString("Buy a secret (1 materials)", (int)(width - buyMenuX + 70), 430);
+        g2d.drawString("Buy a torpedo (1 coin)", (int)(width - buyMenuX + 70), 320);
+        g2d.drawString("Buy a secret (1 coin)", (int)(width - buyMenuX + 70), 430);
     }
 
     public void closeBuyMenu(){
         buyMenuOpened = -1;
         buyMenuClosed = System.currentTimeMillis();
         inBuyMenu = false;
+        
+    }
+    public void openPopup(){
         
     }
     // Pirated from Avi's cave class
@@ -740,7 +743,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     if(buttonClicked == 1){
                         gameControl.turn(roomNumClicked);
                     } 
-                    else if(buttonClicked == 2){
+                    else if(buttonClicked == 3){
+                        
                         gameControl.turn(roomNumClicked, true);
                     }
                     
