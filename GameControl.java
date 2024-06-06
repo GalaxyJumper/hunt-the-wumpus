@@ -168,7 +168,7 @@ public  class GameControl {
                 boolean missed = false;
                 gui.updateActionText("Torpedo fired...", new Color(255,255,255));
                 gui.updateActionText(player.getArrows() + " torpedoes left", new Color(255,255,255));
-                if (hazards[0].equals("Wumpus")){
+                if ((hazards.length > 0) && hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
                     else {
