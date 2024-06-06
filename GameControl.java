@@ -61,6 +61,7 @@ public  class GameControl {
     ///////////////////////////////////////////////
     public String getHint(int questionNum){
         if (getCoins() >= 1){
+            player.addCoins(-1);
             return questions[questionNum][6];
         }
         gui.updateActionText("No coins remaining", new Color(255,0,0));
