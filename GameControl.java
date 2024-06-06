@@ -191,10 +191,14 @@ public  class GameControl {
                 }
             }
         } else {
-            questionType = playerInput;
-            createQuestions();
-            hazards = null;
-            gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
+            if (player.getArrows() >= 1){
+                questionType = playerInput;
+                createQuestions();
+                hazards = null;
+                gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
+            } else {
+                gui.updateActionText("No coins left", new Color(255,0,0));
+            }
         }
     }
     // response is "A", "B", "C", or "D"
