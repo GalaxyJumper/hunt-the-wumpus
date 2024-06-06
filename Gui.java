@@ -71,6 +71,9 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     int buttonSelected = 0;
     int[] mapLoopOver = new int[] {0, 0};
     final double SQRT3 = Math.sqrt(3);
+    String popupString = "";
+    boolean isPopupSecret = false;
+    int currentTriviaQuestion = 0;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -120,30 +123,14 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.failMove(2);
         //sounds.playSound(2);
         //openPurchaseMenu();
+        this.openPopup("Tardigrades are very awesome and can live in very intense enviroments sucha as hudropthermic eventa nsd ice cold envirpnmenys like in a ruler made of wood.");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-    }
-    
-    public Gui(String name){
-        JFrame frame = new JFrame();
-        System.out.println("New display instantiated with default dimensions 960x540");
-        this.setPreferredSize(new Dimension(960, 540));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // for later frame.addKeyListener();
-        frame.add(this);
-        //frame.pack();
-        frame.setTitle(name);
-        frame.setVisible(true);
-        
     }
     /////////////////////////////////////
     // METHODS
     /////////////////////////////////////
     
-    //Should run in a loop - gets called once every 17 ms
-    //Draws things based on 
-
-
     ////////////////////////////////////////////////
     // PAINT
     ///////////////////////////////////////////////
@@ -168,15 +155,17 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             drawFailMoveHex(failMoveHex[0], failMoveHex[1]);
         
         }
-        drawActionText(g2d);
+        
 
         if(dimRectTransparency != -1){
             g2d.setColor(new Color(0, 0, 0, dimRectTransparency));
             g2d.fillRect(0, 0, width, height);
         }
+        
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, this.triviaScoreData, g2d);
         }
+        drawActionText(g2d);
         g2d.setColor(new Color(255, 255, 255));
         g2d.drawString("" + testCounter, 300, 90);
         g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
@@ -190,6 +179,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             g2d.drawLine(width - 150, i * 20 + 50, width - 100, i * 20 + 50);
         }
         drawBuyMenu(turn, g2d, buttonSelected);
+        if(popupString != null && popupString != ""){
+            g2d.setColor(new Color(0, 0, 0, 177));
+            g2d.fillRect(0, 0, width, height);
+            drawPopup(g2d);
+        }
 
     }
     ////////////////////////////////////////////////
@@ -454,6 +448,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         for(int i = 0; i < 4; i ++){
             g2d.drawString(answerLabels[i] + question[i + 1], triviaMenuX + 50, (triviaMenuY + triviaMenuHeight / 3  + (triviaMenuHeight * 1 / 15)) + i * triviaMenuHeight/8);
         }
+        g2d.drawString("Get a hint (1 coin)", triviaMenuX + 50, (triviaMenuY + triviaMenuHeight / 3  + (triviaMenuHeight / 15)) + 4 * triviaMenuHeight/8);
         //g2d.drawRect(triviaMenuX, triviaMenuY, triviaMenuWidth, triviaMenuHeight / 4);
         //g2d.drawRect(triviaMenuX, triviaMenuY + triviaMenuHeight * 23 / 30, triviaMenuWidth, (triviaMenuHeight * 7 / 30));
     }
@@ -465,14 +460,16 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.triviaQuestion = question;
         nextQTransitionDim = -1;
         triviaCause = why;
-        
+        currentTriviaQuestion = 0;
         
         
     }
     public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ, int lastQNum){
         if(isLastQ){
             this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
+            return;
         }
+        currentTriviaQuestion = lastQNum + 1;
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
         disableClicks = true;
         this.isLastQ = isLastQ;
@@ -530,9 +527,47 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         inBuyMenu = false;
         
     }
-    public void openPopup(){
-        
+    public void openPopup(String message){
+        popupString = message;
     }
+    public void drawPopup(Graphics2D g2d){
+        g2d.setColor(new Color(31, 31, 31));
+        int popupWidth = width / 2;
+        int popupHeight = height / 3;
+        int popupX = (popupWidth / 2);
+        int popupY = ((height / 2) - (popupHeight / 2));
+        g2d.fillRect(popupX, popupY, popupWidth, popupHeight);
+        g2d.setColor(new Color(24, 24, 24));
+        g2d.fillRect(popupX, popupY, popupWidth, popupHeight / 7);
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.setFont(calibri.deriveFont(40f));
+        g2d.drawString("Hint (click to close)", popupX + 20, popupY + 45);
+        String[] splitPopupString = popupString.split(" ");
+        ArrayList<String> result = new ArrayList<String> ();
+        String currentLine = "";
+        int sum = 0;
+        int pos = 0;
+        int lineLength = 50;
+        while(pos < splitPopupString.length){
+            sum += splitPopupString[pos].length();
+            currentLine += splitPopupString[pos] + " ";
+            if(sum > lineLength){
+                result.add(currentLine);
+                currentLine = "";
+                sum = 0;
+            }
+            pos ++;
+        }
+        result.add(currentLine);
+        for(int i = 0; i < result.size(); i++){
+            g2d.drawString(result.get(i), popupX + 50, (popupY + 170) + 50 * i);
+        }
+    }
+
+    public void gameEndSequence(String[][] leaderboardInfo, boolean won){
+        // display leaderboard and if the player won
+    }
+
     // Pirated from Avi's cave class
     private int twoToOneD(int y, int x){
         return x + (6 * y);
@@ -587,8 +622,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
          * By checking both of the triangles we can figure out whether the mouse is in this hexagon or one of its neighbors.
         */
         if(!disableClicks){
-
-            if(inBuyMenu){
+            if(popupString != ""){
+                popupString = "";
+            }
+            else if(inBuyMenu){
                 if(mouseX > (width * 3 / 4) && mouseX < width){
                     if(mouseY > 240 && mouseY < 480){
                         if(mouseY > 360){
@@ -763,17 +800,23 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             //////////////////////////////////////////////////
 
 
+            
             else if (inTriviaMenu) {
+                answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
                 if(mouseX > triviaMenuX && 
                 mouseX < triviaMenuX + triviaMenuWidth &&
                 mouseY > triviaMenuY + triviaMenuHeight / 4 + (triviaMenuHeight * 1 / 15)
-                && mouseY < triviaMenuY + (triviaMenuHeight * 25 / 30 )){
+                && mouseY < triviaMenuY + (triviaMenuHeight * 25 / 30) + (answerSelectionHeight / 4)){
                     
                     answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
 
                     answerHitboxHeight = answerSelectionHeight / 4;
 
                     int answerSelected = (int)((mouseY - triviaMenuY - ((triviaMenuHeight / 4)  + (triviaMenuHeight * 1 / 15))) / answerHitboxHeight);
+                    if(answerSelected == 4){
+                        openPopup(gameControl.getHint(currentTriviaQuestion));
+                        return;
+                    }
                     trivChoice = answerSelected;
                     String abcd = "ABCD";
                     int temp = trivChoice;
@@ -881,7 +924,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         mouseY = MouseInfo.getPointerInfo().getLocation().getY();
         mousePos = new int[] {(int)mouseX, (int)mouseY};
         //Constantly fade out action text
-        for(int i = 0; i < actionTextFades.length; i++){
+        for(int i = 0; i < actionTextFades.length - 1; i++){
             if(actionTextFades[i] > 30){
                 actionTextFades[i] -= 1;
             }
@@ -912,7 +955,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                 if(mouseX > triviaMenuX && 
                 mouseX < triviaMenuX + triviaMenuWidth &&
                 mouseY > triviaMenuY + triviaMenuHeight / 4 + (answerHitboxHeight / 2)  + (triviaMenuHeight * 1 / 15)
-                && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)  + (triviaMenuHeight * 1 / 15)){
+                && mouseY < triviaMenuY + (triviaMenuHeight * 23 / 30 ) + (answerHitboxHeight / 2)  + (triviaMenuHeight * 1 / 15) + (answerSelectionHeight / 4)){
                 
                 // Do some math to figure out which answer specifically, 0-3.
                 int answerHovered = (int)((mouseY - triviaMenuY - (triviaMenuHeight / 4) - (answerHitboxHeight / 2)  - (triviaMenuHeight * 1 / 15)) / answerHitboxHeight);
@@ -954,6 +997,6 @@ class argly {
 
         argly bargly
         
-        
-        ;}
+    ;}
 }
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
