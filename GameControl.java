@@ -60,7 +60,11 @@ public  class GameControl {
     // METHODS
     ///////////////////////////////////////////////
     public String getHint(int questionNum){
-        return questions[questionNum][6];
+        if (getCoins() >= 1){
+            return questions[questionNum][6];
+        }
+        gui.updateActionText("No coins remaining", new Color(255,0,0));
+        return null;
     }
     public void move(int playerInput){
         gui.move(playerInput);
@@ -191,7 +195,7 @@ public  class GameControl {
                 }
             }
         } else {
-            if (player.getArrows() >= 1){
+            if (player.getCoins() >= 1){
                 questionType = playerInput;
                 createQuestions();
                 hazards = null;
