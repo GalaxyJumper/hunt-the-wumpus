@@ -11,8 +11,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.awt.Color;
-// TEMPORARY
-import java.util.concurrent.TimeUnit;
+
 public  class GameControl {
     ///////////////////////////////////////////////
     // VARIABLES
@@ -271,11 +270,6 @@ public  class GameControl {
         //gui.gameEndSequence(won, leaderboardInfo);
         // TEMPORARY
         gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255,won? 255 : 0,0));
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (Exception t){
-            t.printStackTrace();
-        }
     }
     public void gameFullEnd(){
         System.exit(0);
