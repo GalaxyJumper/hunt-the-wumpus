@@ -73,7 +73,7 @@ public  class GameControl {
         String[] nearHazards = gameLocs.checkForHazards();
         for (String hazard : nearHazards){
             if (hazard.equals("Wumpus")){
-                gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
+                gui.updateActionText("The ship rocks with an ominous rumble...", new Color(155,73,186));
             } else if (hazard.equals("Pit")){
                 gui.updateActionText("You notice the floor dropping away...", new Color(255,255,255));
             } else if (hazard.equals("Bat")) {
