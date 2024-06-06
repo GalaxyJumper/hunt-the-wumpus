@@ -71,9 +71,9 @@ public  class GameControl {
             if (hazard.equals("Wumpus")){
                 gui.updateActionText("The ship rocks with an ominous rumble...", new Color(255,255,255));
             } else if (hazard.equals("Pit")){
-                gui.updateActionText("You feel a current pulling your ship...", new Color(255,255,255));
+                gui.updateActionText("You notice the floor dropping away...", new Color(255,255,255));
             } else if (hazard.equals("Bat")) {
-                gui.updateActionText("BATMANNNNN...", new Color(255,255,255));
+                gui.updateActionText("You feel a current pulling your ship...", new Color(255,255,255));
             }
         }
     }
@@ -98,7 +98,7 @@ public  class GameControl {
                 }
                 questionType = 3;
                 createQuestions();
-                gui.openTriviaMenu("Wumpus Encounter", questions[0], 5);
+                gui.openTriviaMenu("Wumpus confrontation", questions[0], 5);
                 return;
             }
             continueTurn();
@@ -141,14 +141,14 @@ public  class GameControl {
             hazards = null;
             questionType = 2;
             createQuestions();
-            gui.openTriviaMenu("Pit Encounter", questions[0], 5);
+            gui.openTriviaMenu("Skirting the Abyss", questions[0], 5);
             return;
         }
         if (hazards[0].equals("Bat")){
             hazards = null;
             questionType = 4;
             createQuestions();
-            gui.openTriviaMenu("Bat Encounter", questions[0], 5);
+            gui.openTriviaMenu("Maintaining Steering Control", questions[0], 5);
             return;
         }
     }
@@ -165,8 +165,8 @@ public  class GameControl {
                 String[] hazards = gameLocs.getHazards(playerInput);
                 boolean wumpusShot = false;
                 boolean missed = false;
-                gui.updateActionText("Arrow Fired...", new Color(255,255,255));
-                gui.updateActionText(player.getArrows() + " arrows left", new Color(255,255,255));
+                gui.updateActionText("Torpedo fired...", new Color(255,255,255));
+                gui.updateActionText(player.getArrows() + " torpedoes left", new Color(255,255,255));
                 if (hazards[0].equals("Wumpus")){
                     if (Math.random() < 0.5)
                         wumpusShot = true;
@@ -175,16 +175,16 @@ public  class GameControl {
                     }
                 }
                 if (wumpusShot){
-                    gui.updateActionText("You Won!", new Color(0,255,0));
+                    gui.updateActionText("Thou hath slain the Wumpus!", new Color(0,255,0));
                     gameEnd(true);
                 } else if (missed) {
-                    gui.updateActionText("You Missed!", new Color(255,255,0));
+                    gui.updateActionText("You missed!", new Color(255,255,0));
                 } else {
-                    gui.updateActionText("Seems The Wumpus Wasn't There...!", new Color(255,255,0));
+                    gui.updateActionText("Seems the Wumpus wasn't there...", new Color(255,255,0));
                 }
             } else {
                 if (player.getArrows() <= 0){
-                    gui.updateActionText("No Arrows Remaining", new Color(255,0,0));
+                    gui.updateActionText("No torpedoes remaining", new Color(255,0,0));
                 } else {
                     gui.updateActionText("You can't get a good angle there...", new Color(255,255,255));
                 }
@@ -193,7 +193,7 @@ public  class GameControl {
             questionType = playerInput;
             createQuestions();
             hazards = null;
-            gui.openTriviaMenu((playerInput == 1)? "Purchase Secret" : "Purchase Arrow", questions[0], 5);
+            gui.openTriviaMenu((playerInput == 1)? "Purchase secret" : "Purchase torpedo", questions[0], 5);
         }
     }
     // response is "A", "B", "C", or "D"
@@ -202,37 +202,38 @@ public  class GameControl {
             player.addCoins(-1);
             if (triviaSuccess){
                 player.addArrows(1);
-                gui.updateActionText("Arrow Gained", new Color(255,0,255));
+                gui.updateActionText("Torpedo gained", new Color(255,0,255));
             }
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 1){
             player.addCoins(-1);
-            if (triviaSuccess){                
+            if (triviaSuccess){    
+                gui.updateActionText("Purchase complete", new Color(0,255,0);
                 gui.updateActionText(gameLocs.newSecret(), new Color(255,255,255));
             }
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 2){
             if (!triviaSuccess){
-                gui.updateActionText("You died!", new Color(255, 0 , 0));
+                gui.updateActionText("You fall away into the abyss...", new Color(255, 0 , 0));
                 gameEnd(false);
             } else {
-                gui.updateActionText("You lived!", new Color(0, 255, 0));
+                gui.updateActionText("You successfully skirted the abyss!", new Color(0, 255, 0));
             }
         } else if (questionType == 3){
             if (!triviaSuccess){
-                gui.updateActionText("You died!", new Color(255, 0 , 0));
+                gui.updateActionText("You were killed by the Wumpus...", new Color(255, 0 , 0));
                 gameEnd(false);
             } else {
-                gui.updateActionText("The Wumpus is Wounded!", new Color(0, 255, 0));
+                gui.updateActionText("The Wumpus is wounded!", new Color(0, 255, 0));
                 gameLocs.fleeingWumpus(player.getTurnsTaken());
             }
         } else if (questionType == 4){
             if (!triviaSuccess){
                 int newRoom = gameLocs.batTransport();
                 move(newRoom);
-                gui.updateActionText("You Were Transported Into Room #" + (newRoom + 1) + "!", new Color(255,255,0));
+                gui.updateActionText("The iron hull screams, and you lose control of the ship... You are now in room #" + (newRoom + 1) + "!", new Color(255,255,0));
             } else {
-                gui.updateActionText("You Escaped The Bats!", new Color(0, 255, 0));
+                gui.updateActionText("You fought the current and remained on course!", new Color(0, 255, 0));
             }
         }
         questionType = -1;

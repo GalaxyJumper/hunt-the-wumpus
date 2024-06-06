@@ -42,7 +42,7 @@ public class SecretsManager {
         // If the template contains *HAZARD*, replace it with a random type
         if (base.contains("*HAZARD*")) {
             int type = (int) (Math.random() * gl.getTYPES().length);
-            String typeName = gl.getTYPES()[type];
+            String typeName = gl.getTYPESFRONT()[type];
             replace(result, "*HAZARD*", typeName);
 
             // Replace *LOCATION* with the location of the hazard
