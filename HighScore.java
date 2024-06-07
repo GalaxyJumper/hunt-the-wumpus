@@ -23,7 +23,7 @@ public class HighScore {
     highScoreFile = new File("Highscore.csv");
     players = putPlayersIntoArray();
     this.player = player;
-
+    player.setCave(caveName);
   }
 
   /// Methods///
@@ -44,8 +44,8 @@ public class HighScore {
   // adds all players into array
   public ArrayList<Player> putPlayersIntoArray() throws FileNotFoundException {
    
-   //makes a list of players using the length of the file
-   ArrayList<Player> players = new ArrayList<Player>(lengthOfFile()-1);
+   //makes a list of players
+   ArrayList<Player> players = new ArrayList<Player>();
    
    Scanner s = new Scanner(highScoreFile);
    
