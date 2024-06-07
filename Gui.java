@@ -123,7 +123,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.failMove(2);
         //sounds.playSound(2);
         //openPurchaseMenu();
-        this.openPopup("Tardigrades are very awesome and can live in very intense enviroments sucha as hudropthermic eventa nsd ice cold envirpnmenys like in a ruler made of wood.");
+        //this.openPopup("Tardigrades are very awesome and can live in very intense enviroments sucha as hudropthermic eventa nsd ice cold envirpnmenys like in a ruler made of wood.");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
         new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
     }
@@ -467,7 +467,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ, int lastQNum){
         if(isLastQ){
             this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
-            return;
         }
         currentTriviaQuestion = lastQNum + 1;
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
