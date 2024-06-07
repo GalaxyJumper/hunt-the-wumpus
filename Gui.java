@@ -79,6 +79,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     String popupString = "";
     boolean isPopupSecret = false;
     int currentTriviaQuestion = 0;
+    boolean inLeaderboard = false;
+    String[][] leaderboardInfo;
+    boolean won;
+    int playerRank;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -166,11 +170,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             g2d.setColor(new Color(0, 0, 0, dimRectTransparency));
             g2d.fillRect(0, 0, width, height);
         }
-        
+        drawActionText(g2d);
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, this.triviaScoreData, g2d);
         }
-        drawActionText(g2d);
         g2d.setColor(new Color(255, 255, 255));
         g2d.drawString("" + testCounter, 300, 90);
         g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
@@ -190,7 +193,12 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             g2d.fillRect(0, 0, width, height);
             drawPopup(g2d);
         }
+        if(inLeaderboard){
+            g2d.setColor(new Color(0, 0, 0, 150));
+            g2d.fillRect(0, 0, width, height);
+            drawLeaderboard();
 
+        }
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
@@ -570,10 +578,63 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         }
     }
 
-    public void gameEndSequence(String[][] leaderboardInfo, boolean won){
+    public void gameEndSequence(String[][] leaderboardInfo, boolean won, int playerRank){
         // display leaderboard and if the player won
+        inLeaderboard = true;
+        this.leaderboardInfo = leaderboardInfo;
+        this.won = won;
+        this.playerRank = playerRank;
     }
+    private void drawLeaderboard(){
+        int leaderboardWidth = (this.width * 3 / 4);
+        int leaderboardHeight = (this.height * 3 / 4);
+        int leaderboardX = (this.width - leaderboardWidth) / 2;
+        int leaderboardY = (this.height - leaderboardHeight) / 2;
+        int scoreBubbleSize = 30;
+        String isYou = "";
+        String rank;
+        //Base menu background
+        g2d.setColor(new Color(31, 31, 31));
+        g2d.fillRect(leaderboardX, leaderboardY, leaderboardWidth, leaderboardHeight);
+        //Title section
+        g2d.setColor(new Color(24, 24, 24));
+        g2d.fillRect(leaderboardX, leaderboardY, leaderboardWidth, leaderboardHeight / 5);
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.setFont(calibri.deriveFont(90f));
+        g2d.drawString((won)? "You won!" : "You lost!", leaderboardX + 40, (int)(leaderboardY + (leaderboardHeight * 0.2 * 0.6)));
+        g2d.setFont(calibri.deriveFont(40f));
+        g2d.drawString("#     Name             Score    Turns  Coins  Arrows  Cave #", leaderboardX + 30, (int)(leaderboardY + (leaderboardHeight * 0.25) - 20));
+        for(int i = 0; i < leaderboardInfo.length; i++){
+            if(i % 2 == 0){
+                g2d.setColor(new Color(43, 43, 43));
+            } else {
+                g2d.setColor(new Color(31, 31, 31));
+            }
+            if(playerRank - 1 == i){
+                isYou = "  (you)";
+                g2d.setColor(new Color(61, 61, 61));
+            }
+            if(!(i == 10)){
+                rank = "" + i;
 
+            } else {
+                rank = " ";
+            }
+            g2d.fillRect(leaderboardX, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i), leaderboardWidth, 66);
+            g2d.setColor(new Color(220, 220, 220));
+    
+            
+            g2d.drawString(rank, leaderboardX + 30, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][0], leaderboardX + 90, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][1], leaderboardX + 310, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][2], leaderboardX + 460, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][3], leaderboardX + 580, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][4], leaderboardX + 700, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][5] + isYou, leaderboardX + 820, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            isYou = "";
+        }
+        g2d.drawString("(click to exit game)", leaderboardX + (leaderboardWidth / 2) - 150, leaderboardY + leaderboardHeight - 30);
+    }
     // Pirated from Avi's cave class
     private int twoToOneD(int y, int x){
         return x + (6 * y);
@@ -628,6 +689,9 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
          * By checking both of the triangles we can figure out whether the mouse is in this hexagon or one of its neighbors.
         */
         if(!disableClicks){
+            if(inLeaderboard){
+                System.exit(0);
+            }
             if(popupString != ""){
                 popupString = "";
             }
@@ -807,8 +871,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             // TRIVIA INPUT
             //////////////////////////////////////////////////
 
-
-            
             else if (inTriviaMenu) {
                 answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
                 if(mouseX > triviaMenuX && 
@@ -834,9 +896,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     gameControl.questionAnswer(abcd.substring(temp, temp + 1));
                 }
 
-
-                
-
             }
 
         }
@@ -844,22 +903,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
 
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public void mousePressed(MouseEvent e){
 
     }
@@ -960,8 +1003,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         if(inTriviaMenu){
             // TRIVIA UI UPDATING
             
-
-            
                 // Is the mouse hovering over an answer?
                 if(mouseX > triviaMenuX && 
                 mouseX < triviaMenuX + triviaMenuWidth &&
@@ -974,8 +1015,6 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                 } else {
                     selectRectPos = -1;
                 }
-
-            
         }
         long time;
         if(moveAnimStart != -1 && now - moveAnimStart <= 1500){
@@ -983,17 +1022,12 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             d = D/2 * ((double)1 - (double)Math.cos((Math.PI / 3) * t));
             mapOffset = new double[] {lastOffset[0] + d * distanceMovingTo[0], lastOffset[1] + d * distanceMovingTo[1]};
         } else if(moveAnimStart != -1 && now - moveAnimStart > 1500){
-            
             disableClicks = false;
             moveAnimStart = -1;
         }
         if(buyMenuOpened != -1 && now - buyMenuOpened < 250){
             time = (now - buyMenuOpened);
             buyMenuX = ((double)width / 4.0) * (double)Math.sqrt((double)time / 250.0);
-
-
-            
-
         }
         if(buyMenuClosed != -1 && now - buyMenuClosed < 250){
             time = now - buyMenuClosed;
@@ -1002,10 +1036,3 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     }
 }
 
-class argly {
-    public argly (){
-
-        argly bargly;
-        
-    ;}
-}
