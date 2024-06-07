@@ -272,7 +272,7 @@
             "Key": "D",
 	        "Hint": "It’s hard to see when you get a hit on those terrible things, squids. Their blood blends in with the waves."
         },
-
+        
         {
             "Question": "What material are submarine hulls typically made of?",
             "Answers": ["Brass", "Steel", "Carbon Nanotubes", "Bronze"],
@@ -333,7 +333,7 @@
 	        "Hint":"Truly massive, with a name to fit..."
         },
         {
- 	        "Question": "What strange phenomenon involves the ocean emitting a continuous,   low-frequency hum heard globally?", 
+ 	        "Question": "What strange phenomenon involves the ocean emitting a continuous, low-frequency hum heard globally?", 
             "Answers": [ "Ocean Murmur", "Thrum of the Deep", "Marine Drone", "Earth’s Hum" ],
             "Key": "D", 
             "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep." 
