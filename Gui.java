@@ -56,7 +56,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     long failMoveStart = 0;
     boolean isLastQ;
     String[] tempQuestion;
-    String[] actionText = new String[] {"Entered room 23.", "Survived a Wumpus attack.", "You smell a foul stench.", "Gary requires attention.", "I am getting tired."};
+    String[] actionText = new String[] {"", "", "", "", "I am getting tired."};
     int[] actionTextFades = {255, 255, 255, 255, 255};
     Color[] actionTextColors = new Color[] {new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31)};
     ArrayList<Integer> tempFadeIndices = new ArrayList<Integer>();
@@ -600,7 +600,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setFont(calibri.deriveFont(90f));
         g2d.drawString((won)? "You won!" : "You lost!", leaderboardX + 40, (int)(leaderboardY + (leaderboardHeight * 0.2 * 0.6)));
         g2d.setFont(calibri.deriveFont(40f));
-        g2d.drawString("#     Name             Score    Turns  Coins  Arrows  Cave #", leaderboardX + 30, (int)(leaderboardY + (leaderboardHeight * 0.25) - 20));
+        g2d.drawString("#     Name              Score   Turns  Coins  Torpedoes     Cave #", leaderboardX + 30, (int)(leaderboardY + (leaderboardHeight * 0.25) - 20));
         for(int i = 0; i < leaderboardInfo.length; i++){
             if(i % 2 == 0){
                 g2d.setColor(new Color(43, 43, 43));
@@ -623,11 +623,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             
             g2d.drawString(rank, leaderboardX + 30, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][0], leaderboardX + 90, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
-            g2d.drawString(leaderboardInfo[i][1], leaderboardX + 310, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][1], leaderboardX + 350, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][2], leaderboardX + 460, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][3], leaderboardX + 580, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][4], leaderboardX + 700, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
-            g2d.drawString(leaderboardInfo[i][5] + isYou, leaderboardX + 820, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][5] + isYou, leaderboardX + 860, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             isYou = "";
         }
         g2d.drawString("(click to exit game)", leaderboardX + (leaderboardWidth / 2) - 150, leaderboardY + leaderboardHeight - 30);
