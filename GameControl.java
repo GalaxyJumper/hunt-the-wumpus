@@ -317,6 +317,6 @@ public  class GameControl {
         gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255, won? 255 : 0,0));
         gui.updateActionText("Click to close", new Color(255,255,255));
         
-        // gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
+        gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
     }
 }
