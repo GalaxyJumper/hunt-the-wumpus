@@ -37,6 +37,9 @@ public class Player{
     public Player(String[] pLine){
         name = pLine[0];
         score = Integer.parseInt(pLine[1]); 
+        turnsTaken = Integer.parseInt(pLine[2]);
+        coins = Integer.parseInt(pLine[3]);
+        arrows = Integer.parseInt(pLine[4]);
         cave = pLine[5];
 
     }
