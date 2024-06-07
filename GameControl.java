@@ -96,6 +96,7 @@ public  class GameControl {
                 } else {
                     // inaccessible room shot at
                     gui.updateActionText("You can't get a good angle there...", new Color(255,255,255));
+                    gui.failMove(playerInput);
                 }
             }
         } else {
@@ -155,6 +156,8 @@ public  class GameControl {
                 return;
             }
             continueTurn();
+        } else {
+            gui.failMove(playerInput);
         }
     }
 
