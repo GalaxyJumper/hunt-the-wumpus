@@ -5,7 +5,7 @@ Contributors:
 - Shivansh Bhatt: Trivia Class, Trivia Questions, and Story Elements
 - Kavya Tayal: Player Class, HighScore Class, and Trivia Questions
 - Josh Lennon: Player Class, HighScore Class, GameLocations Class, SecretsManager Class, Trivia Questions, Story Elements, Art, and SFX
-- Nick Lennon: Player Class, HighScore Class, SoundManager Class, Trivia Class, and Trivia Questions
+- Nick Lennon: Player Class, HighScore Class, SoundManager Class, and Trivia Questions
 - Toki Young: SoundManager Class and Trivia Questions
 
 This our Hunt-The-Wumpus game, Ocean Edition.

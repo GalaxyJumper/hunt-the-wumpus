@@ -1,6 +1,7 @@
-// Joshua Lennon
-// 4 - 24 - 24
-// Secrets Managing Object
+// Secrets Manager Object
+// Josh Lennon
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
 
 import java.util.*;
 

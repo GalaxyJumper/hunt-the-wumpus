@@ -1,11 +1,8 @@
-// Joshua Lennon
-// Nick Lennon
+// Game Control Object
 // Aviral Mishra
 // 06/07/2024
-// Game Control Object
 // Mr. Reiber AP CSA Periods 5 & 6
 
-// Necessary Imports
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;

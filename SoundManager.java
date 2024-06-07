@@ -1,3 +1,9 @@
+// Sound Manager Object
+// Toki Young
+// Nick Lennon
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
+
 import javax.sound.sampled.*;
 import java.util.ArrayList;
 import java.io.File;
