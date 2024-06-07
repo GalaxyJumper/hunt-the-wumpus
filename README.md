@@ -20,4 +20,13 @@ Movement: [Left Click]
 Answer Trivia: [Left Click]
 Launch Torpedo: [Right Click]
 
+Troubleshooting
+Game Crashes on Startup:
+Ensure you have the correct version of JDK installed.
 
+Performance Issues:
+Close other applications running in the background.
+
+Compilation Errors:
+Ensure all necessary files are in the correct directories.
+Check for any missing dependencies.
