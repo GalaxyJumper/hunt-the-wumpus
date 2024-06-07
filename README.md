@@ -8,12 +8,16 @@ Contributors:
 - Nick Lennon: Player Class, HighScore Class, SoundManager Class, and Trivia Questions
 - Toki Young: SoundManager Class and Trivia Questions
 
-This our Hunt-The-Wumpus game, Ocean Edition.
+This is a java game titled "In the Deep" created by our team at Bothell High School for Microsoft's 'Hunt the Wumpus' challenge. You must navigate through a maze of underwater caverns, avoid deadly hazards, skirt death by the power of your wit, and ultimately strike the Wumpus dead the only way we know how: 1200 pounds of TNT and tetrodotoxin, delivered gracefully by our "reposessed" Mark 14 torpedoes.
 
-It is like the original wumpus, with a few minor and a small amount of major modifications.
-1. Wumpus is scarier, and does not die
-    a. In order to win, you need to shoot a picture of wumpus, like how you would shoot wumpus with an arrow. After doing this, get out while being pursued by wumpus
-    b. An escape plan is invaluable in this situation.
-2. New tile = Alert tile
-    a. Alerts the wumpus to where you are: Good luck!
+"In the Deep" plays like the original "Hunt the Wumpus", with a few minor gameplay modifications:
+Trivia Questions: when encountering any hazard, positive outcomes are determined by successfully answering randomly ordered, themed, trivia questions.
+
+Pits and Bats have been changed to Abyss and Currents while Wumpus remained the same. Players receive a warning when adjacent to these hazards.
+
+In-Game Navigation
+Movement: [Left Click]
+Answer Trivia: [Left Click]
+Launch Torpedo: [Right Click]
+
 
