@@ -25,7 +25,7 @@ public class Player{
 
     public Player(){
         this.name = makeName();
-        this.arrows = 3;
+        this.arrows = 0;
         this.coins = 0;
         this.turnsTaken = 0;
         this.score = 0;
