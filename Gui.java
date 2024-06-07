@@ -169,6 +169,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setColor(new Color(255, 255, 255));
         g2d.drawString("" + testCounter, 300, 90);
         g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
+        g2d.drawString(String.valueOf(isLastQ), 300, 190);
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(30f));
         g2d.drawLine(mapLoopShift[0], mapLoopShift[1], mapLoopShift[0], mapLoopShift[1]);
@@ -465,16 +466,17 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         
     }
     public void nextTriviaQuestion(boolean lastQCorrect, String[] nextQuestion, boolean isLastQ, int lastQNum){
+        this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
         if(isLastQ){
             this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
         }
         currentTriviaQuestion = lastQNum + 1;
         selectedAnswerData[1] = lastQCorrect? 1 : 0;
-        disableClicks = true;
+        this.disableClicks = true;
         this.isLastQ = isLastQ;
         nextQTransitionDim = -1;
         this.tempQuestion = nextQuestion;
-        this.triviaScoreData[5 - lastQNum + 1] = (lastQCorrect)? 1 : 0; 
+   
         triviaFeedbackAnimStart = System.currentTimeMillis();
         if(lastQCorrect){
             //sounds.playSound(4);
@@ -762,9 +764,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                             mapLoopOver[0] = 2;
                         }               
                         
-                        if(mouseY < mapStartY + mapOffset[1]){
+                        if(mouseY < mapStartY + mapOffset[1] && mapInputX % 2 == 1){
                             mapInputY = -1;
-                        }         
+                        } else if(mouseY < mapTopEdge + mapOffset[1] && mapInputX % 2 == 0){
+                            mapInputY = -1;
+                        }
                         
                         if(mapInputY < 0){
                             roomNumClicked = twoToOneD(mapInputY, mapInputX) + 30;
@@ -884,7 +888,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             triviaMenuOpened = 0;
         }
         //Trivia right/wrong
-        if(now - triviaFeedbackAnimStart <= 2100){
+        if(now - triviaFeedbackAnimStart <= 2100 && triviaFeedbackAnimStart != 0){
             
             correctAnsRectDim = (int)(1000 - (now - triviaFeedbackAnimStart));
             correctAnsRectDim = (correctAnsRectDim > 255)? 255 : correctAnsRectDim; 
@@ -894,24 +898,27 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             }
             if(now - triviaFeedbackAnimStart > 1000 && now - triviaFeedbackAnimStart < 1400){
                     if(isLastQ){
-                        triviaFeedbackAnimStart = 0;
-                        gameControl.continueTurn();
-                        this.closeTriviaMenu();
                         disableClicks = false;
+                        
+                        triviaFeedbackAnimStart = 0;
+                        this.closeTriviaMenu();
+                        gameControl.continueTurn();
+                        
                     }
                     nextQTransitionDim = 0;
             }
             else if(now - triviaFeedbackAnimStart > 1400 && now - triviaFeedbackAnimStart < 2100){
-                isLastQ = false;
                 this.triviaQuestion = tempQuestion;
                 nextQTransitionDim = (int)(255 * (now - (triviaFeedbackAnimStart + 1400)) / 700);
                 nextQTransitionDim = (nextQTransitionDim > 255)? 255 : nextQTransitionDim; 
                 nextQTransitionDim = (nextQTransitionDim < 0)? 0 : nextQTransitionDim;
             }
-            if(now - triviaFeedbackAnimStart > 2050 && now - triviaFeedbackAnimStart < 2100){
-                disableClicks = false;
-            }
             
+            
+        } else if(now - triviaFeedbackAnimStart > 2100 && triviaFeedbackAnimStart != 0){
+            disableClicks = false;
+            
+            triviaFeedbackAnimStart = 0;
         }
 
         double answerSelectionHeight = ((triviaMenuHeight * 3 / 4) - (triviaMenuHeight * 7 / 30));
@@ -971,10 +978,9 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             d = D/2 * ((double)1 - (double)Math.cos((Math.PI / 3) * t));
             mapOffset = new double[] {lastOffset[0] + d * distanceMovingTo[0], lastOffset[1] + d * distanceMovingTo[1]};
         } else if(moveAnimStart != -1 && now - moveAnimStart > 1500){
-            disableClicks = false;
-        } else {
-            moveAnimStart = -1;
             
+            disableClicks = false;
+            moveAnimStart = -1;
         }
         if(buyMenuOpened != -1 && now - buyMenuOpened < 250){
             time = (now - buyMenuOpened);
@@ -998,4 +1004,3 @@ class argly {
         
     ;}
 }
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
