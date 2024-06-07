@@ -12,18 +12,23 @@ import org.json.simple.parser.ParseException;
 
 public class Cave {
 
+    // the map
     private final int[][] map = new int[30][];
     private String caveName;
 
-    // cave constructor 
     public Cave(){
-        // get map and map reader
+        // map reader
         JSONParser parser = new JSONParser();
         
         try {
+            // get json object
             JSONObject a = (JSONObject) parser.parse(new FileReader("Maps.json"));
+
+            // choose random cave
             int caveNumber = 1 + (int) (Math.random() * 3);
             caveName = "Cave " + (caveNumber);
+
+            // gave cave info
             interpretFile((JSONObject) a.get(caveName));
         } catch (IOException io) {
             io.printStackTrace();
@@ -39,7 +44,10 @@ public class Cave {
     // get file info
     private void interpretFile(JSONObject cave){
         for (int i = 0; i < 30; i++){
+            // list of possible rooms as a json array
             JSONArray possibleRooms = (JSONArray) cave.get(i + "");
+
+            // transfer into map array
             map[i] = new int[possibleRooms.size()];
             for (int j = 0; j < possibleRooms.size(); j++){
                 map[i][j] = Math.toIntExact((long) possibleRooms.get(j));
@@ -57,31 +65,8 @@ public class Cave {
         return false;
     }
 
-    // returns the array of possible moves frmo a specific room
+    // returns the array of possible moves from a specific room
     public int[] possibleMoves(int curLoc){
         return map[curLoc];
-    }
-
-    // internal code curerntly works in two dimensions while every other class else indexes rooms 0 - 29
-    /**private int[] oneToTwoD(int oneDCoord){
-        int[] twoD = new int[]{oneDCoord / 6, oneDCoord % 6};
-        return twoD;
-    }**/
-
-    public int twoToOneD(int[] twoDCoords){
-        return twoDCoords[1] + 6 * twoDCoords[0];
-    }
-
-    // coding speed stuff, delete later
-    public static void println(String string){
-        System.out.println(string);
-    }
-
-    public static void print(String string){
-        System.out.println(string);
-    }
- 
-    public static void println(){
-        System.out.println();
     }
 }

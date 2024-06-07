@@ -5,7 +5,6 @@
 // 06/07/2024
 // Mr. Reiber AP CSA Periods 5 & 6
 
-//imports
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +15,10 @@ import org.json.simple.parser.ParseException;
 
 class Trivia {
 
+    // all the questions
     private String[][] questionsAndInfo;
+
+    // for unique questions
     private boolean[] usedQuestions;
 
     public Trivia(){

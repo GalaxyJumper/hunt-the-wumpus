@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws FontFormatException, IOException {
+        System.setProperty("sun.java2d.uiScale", "0.7");
         new GameControl();
     }
 }

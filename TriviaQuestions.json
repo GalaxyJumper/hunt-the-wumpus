@@ -228,10 +228,10 @@
         },
 
         {
-            "Question": "Which country’s submarines were the best at the end of World War II?",
+            "Question": "Which country's submarines were the best at the end of World War II?",
             "Answers": ["Germany", "Japan", "United States", "Russia"],
             "Key": "A",
-	        "Hint": "The deathtrap you’re bolted into right now was cutting edge in 1940. When it was stolen from the Krauts."	
+	        "Hint": "The deathtrap you're bolted into right now was cutting edge in 1940. When it was stolen from the Krauts."	
         },
 
         {
@@ -267,24 +267,24 @@
 	        "Hint": "The torpedoes in this ship are filled with tetrodotoxin, from puffers. Lord knows it is barely enough to kill a Wumpus…"
         },
         {
-            "Question": "What sea creature’s blood is blue?",
+            "Question": "What sea creature's blood is blue?",
             "Answers": ["Lobster", "Yellowfin tuna", "Hermit Crab", "Squid"],
             "Key": "D",
-	        "Hint": "It’s hard to see when you get a hit on those terrible things, squids. Their blood blends in with the waves."
+	        "Hint": "It's hard to see when you get a hit on those terrible things, squids. Their blood blends in with the waves."
         },
         
         {
             "Question": "What material are submarine hulls typically made of?",
             "Answers": ["Brass", "Steel", "Carbon Nanotubes", "Bronze"],
             "Key": "B",
-	        "Hint": "This vessel is made of High-Yield 80 steel alloy, like anything that doesn’t want to implode a few kilometers down."
+	        "Hint": "This vessel is made of High-Yield 80 steel alloy, like anything that doesn't want to implode a few kilometers down."
         },
         {
 
             "Question": "How many oceans are in the world?",
             "Answers": ["4", "7", "6", "5"],
             "Key": "D",
-	        "Hint”":"There’s a total of 5 seas in the world, yet, we only explored so little of each."
+	        "Hint”":"There's a total of 5 seas in the world, yet, we only explored so little of each."
         },
 
         {
@@ -297,7 +297,7 @@
             "Question": "When was the first submarine built?",
             "Answers": ["1785", "1920", "1620", "1890"],
             "Key": "C",
-	        "Hint": "Time for a history lesson: The first submarine was built in 1620, it was called ‘The Drebbel I’, ... "
+	        "Hint": "Time for a history lesson: The first submarine was built in 1620, it was called 'The Drebbel I', ... "
         },
 {
             "Question": "Who invented the first submarine?",
@@ -309,7 +309,7 @@
 
 
 {
-            "Question": "How much of the Earth’s surface is oceans?",
+            "Question": "How much of the Earth's surface is oceans?",
             "Answers": ["50 percent", "71 percent", "68 percent", "34 percent"],
             "Key": "B",
 	        "Hint": "Most of this rock in space is covered in ocean, and the more time I spend in it the more I think we should stick to our 39…"
@@ -318,7 +318,7 @@
             "Question": "The greatest ocean depth at which life exists is?",
             "Answers": ["8000m", "700m", "60000m", "10700m"],
             "Key": "D",
-	        "Hint": "It’s surprising that there's anything 10 kilometers down, but here you are…"
+	        "Hint": "It's surprising that there's anything 10 kilometers down, but here you are…"
         },
 {
             "Question": "How many seafarers lose their lives each year?",
@@ -334,7 +334,7 @@
         },
         {
  	        "Question": "What strange phenomenon involves the ocean emitting a continuous, low-frequency hum heard globally?", 
-            "Answers": [ "Ocean Murmur", "Thrum of the Deep", "Marine Drone", "Earth’s Hum" ],
+            "Answers": [ "Ocean Murmur", "Thrum of the Deep", "Marine Drone", "Earth's Hum" ],
             "Key": "D", 
             "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep." 
         },
@@ -343,7 +343,7 @@
             "Question":"What ocean covers the greatest expanse?",
             "Answers": ["Pacific Ocean", "Indian Ocean", "West Ocean", "Atlantic Ocean"],
             "Key": "A",
-            "Hint": "There’s this place in the Pacific Ocean called Point Nemo. It is the furthest you can ever get from another human, without a spaceship."
+            "Hint": "There's this place in the Pacific Ocean called Point Nemo. It is the furthest you can ever get from another human, without a spaceship."
         },
 
         {
