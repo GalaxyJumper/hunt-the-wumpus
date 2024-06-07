@@ -18,7 +18,7 @@ public class HighScore {
   Player player;
 
   /// Constructors////
-  public HighScore(Player player) throws FileNotFoundException {
+  public HighScore(Player player, String caveName) throws FileNotFoundException {
 
     highScoreFile = new File("Highscore.csv");
     players = putPlayersIntoArray();
