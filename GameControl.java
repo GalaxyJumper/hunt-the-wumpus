@@ -298,7 +298,7 @@ public  class GameControl {
         questionType = -1;
     }
 
-    // gui methods for side menu through player class
+    // gui methods for side menu; through player class
     public int getCoins(){
         return player.getCoins();
     }
@@ -317,11 +317,6 @@ public  class GameControl {
         gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255, won? 255 : 0,0));
         gui.updateActionText("Click to close", new Color(255,255,255));
         
-        // String playerID;
-        // closeTriviaMenu
-        // display for win or lost
-        // display leaderboard
-        // call gameFullEnd
-        // gui.gameEndSequence(won, leaderboardInfo);
+        // gui.gameEndSequence(leaderboardInfo, won, player.getName());
     }
 }
