@@ -6,9 +6,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.*;
 public class Gui extends JPanel implements MouseListener, ActionListener{
     //////////////////////////////////////
     //VARAIBLES
@@ -83,6 +86,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     String[][] leaderboardInfo;
     boolean won;
     int playerRank;
+    ImageIcon[] roomImages = new ImageIcon[6];
+    AffineTransform[] angles;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -119,6 +124,16 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // for later 
         this.addMouseListener(this);
+
+        for(int i = 0; i < 6; i++){
+            roomImages[i] = new ImageIcon("./images/room" + i + ".png");
+        }
+
+        angles = new AffineTransform[6];
+        for(int i = 0; i < 6; i++){
+            angles[i] = new AffineTransform();
+            angles[i].rotate(30 * i);
+        }
 
 
 
@@ -202,6 +217,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
    /////////////////////////////////////////////////
 
     private void drawRoom(double centerX, double centerY, double radius, String number, Color color){
+        g2d.drawImage(roomImages[0].getImage(), 20, 20, null);
         double currentX = 0;
         double currentY = 0;
         int[] xPoints = new int[6];
