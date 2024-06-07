@@ -317,8 +317,6 @@ public  class GameControl {
     // leaderboard display sequence
     public void gameEnd(boolean won){
         String[][] leaderboardInfo = scores.endOfGame();
-        gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255, won? 255 : 0,0));
-        gui.updateActionText("Click to close", new Color(255,255,255));
         
         gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
     }
