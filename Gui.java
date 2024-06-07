@@ -159,6 +159,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         drawMap((int)(mapStartX + mapOffset[0] + (mapRoomSize * 9)), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
         drawMap((int)(mapStartX + mapOffset[0]), (int)((mapStartY + mapOffset[1]) - (mapRoomSize * SQRT3) * 5), mapRoomSize, g2d, playerLoc);
         drawMap((int)(mapStartX + mapOffset[0]), (int)((mapStartY + mapOffset[1]) + (mapRoomSize * SQRT3) * 5), mapRoomSize, g2d, playerLoc);
+        drawMap((int)(mapStartX + mapOffset[0] - (mapRoomSize * 9)), (int)((mapStartY + mapOffset[1]) - (mapRoomSize * SQRT3) * 5), mapRoomSize, g2d, playerLoc);
+        drawMap((int)(mapStartX + mapOffset[0] - (mapRoomSize * 9)), (int)((mapStartY + mapOffset[1]) + (mapRoomSize * SQRT3) * 5), mapRoomSize, g2d, playerLoc);
+        drawMap((int)(mapStartX + mapOffset[0] + (mapRoomSize * 9)), (int)((mapStartY + mapOffset[1]) - (mapRoomSize * SQRT3) * 5), mapRoomSize, g2d, playerLoc);
+        drawMap((int)(mapStartX + mapOffset[0] + (mapRoomSize * 9)), (int)((mapStartY + mapOffset[1]) + (mapRoomSize * SQRT3) * 5), mapRoomSize, g2d, playerLoc);
 
         if(failMoveHex[0] != -1 && failMoveHex[1] != -1){
             drawFailMoveHex(failMoveHex[0], failMoveHex[1]);
@@ -174,15 +178,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, this.triviaScoreData, g2d);
         }
-        g2d.setColor(new Color(255, 255, 255));
-        g2d.drawString("" + testCounter, 300, 90);
-        g2d.drawString(mousePos[0] + ", " + mousePos[1], 300, 140);
-        g2d.drawString(String.valueOf(isLastQ), 300, 190);
-        g2d.setColor(Color.RED);
-        g2d.setStroke(new BasicStroke(30f));
-        g2d.drawLine(mapLoopShift[0], mapLoopShift[1], mapLoopShift[0], mapLoopShift[1]);
-        g2d.setColor(new Color(220, 220, 220));
-        g2d.setStroke(new BasicStroke(7));
+
         // Buy menu icon
         for(int i = 1; i <= 3; i++){
             g2d.drawLine(width - 150, i * 20 + 50, width - 100, i * 20 + 50);
@@ -282,7 +278,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     currentColor = new Color(20, 20, 20);
                 }
                 
-                drawRoom(x + startX, (y + ( (k % 2) * (SQRT3*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum), currentColor);
+                drawRoom(x + startX, (y + ( (k % 2) * (SQRT3*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
             }
         }
     
