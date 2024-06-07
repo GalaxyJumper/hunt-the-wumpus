@@ -20,6 +20,8 @@ public class GameLocations {
 
     // Maps the type name to the locs table
     private final String[] TYPES = { "Player", "Wumpus", "Bat", "Pit" };
+    
+    private final String[] TYPESFRONT = {"Player", "Wumpus", "Current", "Abyss"};
 
     private Cave cave;
     private SecretsManager secrets;
@@ -229,8 +231,13 @@ public class GameLocations {
         return this.TYPES;
     }
 
+    public String[] getTYPESFRONT(){
+        return this.TYPESFRONT;
+    }
+
     // Returns the locations table
     public int[][] getLocsTable() {
         return locsTable;
     }
+
 }

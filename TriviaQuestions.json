@@ -20,7 +20,7 @@
                 "Elevated Melanin"
             ],
             "Key": "A",
-            "Hint": "I feel sorry for the beasts that evolved trapped within the confines of these caves. Mother nature intended so much more for them–just looking into their unseeing eyes wrenches my heart. The only justice for them is death."
+            "Hint": "I feel sorry for the beasts that evolved trapped within the confines of these caves. Mother nature intended so much more for them - just looking into their unseeing eyes wrenches my heart. The only justice for them is death."
         },
         {
             "Question": "Which of the following surface features also exist on the ocean floor",
@@ -31,7 +31,7 @@
                 "Seasons"
             ],
             "Key": "B",
-            "Hint": "Mysterious rivers wind along the sea floor. I’ve never seen anything escape once embraced by the cerulean current - makes you wonder if there really was something to the myth of Lethe."
+            "Hint": "Mysterious rivers wind along the sea floor. I've never seen anything escape once embraced by the cerulean current - makes you wonder if there really was something to the myth of Lethe."
         },
         {
             "Question": "What is the primary source of sustenance for organisms living near hydrothermal vents?",
@@ -39,7 +39,7 @@
                 "Sunlight",
                 "Plankton",
                 "Chemical energy",
-                "Dead fish                "
+                "Dead fish"
             ],
             "Key": "C",
             "Hint": "Among the deepest recesses, where heat and darkness reign, life finds a way to thrive. It's not sunlight that nourishes these strange creatures, but rather the alchemy of the deep, where chemistry meets biology in a delicate dance of survival."
@@ -67,7 +67,7 @@
             "Hint": "A tiny beacon in the abyss, a glimmer of hope—or doom—for those who seek it. Beware the light, for it masks a deadly maw."
         },
         {
-            "Question": "Which formation is created by dripping water depositing minerals over time",
+            "Question": "Which formation is created by dripping water depositing minerals over time?",
             "Answers": [
                 "Stalagmites",
                 "Sinkholes",
@@ -89,7 +89,7 @@
             "Hint": "Deep below, the earth is restless. Its movements send out a low, haunting moan that echoes through the water."
         },
         {
-            "Question": "Which deep-sea organism is known for its ability to survive in both freezing temperatures and near-boiling hydrothermal vents?",
+            "Question": "Which deep-sea organism is known to survive both freezing temperatures and boiling hydrothermal vents?",
             "Answers": [
                 "Tardigrades",
                 "Deep-Sea Crabs",
@@ -97,7 +97,7 @@
                 "Brine Shrimp"
             ],
             "Key": "A",
-            "Hint": "With a name meaning 'slow walker' paying homage to their ability of long-term hibernation, these microorganisms can survive in the vaccum of space."
+            "Hint": "With a name meaning 'slow walker', tardigrades can survive even in the vaccum of space."
         },
         {
             "Question": "What is the primary reason why many cave-dwelling creatures are colorless or white?",
@@ -219,6 +219,146 @@
             ],
             "Key": "A",
             "Hint": "Such a terrible animal deserves the moniker, 'mega'."
+        },
+        {
+            "Question": "What is the study of caves called?",
+            "Answers": ["Geology", "Hydrology", "Speleology", "Oceanography"],
+            "Key": "C",
+	        "Hint": "I guess this line of work counts as Speleology, but I don't know how many researchers hunt their subjects…"
+        },
+
+        {
+            "Question": "Which country’s submarines were the best at the end of World War II?",
+            "Answers": ["Germany", "Japan", "United States", "Russia"],
+            "Key": "A",
+	        "Hint": "The deathtrap you’re bolted into right now was cutting edge in 1940. When it was stolen from the Krauts."	
+        },
+
+        {
+            "Question": "Which ocean zone is known for being the most biologically diverse?",
+            "Answers": ["Abyssal Zone", "Bathyal Zone", "Epipelagic Zone", "Hadal Zone"],
+            "Key": "C",
+	        "Hint": "The most ecologically diverse area is the sunlight zone, known as the epipelagic zone."
+        },
+        {
+            "Question": "Which submarine reached the deepest point in the Mariana Trench?",
+            "Answers": ["Alvin", "Trieste", "Nautilus", "Seawolf"],
+            "Key": "B",
+	        "Hint": "This vessel is nowhere near as sturdy as Trieste, so be careful when descending."
+        },
+
+        {
+            "Question": "What are formations that hang from the ceiling of a cave?",
+            "Answers": ["Stalagmites", "Speleothems", "Columns", "Stalactites"],
+            "Key": "D",
+	        "Hint": "Watch out above for stalactites, they can do some serious damage to the vessel."
+        },
+        {
+            "Question": "Which phenomenon is caused by the bending of light as it passes through water?",
+            "Answers": ["Refraction","Reflection", "Diffusion", "Absorption"],
+            "Key": "A",
+	        "Hint": "The water is deceptive, it hides things from you until it is too late, like a prism - bends light, it refracts light away. Be careful."
+        },
+
+{
+            "Question": "What is the name of the toxin that is located within sea life such as pufferfish?",
+            "Answers": ["Tetrodotoxin", "Contracin A", "Metalloproteinases", "Cyclodotoxin"],
+            "Key": "A",
+	        "Hint": "The torpedoes in this ship are filled with tetrodotoxin, from puffers. Lord knows it is barely enough to kill a Wumpus…"
+        },
+        {
+            "Question": "What sea creature’s blood is blue?",
+            "Answers": ["Lobster", "Yellowfin tuna", "Hermit Crab", "Squid"],
+            "Key": "D",
+	        "Hint": "It’s hard to see when you get a hit on those terrible things, squids. Their blood blends in with the waves."
+        },
+
+        {
+            "Question": "What material are submarine hulls typically made of?",
+            "Answers": ["Brass", "Steel", "Carbon Nanotubes", "Bronze"],
+            "Key": "D",
+	        "Hint": "This vessel is made of High-Yield 80 steel alloy, like anything that doesn’t want to implode a few kilometers down."
+        },
+        {
+
+            "Question": "How many oceans are in the world?",
+            "Answers": ["4", "7", "6", "5"],
+            "Key": "D",
+	        "Hint”":"There’s a total of 5 seas in the world, yet, we only explored so little of each."
+        },
+
+        {
+            "Question": "How many known species are there living in the ocean?",
+            "Answers": ["230 thousand", "5 million", "68 thousand", "90 thousand"],
+            "Key": "A",
+	        "Hint":"Some 230 thousand things exist in these massive bodies of water, possibly more. Its scary, yeah?"
+        },
+        {
+            "Question": "When was the first submarine built?",
+            "Answers": ["1785", "1920", "1620", "1890"],
+            "Key": "C",
+	        "Hint": "Time for a history lesson: The first submarine was built in 1620, it was called ‘The Drebbel I’, ... "
+        },
+{
+            "Question": "Who invented the first submarine?",
+            "Answers": ["Wilhelm Bauer", "Cornelis Drebbel", "David Bushnell", "Albert Einstein "],
+            "Key": "B",
+	        "Hint": "...Invented by a nutcase dutchman named Cornelis of all things…"
+        },
+
+
+
+{
+            "Question": "How much of the Earth’s surface is oceans?",
+            "Answers": ["50 percent", "71 percent", "68 percent", "34 percent"],
+            "Key": "B",
+	        "Hint": "Most of this rock in space is covered in ocean - over 70%, and the more time I spend in it the more I think we should stick to our 30…"
+        },
+{
+            "Question": "The greatest ocean depth at which life exists is?",
+            "Answers": ["8000m", "700m", "60000m", "10700m"],
+            "Key": "D",
+	        "Hint": "It’s surprising that there's anything 10 kilometers down, but here you are…"
+        },
+{
+            "Question": "How many seafarers lose their lives each year?",
+            "Answers": ["1 million", "100", "2000", "10000"],
+            "Key": "C",
+	        "Hint": "The ocean is a dangerous place, a couple thousand meet their end out here a year."
+        },
+        {
+            "Question": "What is the biggest underwater volcano?",
+            "Answers": ["Banc Capel", "Tamu Massif", "Under Biguess", "Biggest Bird"],
+            "Key": "B",
+	        "Hint":"Tamu Massif is 500,000 kilometers squared of basalt, piled a mile high."
+        },
+        {
+ 	        "Question": "What strange phenomenon involves the ocean emitting a continuous,   low-frequency hum heard globally?", 
+            "Answers": [ "Ocean Murmur", "Thrum of the Deep", "Marine Drone", "Earth’s Hum" ],
+            "Key": "D", 
+            "Hint": "A persistent and eerie hum, too low for human ears, echoing the restless movements of the deep." 
+        },
+
+        {
+            "Question":"What ocean covers the greatest expanse?",
+            "Answers": ["Pacific Ocean", "Indian Ocean", "West Ocean", "Atlantic Ocean"],
+            "Key": "A",
+            "Hint": "There’s this place in the Pacific Ocean called Point Nemo. It is the furthest you can ever get from another human, without a spaceship."
+        },
+
+        {
+            "Question": "What are brine pools?",
+            "Answers": ["Hypersaline ocean depression", "Crustation breeding grounds", "Hyperoxic region", "Solution to pickle"],
+            "Key": "A",
+            "Hint": "Salt seeps from the ocean floor, making pools under the water so toxic it instantly kills all that enter."
+        },
+
+        {
+            "Question":"Why are harpoon tips barbed?",
+            "Answers": ["To increase pain", "To improve the distance and speed of the harpoon", "To be able to reel in the hit target","To ease the gutting of fish"],
+            "Key": "C",
+            "Hint": "I miss the old harpoon system we had, since I could actually reel in meals instead of eating these disgusting rations."
         }
+
     ]
 }
