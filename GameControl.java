@@ -1,9 +1,9 @@
-// Joshua Lennon (cringe)
-// Nick Lennon (less cringe)
-// Aviral Mishra (the cool one)
-// Toki
-// 2/12/2024
+// Joshua Lennon
+// Nick Lennon
+// Aviral Mishra
+// 06/07/2024
 // Game Control Object
+// Mr. Reiber AP CSA Periods 5 & 6
 
 // Necessary Imports
 import java.awt.FontFormatException;
