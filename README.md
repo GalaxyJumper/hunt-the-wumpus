@@ -5,7 +5,7 @@ Contributors:
 - Shivansh Bhatt: Trivia Class, Trivia Questions, and Story Elements
 - Kavya Tayal: Player Class, HighScore Class, and Trivia Questions
 - Josh Lennon: Player Class, HighScore Class, GameLocations Class, SecretsManager Class, Trivia Questions, Story Elements, Art, and SFX
-- Nick Lennon: Player Class, HighScore Class, SoundManager Class, Trivia Class, and Trivia Questions
+- Nick Lennon: Player Class, HighScore Class, SoundManager Class, and Trivia Questions
 - Toki Young: SoundManager Class and Trivia Questions
 
 This is a java game titled "In the Deep" created by our team at Bothell High School for Microsoft's 'Hunt the Wumpus' challenge. You must navigate through a maze of underwater caverns, avoid deadly hazards, skirt death by the power of your wit, and ultimately strike the Wumpus dead the only way we know how: 1200 pounds of TNT and tetrodotoxin, delivered gracefully by our "reposessed" Mark 14 torpedoes.

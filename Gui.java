@@ -1,3 +1,8 @@
+// Graphical User Interface Object
+// Oliver Davis
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

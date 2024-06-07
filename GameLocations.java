@@ -1,7 +1,7 @@
-// Joshua Lennon
-// 2/12/2024
 // Game Locations Object
-
+// Josh Lennon
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
 
 import java.util.ArrayList;
 import java.util.HashSet;

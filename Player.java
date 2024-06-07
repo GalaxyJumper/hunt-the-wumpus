@@ -1,13 +1,9 @@
-/*
- * Keeps track of player inventory: Arrows and Gold Coins
- * Keeps track of how many turns the player has taken
- * Computes the ending score of player
- */
-
-// Joshua Lennon
-// Nick Lennon
-// 2/12/2024
 // Player Object
+// Kavya Tayal
+// Nick Lennon
+// Josh Lennon
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
 
 public class Player{
 

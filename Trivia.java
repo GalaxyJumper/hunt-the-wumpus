@@ -1,5 +1,9 @@
-//Lincon
-//shivansh
+// Trivia Object
+// Aviral Mishra
+// Lincoln Nguyen
+// Shivansh Bhatt
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
 
 //imports
 import java.io.FileReader;

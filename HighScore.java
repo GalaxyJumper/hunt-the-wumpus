@@ -1,7 +1,9 @@
-//Kavya Tayal
-//Nick Lennon
-//02/12/24
-//Scores Object
+// Highscore Object
+// Kavya Tayal
+// Nick Lennon
+// Josh Lennon
+// 06/07/2024
+// Mr. Reiber AP CSA Periods 5 & 6
 
 import java.io.File;
 import java.io.FileNotFoundException;
