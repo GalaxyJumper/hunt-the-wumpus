@@ -28,6 +28,7 @@ public class Player{
     ///////////////////////////////////////////////
 
     public Player(){
+        this.name = makeName();
         this.arrows = 3;
         this.coins = 0;
         this.turnsTaken = 0;
@@ -50,6 +51,16 @@ public class Player{
     ///////////////////////////////////////////////
     // METHODS
     ///////////////////////////////////////////////
+
+    // generates a random player tag "player" + 5 nums or letters
+    public String makeName(){
+        String name = "player";
+        for(int i = 0; i < 5; i++){
+            if(Math.random() > 0.5) name += (char) ((int) (Math.random()*26 + 'A'));
+            else name += "" + (int) (Math.random()*10);
+        }
+        return name;
+    }
 
     //This method will be called in gameControl to check the validity of a move
     //and also update the location of the player on the CSV

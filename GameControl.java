@@ -268,9 +268,10 @@ public  class GameControl {
         // display leaderboard
         // call gameFullEnd
         //gui.gameEndSequence(won, leaderboardInfo);
-        // TEMPORARY
         gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255,won? 255 : 0,0));
+        gui.updateActionText("Close to continue", new Color(255,255,255));
     }
+    
     public void gameFullEnd(){
         System.exit(0);
     }
