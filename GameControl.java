@@ -226,14 +226,14 @@ public  class GameControl {
             // gui.updateTurnCounter(player.getTurnsTaken());
         } else if (questionType == 2){
             if (!triviaSuccess){
-                gui.updateActionText("You fall away into the abyss...", new Color(255, 0 , 0));
+                gui.updateActionText("You sink away into the abyss...", new Color(255, 0 , 0));
                 gameEnd(false);
             } else {
                 gui.updateActionText("You successfully skirted the abyss!", new Color(0, 255, 0));
             }
         } else if (questionType == 3){
             if (!triviaSuccess){
-                gui.updateActionText("You were killed by the Wumpus...", new Color(255, 0 , 0));
+                gui.updateActionText("Your ship is torn asunder by the Wumpus...", new Color(255, 0 , 0));
                 gameEnd(false);
             } else {
                 gui.updateActionText("The Wumpus is wounded!", new Color(0, 255, 0));
