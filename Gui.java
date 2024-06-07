@@ -235,20 +235,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.drawPolygon(xPoints, yPoints, 6);
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
-    private void drawHex(double centerX, double centerY, double radius, Color color){
-        double currentX = 0;
-        double currentY = 0;
-        int[] xPoints = new int[6];
-        int[] yPoints = new int[6];
-        for(int i = 0; i < 6; i++){
-            currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
-            currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
-            xPoints[i] = (int)(currentX);
-            yPoints[i] = (int)(currentY);
-        }
-        g2d.setColor(color);
-        g2d.drawPolygon(xPoints, yPoints, 6);
-    }
+    
     private void fillHex(double centerX, double centerY, double radius, Color color){
         double currentX = 0;
         double currentY = 0;
@@ -1048,4 +1035,3 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         }
     }
 }
-
