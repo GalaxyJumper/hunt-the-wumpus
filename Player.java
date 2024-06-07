@@ -52,6 +52,7 @@ public class Player{
     // METHODS
     ///////////////////////////////////////////////
 
+    // generates a random player tag "player" + 5 nums or letters
     public String makeName(){
         String name = "player";
         for(int i = 0; i < 5; i++){
