@@ -79,24 +79,19 @@ public class HighScore {
 
   // checks if player has a high score and updates array accordingly
   private void endOfGameUpdate() throws FileNotFoundException {
-    // if there are less than 10 players in the csv, then the new player is automatically added to the csv
-    // if the player is on leaderboard, they are sorted correctly and new last is kicked
-    // if they are not on leaderboard, still placed, but in "11th"
-    if (players.size() < 10) {
-      players.add(player);
-    } else if (player.getScore() > players.get(players.size() - 1).getScore()) {
-      for (int i = players.size() - 1; i >= 0; i--) {
-        if (players.get(i).getScore() >= player.getScore()) {
-          players.add(i, player);
-          players.remove(players.size() - 1);
-          break;
-        }
-      }
-    } else {
-      players.add(player);
-    }
-  }
+    // Add the new player to the list
+    players.add(player);
 
+    // Sort the players list in descending order based on the score
+    players.sort((p1, p2) -> Integer.compare(p2.getScore(), p1.getScore()));
+
+    // If there are more than 10 players, remove the extra players
+    if (players.size() > 10) {
+        while (players.size() > 10) {
+            players.remove(players.size() - 1);
+        }
+    }
+}
   // updates the file with the current list of players up to 10th.
   public void updateFile() throws IOException {
     FileWriter fw = new FileWriter(highScoreFile);
@@ -126,5 +121,9 @@ public class HighScore {
 
     s.close();
     return result;
+  }
+
+  public int getPlayerIndex(){
+    return (players.contains(player))? players.indexOf(player) : -1;
   }
 }
