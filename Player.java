@@ -109,7 +109,9 @@ public class Player{
         return this;
     }
 
-    
+    public int getArrows() {
+        return arrows;
+    }
 
     public void addArrows(int arrows){
         this.arrows += arrows;
