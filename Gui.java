@@ -178,7 +178,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, this.triviaScoreData, g2d);
         }
-
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.setStroke(new BasicStroke(6));
         // Buy menu icon
         for(int i = 1; i <= 3; i++){
             g2d.drawLine(width - 150, i * 20 + 50, width - 100, i * 20 + 50);
@@ -606,12 +607,12 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             } else {
                 g2d.setColor(new Color(31, 31, 31));
             }
-            if(playerRank - 1 == i){
+            if(playerRank == i + 1){
                 isYou = "  (you)";
                 g2d.setColor(new Color(61, 61, 61));
             }
             if(!(i == 10)){
-                rank = "" + i;
+                rank = "" + (int)(i + 1);
 
             } else {
                 rank = " ";
