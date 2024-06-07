@@ -16,13 +16,15 @@ Trivia Questions: when encountering any hazard, positive outcomes are determined
 Pits and Bats have been changed to Abyss and Currents while Wumpus remained the same. Players receive a warning when adjacent to these hazards.
 
 In-Game Navigation
-Movement: [Left Click]
-Answer Trivia: [Left Click]
-Launch Torpedo: [Right Click]
+All actions use left clicking EXCEPT shooting torpedoes (right click)
+To purchase items, access the menu in the top right
 
 Troubleshooting
 Game Crashes on Startup:
 Ensure you have the correct version of JDK installed.
+
+Awkward Graphics:
+Do not resize the game
 
 Performance Issues:
 Close other applications running in the background.
