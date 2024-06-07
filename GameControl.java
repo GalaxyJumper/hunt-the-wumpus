@@ -42,7 +42,7 @@ public  class GameControl {
         player = new Player();
         gameLocs = new GameLocations(cave);
         trivia = new Trivia();
-        scores = new HighScore(player);
+        scores = new HighScore(player, cave.getCaveName());
         sManager = new SoundManager();
         
         
@@ -263,11 +263,12 @@ public  class GameControl {
 
     public void gameEnd(boolean won){
         String[][] leaderboardInfo = scores.endOfGame();
+        // String playerID;
         // closeTriviaMenu
         // display for win or lost
         // display leaderboard
         // call gameFullEnd
-        //gui.gameEndSequence(won, leaderboardInfo);
+        // gui.gameEndSequence(won, leaderboardInfo);
         gui.updateActionText((won? "YOU WON!!!" : "You lost..."), new Color(won? 0 : 255,won? 255 : 0,0));
         gui.updateActionText("Close to continue", new Color(255,255,255));
     }
