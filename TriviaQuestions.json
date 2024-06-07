@@ -163,7 +163,7 @@
                 "Ultraviolet"
             ],
             "Key": "A",
-            "Hint": "This here ship is called a steel whale for good reason. Just like a whale, it uses sonar to find its way in the dark."
+            "Hint": "This here ship is called a steel whale for good reason. Just like a whale, it uses sound to find its way in the dark."
         },
         {
             "Question": "What body of water has the highest salinity in the world?",
@@ -174,7 +174,7 @@
                 "Great Salt Lake"
             ],
             "Key": "A",
-            "Hint": "The bottom of the world is a place of extremes. When the bitter cold freezes brine, it consentrates to unbelievable levels."
+            "Hint": "You'd be surprised to know the saltiest body is also the smallest. Not unlike some people I know..."
         },
         {
             "Question": "What is the name of the deepest underwater cave explored by man?",
@@ -185,7 +185,7 @@
                 "Abisso Paolo Roversi cave "
             ],
             "Key": "C",
-            "Hint": "In the mountains of Moravia, Propast sinks into the very bowels of the earth."
+            "Hint": "'Hranicka Prospect', they called it. Found nothing but water and fish for going so far down."
         },
         {
             "Question": "What type of rock is most commonly associated with cave formations?",
@@ -218,7 +218,7 @@
                 "Architeuthus"
             ],
             "Key": "A",
-            "Hint": "Such a terrible animal deserves the moniker, 'mega'."
+            "Hint": "The architect of doom, with a large name sized to fit."
         },
         {
             "Question": "What is the study of caves called?",
@@ -244,14 +244,14 @@
             "Question": "Which submarine reached the deepest point in the Mariana Trench?",
             "Answers": ["Alvin", "Trieste", "Nautilus", "Seawolf"],
             "Key": "B",
-	        "Hint": "This vessel is nowhere near as sturdy as Trieste, so be careful when descending."
+	        "Hint": "This vessel is nowhere near as sturdy as Trieste. Be careful down there."
         },
 
         {
             "Question": "What are formations that hang from the ceiling of a cave?",
             "Answers": ["Stalagmites", "Speleothems", "Columns", "Stalactites"],
             "Key": "D",
-	        "Hint": "Watch out above for stalactites, they can do some serious damage to the vessel."
+	        "Hint": "Ah yes. I always remember my days in school when I hear about these. 'G for ground, C for ceiling, and don't forget the ite'."
         },
         {
             "Question": "Which phenomenon is caused by the bending of light as it passes through water?",
@@ -276,7 +276,7 @@
         {
             "Question": "What material are submarine hulls typically made of?",
             "Answers": ["Brass", "Steel", "Carbon Nanotubes", "Bronze"],
-            "Key": "D",
+            "Key": "B",
 	        "Hint": "This vessel is made of High-Yield 80 steel alloy, like anything that doesn’t want to implode a few kilometers down."
         },
         {
@@ -291,7 +291,7 @@
             "Question": "How many known species are there living in the ocean?",
             "Answers": ["230 thousand", "5 million", "68 thousand", "90 thousand"],
             "Key": "A",
-	        "Hint":"Some 230 thousand things exist in these massive bodies of water, possibly more. Its scary, yeah?"
+	        "Hint":"A quarter million things exist in these massive bodies of water, possibly more. Scary, no?"
         },
         {
             "Question": "When was the first submarine built?",
@@ -312,7 +312,7 @@
             "Question": "How much of the Earth’s surface is oceans?",
             "Answers": ["50 percent", "71 percent", "68 percent", "34 percent"],
             "Key": "B",
-	        "Hint": "Most of this rock in space is covered in ocean - over 70%, and the more time I spend in it the more I think we should stick to our 30…"
+	        "Hint": "Most of this rock in space is covered in ocean, and the more time I spend in it the more I think we should stick to our 39…"
         },
 {
             "Question": "The greatest ocean depth at which life exists is?",
@@ -330,7 +330,7 @@
             "Question": "What is the biggest underwater volcano?",
             "Answers": ["Banc Capel", "Tamu Massif", "Under Biguess", "Biggest Bird"],
             "Key": "B",
-	        "Hint":"Tamu Massif is 500,000 kilometers squared of basalt, piled a mile high."
+	        "Hint":"Truly massive, with a name to fit..."
         },
         {
  	        "Question": "What strange phenomenon involves the ocean emitting a continuous,   low-frequency hum heard globally?", 
