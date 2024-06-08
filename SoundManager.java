@@ -8,6 +8,7 @@ import javax.sound.sampled.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.lang.InterruptedException;
 
 public class SoundManager {
 
@@ -22,6 +23,7 @@ public class SoundManager {
         this.filePaths.add("./sound/correctAnswer.wav");
         this.filePaths.add("./sound/disappointment.wav");
         this.filePaths.add("./sound/wrongAnswer.wav");
+        this.filePaths.add("./sound/winGame.wav");
 
     }
 
@@ -42,9 +44,12 @@ public class SoundManager {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            Thread.sleep(2000);
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e ) {
             e.printStackTrace();
         }
+        
+        loopAmbiance();
     }
 
     // Stops a CURRENTLY RUNNING audio clip
@@ -58,6 +63,19 @@ public class SoundManager {
     public void rewind() {
         if (clip != null) {
             clip.setMicrosecondPosition(0);
+        }
+    }
+
+    public void loopAmbiance(){
+        try {
+            File ambiance = new File(filePaths.get(1));
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(ambiance);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(5);        
+         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+        e.printStackTrace();
         }
     }
 }

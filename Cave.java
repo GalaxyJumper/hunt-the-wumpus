@@ -25,7 +25,7 @@ public class Cave {
             JSONObject a = (JSONObject) parser.parse(new FileReader("Maps.json"));
 
             // choose random cave
-            int caveNumber = 1 + (int) (Math.random() * 3);
+            int caveNumber = 1 + (int) (Math.random() * a.size());
             caveName = "Cave " + (caveNumber);
 
             // gave cave info

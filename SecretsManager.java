@@ -49,7 +49,7 @@ public class SecretsManager {
             // Replace *LOCATION* with the location of the hazard
             if (base.contains("*LOCATION*")) {
                 int loc = getHazardLoc(type);
-                replace(result, "*LOCATION*", String.valueOf(loc));
+                replace(result, "*LOCATION*", String.valueOf(loc + 1));
             }
 
             // Replace *DISTANCE* with the distance to the hazard

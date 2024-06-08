@@ -46,6 +46,8 @@ public  class GameControl {
         scores = new HighScore(player, cave.getCaveName());
         sManager = new SoundManager();
 
+        sManager.loopAmbiance();
+
         // GUI must contain this object because the GUI repaint method is buggy when called from outside the class. Code is therefore factored so the GUI calls gameControl methods 
         if (!GraphicsEnvironment.isHeadless()){
             gui = new Gui("HUNT THE WUMPUS - " + cave.getCaveName(), 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
@@ -241,7 +243,8 @@ public  class GameControl {
     // ask questions after the last question is answered
     public void questionAnswer(String answer){
         // check if answer is correct
-        answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
+        boolean correct = answer.equals(questions[currentQuestion][5]);
+        answers[currentQuestion] = correct;
         currentQuestion++;
 
         // fence-post for last question
@@ -323,6 +326,8 @@ public  class GameControl {
     // leaderboard display sequence
     public void gameEnd(boolean won){
         player.calcScore(won);
+        sManager.stop();
+        sManager.playSound((won)? 5 : 0);
         String[][] leaderboardInfo = scores.endOfGame();
         
         gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());

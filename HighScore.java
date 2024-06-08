@@ -22,6 +22,7 @@ public class HighScore {
     highScoreFile = new File("Highscore.csv");
     players = putPlayersIntoArray();
     this.player = player;
+    player.setCave(caveName);
   }
 
   /// Methods///
