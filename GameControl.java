@@ -86,6 +86,7 @@ public  class GameControl {
                     gameEnd(true);
                 } else if (missed) {
                     gui.updateActionText("You missed!", new Color(255,255,0));
+                    
                 } else {
                     // shot room without wumpus
                     gui.updateActionText("Seems the Wumpus wasn't there...", new Color(255,255,0));
