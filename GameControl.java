@@ -247,6 +247,7 @@ public  class GameControl {
         boolean correct = answer.equals(questions[currentQuestion][5]);
         answers[currentQuestion] = correct;
         currentQuestion++;
+        sManager.stop();
         sManager.playSound((correct)? 2 : 4);
 
         // fence-post for last question
@@ -329,7 +330,7 @@ public  class GameControl {
     public void gameEnd(boolean won){
         player.calcScore(won);
         sManager.stop();
-        sManager.playSound((won)? 0 : 5);
+        sManager.playSound((won)? 5 : 0);
         String[][] leaderboardInfo = scores.endOfGame();
         
         gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
