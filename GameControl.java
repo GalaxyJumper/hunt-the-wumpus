@@ -328,7 +328,8 @@ public  class GameControl {
     // leaderboard display sequence
     public void gameEnd(boolean won){
         player.calcScore(won);
-        
+        sManager.stop();
+        sManager.playSound((won)? 0 : 5);
         String[][] leaderboardInfo = scores.endOfGame();
         
         gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
