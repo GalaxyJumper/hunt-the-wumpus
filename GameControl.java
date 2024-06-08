@@ -241,8 +241,10 @@ public  class GameControl {
     // ask questions after the last question is answered
     public void questionAnswer(String answer){
         // check if answer is correct
-        answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
+        boolean correct = answer.equals(questions[currentQuestion][5]);
+        answers[currentQuestion] = correct;
         currentQuestion++;
+        sManager.playSound((correct)? 2 : 4);
 
         // fence-post for last question
         if (currentQuestion == 5){
