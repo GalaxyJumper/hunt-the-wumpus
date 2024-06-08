@@ -22,6 +22,7 @@ public class SoundManager {
         this.filePaths.add("./sound/correctAnswer.wav");
         this.filePaths.add("./sound/disappointment.wav");
         this.filePaths.add("./sound/wrongAnswer.wav");
+        this.filePaths.add("./sound/winGame.wav");
 
     }
 
