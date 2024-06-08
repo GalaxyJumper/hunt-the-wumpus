@@ -64,12 +64,12 @@ public class SoundManager {
 
     public void loopAmbiance(){
         try {
-            File ambiance = new File(filePaths.get(3));
+            File ambiance = new File(filePaths.get(1));
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(ambiance);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-            clip.loop(clip.LOOP_CONTINUOUSLY);        
+            clip.loop(5);        
          } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
         e.printStackTrace();
         }

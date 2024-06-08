@@ -106,5 +106,9 @@ public class Player{
     public String toString() {
     return name + "," + score + "," + turnsTaken + "," + coins + "," + arrows + "," + cave;
     }
+
+    public void setCave(String caveName){
+        cave = caveName;
+    }
 }
 
