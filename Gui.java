@@ -683,7 +683,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             } else {
                 g2d.setColor(new Color(31, 31, 31));
             }
-            if(playerRank == i + 1){
+            if(playerRank == i){
                 isYou = "  (you)";
                 g2d.setColor(new Color(61, 61, 61));
             }
