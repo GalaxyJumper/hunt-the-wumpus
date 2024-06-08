@@ -60,4 +60,17 @@ public class SoundManager {
             clip.setMicrosecondPosition(0);
         }
     }
+
+    public void loopAmbiance(){
+        try {
+            File ambiance = new File(filePaths.get(3));
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(ambiance);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(clip.LOOP_CONTINUOUSLY);        
+         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+        e.printStackTrace();
+        }
+    }
 }

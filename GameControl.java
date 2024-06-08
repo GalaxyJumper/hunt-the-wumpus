@@ -46,6 +46,9 @@ public  class GameControl {
         scores = new HighScore(player, cave.getCaveName());
         sManager = new SoundManager();
 
+        //sManager.playSound(0);
+        sManager.loopAmbiance();
+
         // GUI must contain this object because the GUI repaint method is buggy when called from outside the class. Code is therefore factored so the GUI calls gameControl methods 
         if (!GraphicsEnvironment.isHeadless()){
             gui = new Gui("HUNT THE WUMPUS - " + cave.getCaveName(), 2560, 1440, cave, this, gameLocs.getPlayerLoc()); 
