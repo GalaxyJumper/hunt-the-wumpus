@@ -206,7 +206,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         
         double scaleFactor = 0.2;
         int xCenterDist = (int)(1280 - (subImage.getWidth() / (2 / scaleFactor)) * (1 / scaleFactor) - (width / 2));
-        int yCenterDist = (int)(1280 - (subImage.getHeight() / (2 / scaleFactor)) * (1 / scaleFactor) - (height / 2));
+        int yCenterDist = (int)(720 - (subImage.getHeight() / (2 / scaleFactor)) * (1 / scaleFactor) - (height / 2));
         subShift = subShift.getScaleInstance(scaleFactor, scaleFactor);
         subShift.translate((1280 - (subImage.getWidth() / (2 / scaleFactor))) * (1 / scaleFactor), (720 - (subImage.getHeight() / (2 / scaleFactor))) * (1 / scaleFactor));
         subShift.rotate((subAngle + 3 * Math.PI / 2));
@@ -252,7 +252,12 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         int[] yPoints = new int[6];
         int roomRotation = (int)(Integer.parseInt(number)) % 6;
         int roomType = (int)(6 + Integer.parseInt(number) + 5) % 6;
-
+        for(int e = 0; e < 6; e++){
+            currentX = centerX + (Math.cos((Math.PI/3) * e) * radius);
+            currentY = centerY + (Math.sin((Math.PI/3) * e) * radius);
+            xPoints[e] = (int)(currentX);
+            yPoints[e] = (int)(currentY);
+        }
 
         g2d.setColor(new Color(255, 255, 255));
         g2d.setStroke(new BasicStroke(2));
@@ -293,11 +298,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     
             }
 
-        if(cave.canMove(playerLoc, Integer.parseInt(number) - 1)){
+        if(cave.canMove(playerLoc, Integer.parseInt(number) - 1) || Integer.parseInt(number) - 1 == playerLoc){
             g2d.setColor(new Color(0, 255, 0));
 
         } else {
-            g2d.setColor(new Color(255, 0, 0));
+            g2d.setColor(new Color(10, 30, 49));
         }
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
