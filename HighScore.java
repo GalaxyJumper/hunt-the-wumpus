@@ -22,7 +22,6 @@ public class HighScore {
     highScoreFile = new File("Highscore.csv");
     players = putPlayersIntoArray();
     this.player = player;
-    player.setCave(caveName);
   }
 
   /// Methods///
@@ -95,7 +94,7 @@ public class HighScore {
   // updates the file with the current list of players up to 10th.
   public void updateFile() throws IOException {
     FileWriter fw = new FileWriter(highScoreFile);
-    fw.write("name,score,turns,coins,arrows,cave" + " \n");
+    fw.write("name,score,turns,coins,arrows," + " \n");
     for (int p = 0; p < Math.min(10, players.size()); p++) {
       fw.write(players.get(p).toString() + " \n");
     }

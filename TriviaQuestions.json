@@ -9,7 +9,7 @@
                 "Migrating Plankton"
             ],
             "Key": "A",
-            "Hint": "Once you pass the mesopelagic the sun disappears. In brief flashes of bioluminescence you can see a kind of snow suspended in the expanse. Leave it be… its a little fleshy."
+            "Hint": "Once you pass the mesopelagic the sun disappears. In brief flashes of bioluminescence you can see a kind of snow suspended in the expanse. Leave it be... its a little fleshy."
         },
         {
             "Question": "This condition is common in organisms that evolved within cave systems:",
@@ -264,7 +264,7 @@
             "Question": "What is the name of the toxin that is located within sea life such as pufferfish?",
             "Answers": ["Tetrodotoxin", "Contracin A", "Metalloproteinases", "Cyclodotoxin"],
             "Key": "A",
-	        "Hint": "The torpedoes in this ship are filled with tetrodotoxin, from puffers. Lord knows it is barely enough to kill a Wumpus…"
+	        "Hint": "The torpedoes in this ship are filled with tetrodotoxin, from puffers. Lord knows it is barely enough to kill a Wumpus..."
         },
         {
             "Question": "What sea creature's blood is blue?",
@@ -303,7 +303,7 @@
             "Question": "Who invented the first submarine?",
             "Answers": ["Wilhelm Bauer", "Cornelis Drebbel", "David Bushnell", "Albert Einstein "],
             "Key": "B",
-	        "Hint": "...Invented by a nutcase dutchman named Cornelis of all things…"
+	        "Hint": "...Invented by a nutcase dutchman named Cornelius of all things..."
         },
 
 
@@ -312,13 +312,13 @@
             "Question": "How much of the Earth's surface is oceans?",
             "Answers": ["50 percent", "71 percent", "68 percent", "34 percent"],
             "Key": "B",
-	        "Hint": "Most of this rock in space is covered in ocean, and the more time I spend in it the more I think we should stick to our 39…"
+	        "Hint": "Most of this rock in space is covered in ocean, and the more time I spend in it the more I think we should stick to our 39..."
         },
 {
             "Question": "The greatest ocean depth at which life exists is?",
             "Answers": ["8000m", "700m", "60000m", "10700m"],
             "Key": "D",
-	        "Hint": "It's surprising that there's anything 10 kilometers down, but here you are…"
+	        "Hint": "It's surprising that there's anything 10 kilometers down, but here you are..."
         },
 {
             "Question": "How many seafarers lose their lives each year?",

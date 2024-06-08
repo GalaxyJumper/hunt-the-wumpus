@@ -6,9 +6,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.*;
 public class Gui extends JPanel implements MouseListener, ActionListener{
     //////////////////////////////////////
     //VARAIBLES
@@ -56,7 +59,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     long failMoveStart = 0;
     boolean isLastQ;
     String[] tempQuestion;
-    String[] actionText = new String[] {"Entered room 23.", "Survived a Wumpus attack.", "You smell a foul stench.", "Gary requires attention.", "I am getting tired."};
+    String[] actionText = new String[] {"", "", "", "", "I am getting tired."};
     int[] actionTextFades = {255, 255, 255, 255, 255};
     Color[] actionTextColors = new Color[] {new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31), new Color(31, 31, 31)};
     ArrayList<Integer> tempFadeIndices = new ArrayList<Integer>();
@@ -83,6 +86,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     String[][] leaderboardInfo;
     boolean won;
     int playerRank;
+    ImageIcon[] roomImages = new ImageIcon[6];
+    AffineTransform[] angles;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -119,6 +124,16 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // for later 
         this.addMouseListener(this);
+
+        for(int i = 0; i < 6; i++){
+            roomImages[i] = new ImageIcon("./images/room" + i + ".png");
+        }
+
+        angles = new AffineTransform[6];
+        for(int i = 0; i < 6; i++){
+            angles[i] = new AffineTransform();
+            angles[i].rotate(30 * i);
+        }
 
 
 
@@ -178,7 +193,8 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         if(inTriviaMenu){
             drawTriviaMenu(this.triviaQuestion, this.triviaScoreData, g2d);
         }
-
+        g2d.setColor(new Color(220, 220, 220));
+        g2d.setStroke(new BasicStroke(6));
         // Buy menu icon
         for(int i = 1; i <= 3; i++){
             g2d.drawLine(width - 150, i * 20 + 50, width - 100, i * 20 + 50);
@@ -201,6 +217,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
    /////////////////////////////////////////////////
 
     private void drawRoom(double centerX, double centerY, double radius, String number, Color color){
+        g2d.drawImage(roomImages[0].getImage(), 20, 20, null);
         double currentX = 0;
         double currentY = 0;
         int[] xPoints = new int[6];
@@ -218,20 +235,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.drawPolygon(xPoints, yPoints, 6);
         g2d.drawString(number, (int)centerX, (int)centerY);
     }
-    private void drawHex(double centerX, double centerY, double radius, Color color){
-        double currentX = 0;
-        double currentY = 0;
-        int[] xPoints = new int[6];
-        int[] yPoints = new int[6];
-        for(int i = 0; i < 6; i++){
-            currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
-            currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
-            xPoints[i] = (int)(currentX);
-            yPoints[i] = (int)(currentY);
-        }
-        g2d.setColor(color);
-        g2d.drawPolygon(xPoints, yPoints, 6);
-    }
+    
     private void fillHex(double centerX, double centerY, double radius, Color color){
         double currentX = 0;
         double currentY = 0;
@@ -599,19 +603,19 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         g2d.setFont(calibri.deriveFont(90f));
         g2d.drawString((won)? "You won!" : "You lost!", leaderboardX + 40, (int)(leaderboardY + (leaderboardHeight * 0.2 * 0.6)));
         g2d.setFont(calibri.deriveFont(40f));
-        g2d.drawString("#     Name             Score    Turns  Coins  Arrows  Cave #", leaderboardX + 30, (int)(leaderboardY + (leaderboardHeight * 0.25) - 20));
+        g2d.drawString("#     Name              Score   Turns  Coins  Torpedoes     Cave #", leaderboardX + 30, (int)(leaderboardY + (leaderboardHeight * 0.25) - 20));
         for(int i = 0; i < leaderboardInfo.length; i++){
             if(i % 2 == 0){
                 g2d.setColor(new Color(43, 43, 43));
             } else {
                 g2d.setColor(new Color(31, 31, 31));
             }
-            if(playerRank - 1 == i){
+            if(playerRank == i + 1){
                 isYou = "  (you)";
                 g2d.setColor(new Color(61, 61, 61));
             }
             if(!(i == 10)){
-                rank = "" + i;
+                rank = "" + (int)(i + 1);
 
             } else {
                 rank = " ";
@@ -622,11 +626,11 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             
             g2d.drawString(rank, leaderboardX + 30, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][0], leaderboardX + 90, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
-            g2d.drawString(leaderboardInfo[i][1], leaderboardX + 310, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][1], leaderboardX + 350, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][2], leaderboardX + 460, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][3], leaderboardX + 580, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             g2d.drawString(leaderboardInfo[i][4], leaderboardX + 700, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
-            g2d.drawString(leaderboardInfo[i][5] + isYou, leaderboardX + 820, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
+            g2d.drawString(leaderboardInfo[i][5] + isYou, leaderboardX + 860, (int)(leaderboardY + leaderboardHeight * 0.25) + (66 * i) + 45);
             isYou = "";
         }
         g2d.drawString("(click to exit game)", leaderboardX + (leaderboardWidth / 2) - 150, leaderboardY + leaderboardHeight - 30);
@@ -1031,4 +1035,3 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         }
     }
 }
-
