@@ -22,6 +22,7 @@ public class SoundManager {
         this.filePaths.add("./sound/correctAnswer.wav");
         this.filePaths.add("./sound/disappointment.wav");
         this.filePaths.add("./sound/wrongAnswer.wav");
+        this.filePaths.add("./sound/winGame.wav");
 
     }
 
@@ -58,6 +59,19 @@ public class SoundManager {
     public void rewind() {
         if (clip != null) {
             clip.setMicrosecondPosition(0);
+        }
+    }
+
+    public void loopAmbiance(){
+        try {
+            File ambiance = new File(filePaths.get(1));
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(ambiance);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(5);        
+         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+        e.printStackTrace();
         }
     }
 }
