@@ -15,6 +15,9 @@ Trivia Questions: when encountering any hazard, positive outcomes are determined
 
 Pits and Bats have been changed to Abyss and Currents while Wumpus remained the same. Players receive a warning when adjacent to these hazards.
 
+The Spec
+In terms of following the spec, many differences have been implented. Based on a read of the spec, it seems one could quite quickly find the Wumpus and just shoot it with one of their three starting arrows with little to no trouble. We changed it so the player starts with zero torpedoes (arrow equivalent), trivia only earns one torpedo at a time, and three out of five trivia questions must be answered correctly to earn one at all. This also meant the player shouldn't immediately lose for running torpedoes since they start with none. For simplicity, we then switched all trivia events to require three out of five trivia questions as opposed to some taking two out of three. In addition, it seems too easy to rack up a lot of points by simply moving back and forth between two rooms that need to be safe, so we completely reworked the coin system. The player now earns coins for every unique room explored. Since this would drastically increase the difficulty of the game due to having to pay the few number of coins the player has for every trivia question, we instead only required one coin to attempt to buy a torpedo or a secret. We also allowed the player to buy a hint to any trivia question for a coin due to the difficulty of the questions and the lack of providing them trivia when they move through tunnels.
+
 In-Game Navigation
 All actions use left clicking EXCEPT shooting torpedoes (right click)
 To purchase items, access the menu in the top right
