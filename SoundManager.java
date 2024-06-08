@@ -8,6 +8,7 @@ import javax.sound.sampled.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.lang.InterruptedException;
 
 public class SoundManager {
 
@@ -43,9 +44,12 @@ public class SoundManager {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            Thread.sleep(2000);
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e ) {
             e.printStackTrace();
         }
+        
+        loopAmbiance();
     }
 
     // Stops a CURRENTLY RUNNING audio clip
