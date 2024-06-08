@@ -156,19 +156,19 @@ public class GameLocations {
     }
 
     // Moves wumpus to a random new room that does not have the player, after torpedo misses
-    public int evadingWumpus(){
+    public boolean evadingWumpus(){
         int[] possibleLocs = cave.possibleMoves(getWumpusLoc());
         if(possibleLocs.length > 1){
             while(true){
                 int loc = possibleLocs[(int) (Math.random() * possibleLocs.length)];
                 if(loc != getPlayerLoc()){
                     setWumpusLoc(loc);
-                    return loc;
+                    return true;
                 } 
             }
             
         }
-        return getWumpusLoc();
+        return false;
     }
 
     // Transports the player to a random location in the cave
