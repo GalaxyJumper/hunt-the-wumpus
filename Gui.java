@@ -260,8 +260,13 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             }
 
         }
+        if(cave.canMove(playerLoc, Integer.parseInt(number) - 1)){
+            g2d.setColor(new Color(0, 255, 0));
+
+        } else {
+            g2d.setColor(new Color(255, 0, 0));
+        }
         g2d.drawString(number, (int)centerX, (int)centerY);
-        
     }
     
     private void fillHex(double centerX, double centerY, double radius, Color color){
