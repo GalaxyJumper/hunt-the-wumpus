@@ -244,8 +244,10 @@ public  class GameControl {
     // ask questions after the last question is answered
     public void questionAnswer(String answer){
         // check if answer is correct
-        answers[currentQuestion] = answer.equals(questions[currentQuestion][5]);
+        boolean correct = answer.equals(questions[currentQuestion][5]);
+        answers[currentQuestion] = correct;
         currentQuestion++;
+        sManager.playSound((correct)? 2 : 4);
 
         // fence-post for last question
         if (currentQuestion == 5){
@@ -326,6 +328,7 @@ public  class GameControl {
     // leaderboard display sequence
     public void gameEnd(boolean won){
         player.calcScore(won);
+        
         String[][] leaderboardInfo = scores.endOfGame();
         
         gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
