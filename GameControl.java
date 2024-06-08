@@ -86,6 +86,12 @@ public  class GameControl {
                     gameEnd(true);
                 } else if (missed) {
                     gui.updateActionText("You missed!", new Color(255,255,0));
+                    boolean evaded = gameLocs.evadingWumpus();
+                    if (evaded){
+                        gui.updateActionText("The Wumpus left...", new Color(0,255,255));
+                    } else {
+                        gui.updateActionText("It seems the Wumpus is backed into a corner!", new Color(0,255,255));
+                    }
                 } else {
                     // shot room without wumpus
                     gui.updateActionText("Seems the Wumpus wasn't there...", new Color(255,255,0));
@@ -316,6 +322,7 @@ public  class GameControl {
 
     // leaderboard display sequence
     public void gameEnd(boolean won){
+        player.calcScore(won);
         String[][] leaderboardInfo = scores.endOfGame();
         
         gui.gameEndSequence(leaderboardInfo, won, scores.getPlayerIndex());
