@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import javax.imageio.*;
 public class Gui extends JPanel implements MouseListener, ActionListener{
@@ -86,7 +87,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     String[][] leaderboardInfo;
     boolean won;
     int playerRank;
-    ImageIcon[] roomImages = new ImageIcon[6];
+    BufferedImage[][] roomImages = new BufferedImage[6][3];
+    BufferedImage[] roomsLayer1 = new BufferedImage[6];
+    BufferedImage[] roomsLayer2 = new BufferedImage[6];
+    BufferedImage[] tunnelImages = new BufferedImage[4];
     AffineTransform[] angles;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
@@ -95,7 +99,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.width = width;
         this.height = height;
         this.gameControl = gameControl;
-        this.mapRoomSize = width / 6;
+        this.mapRoomSize = width / 5;
         this.mapStartX = (int)(mapRoomSize * 12) / 2;
         this.mapStartY = 200;
         this.cave = cave;
@@ -126,7 +130,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         this.addMouseListener(this);
 
         for(int i = 0; i < 6; i++){
-            roomImages[i] = new ImageIcon("./images/room" + i + ".png");
+            for(int k = 0; k < 3; k++){
+                File imageFile = new File("./images/room" + i + "layer" + k + ".png");
+                roomImages[i][k] = ImageIO.read(imageFile);
+            }
         }
 
         angles = new AffineTransform[6];
@@ -217,23 +224,44 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
    /////////////////////////////////////////////////
 
     private void drawRoom(double centerX, double centerY, double radius, String number, Color color){
-        g2d.drawImage(roomImages[0].getImage(), 20, 20, null);
+        
         double currentX = 0;
         double currentY = 0;
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
+        int roomRotation = (int)(Integer.parseInt(number)) % 6;
+        int roomType = (int)(6 + Integer.parseInt(number) + 5) % 6;
         for(int i = 0; i < 6; i++){
             currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
             currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
             xPoints[i] = (int)(currentX);
             yPoints[i] = (int)(currentY);
         }
-        g2d.setColor(color);
+        g2d.setColor(new Color(10, 30, 49));
         g2d.fillPolygon(xPoints, yPoints, 6);
         g2d.setColor(new Color(255, 255, 255));
         g2d.setStroke(new BasicStroke(2));
         g2d.drawPolygon(xPoints, yPoints, 6);
+        double scaleFactor = 0.9;
+        double scaledRadius = radius * 0.5;
+        if(centerX > -scaledRadius && centerX < (width + scaledRadius) && (centerY > -scaledRadius && centerY < height + scaledRadius)){
+            for(int i = 0; i < 3; i++){
+                BufferedImage roomImage = roomImages[roomType][i];
+                AffineTransform scale = angles[roomRotation];
+                
+                int xCenterDist = (int)(centerX - (roomImage.getWidth() / (2 / scaleFactor)) * (1 / scaleFactor) - (width / 2));
+                int yCenterDist = (int)(centerY - (roomImage.getHeight() / (2 / scaleFactor)) * (1 / scaleFactor) - (height / 2));
+                scale = scale.getScaleInstance(scaleFactor, scaleFactor);
+                scale.translate((centerX - (roomImage.getWidth() / (2 / scaleFactor))) * (1 / scaleFactor), (centerY - (roomImage.getHeight() / (2 / scaleFactor))) * (1 / scaleFactor));
+                scale.translate(-(xCenterDist / 25) * i, -((yCenterDist / 25) * i + (10 * i)));
+                g2d.drawImage(roomImage, scale, null);
+                g2d.drawImage(roomsLayer1[roomType], scale, null);
+                g2d.drawImage(roomsLayer2[roomType], scale, null);
+            }
+
+        }
         g2d.drawString(number, (int)centerX, (int)centerY);
+        
     }
     
     private void fillHex(double centerX, double centerY, double radius, Color color){
@@ -413,7 +441,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         // "Trivia - X out of Y (Category)"
         g2d.setFont(calibri.deriveFont((float)40));
         g2d.setColor(Color.WHITE);
-        g2d.drawString(triviaCause + " - get " + scoreData[1] + " out of " + scoreData[0] + " correct", triviaMenuX + 20, triviaMenuY + 60);
+        g2d.drawString(triviaCause + " - get 3 out of 5 correct", triviaMenuX + 20, triviaMenuY + 60);
         
         
         // Question
