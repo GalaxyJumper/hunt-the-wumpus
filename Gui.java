@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import javax.imageio.*;
+import java.util.Arrays;
 public class Gui extends JPanel implements MouseListener, ActionListener{
     //////////////////////////////////////
     //VARAIBLES
@@ -92,6 +93,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
     BufferedImage[] roomsLayer2 = new BufferedImage[6];
     BufferedImage[] tunnelImages = new BufferedImage[4];
     AffineTransform[] angles;
+    double subAngle = 0;
+    double lastSubAngle = 0;
+    AffineTransform subShift;
+    BufferedImage subImage;
     /////////////////////////////////////
     // CONSTRUCTOR(S)
     ////////////////////////////////////
@@ -135,12 +140,21 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                 roomImages[i][k] = ImageIO.read(imageFile);
             }
         }
+        for(int i = 0; i < 4; i++){
+            File imageFile = new File("./images/bridge" + i + ".png");
+            tunnelImages[i] = ImageIO.read(imageFile);
+        }
 
         angles = new AffineTransform[6];
         for(int i = 0; i < 6; i++){
             angles[i] = new AffineTransform();
             angles[i].rotate(30 * i);
         }
+        File subFile = new File("./images/sub.png");
+        subImage = ImageIO.read(subFile);
+        subShift = new AffineTransform();
+        
+        
 
 
 
@@ -155,9 +169,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         //sounds.playSound(2);
         //openPurchaseMenu();
         //this.openPopup("Tardigrades are very awesome and can live in very intense enviroments sucha as hudropthermic eventa nsd ice cold envirpnmenys like in a ruler made of wood.");
-        new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-        new String("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-    }
+}
     /////////////////////////////////////
     // METHODS
     /////////////////////////////////////
@@ -173,7 +185,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         //Antialiasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
         //Background + map
-        g2d.setColor(new Color(10, 10, 10));
+        g2d.setColor(new Color(10, 30, 49));
         g2d.setFont(calibri);
         g2d.fillRect(0, 0, width * 3, height * 3);
         drawMap((int)(mapStartX + mapOffset[0]), (int)(mapStartY + mapOffset[1]), mapRoomSize, g2d, playerLoc);
@@ -191,6 +203,14 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         
         }
         
+        
+        double scaleFactor = 0.2;
+        int xCenterDist = (int)(1280 - (subImage.getWidth() / (2 / scaleFactor)) * (1 / scaleFactor) - (width / 2));
+        int yCenterDist = (int)(1280 - (subImage.getHeight() / (2 / scaleFactor)) * (1 / scaleFactor) - (height / 2));
+        subShift = subShift.getScaleInstance(scaleFactor, scaleFactor);
+        subShift.translate((1280 - (subImage.getWidth() / (2 / scaleFactor))) * (1 / scaleFactor), (720 - (subImage.getHeight() / (2 / scaleFactor))) * (1 / scaleFactor));
+        subShift.rotate((subAngle + 3 * Math.PI / 2));
+        g2d.drawImage(subImage, subShift, null);
 
         if(dimRectTransparency != -1){
             g2d.setColor(new Color(0, 0, 0, dimRectTransparency));
@@ -218,12 +238,13 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
             drawLeaderboard();
 
         }
+
     }
     ////////////////////////////////////////////////
     // MAP + MOVEMENT
    /////////////////////////////////////////////////
 
-    private void drawRoom(double centerX, double centerY, double radius, String number, Color color){
+    private void drawRoom(double centerX, double centerY, double radius, String number, int i){
         
         double currentX = 0;
         double currentY = 0;
@@ -231,35 +252,47 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         int[] yPoints = new int[6];
         int roomRotation = (int)(Integer.parseInt(number)) % 6;
         int roomType = (int)(6 + Integer.parseInt(number) + 5) % 6;
-        for(int i = 0; i < 6; i++){
-            currentX = centerX + (Math.cos((Math.PI/3) * i) * radius);
-            currentY = centerY + (Math.sin((Math.PI/3) * i) * radius);
-            xPoints[i] = (int)(currentX);
-            yPoints[i] = (int)(currentY);
-        }
-        g2d.setColor(new Color(10, 30, 49));
-        g2d.fillPolygon(xPoints, yPoints, 6);
+
+
         g2d.setColor(new Color(255, 255, 255));
         g2d.setStroke(new BasicStroke(2));
         g2d.drawPolygon(xPoints, yPoints, 6);
         double scaleFactor = 0.9;
         double scaledRadius = radius * 0.5;
         if(centerX > -scaledRadius && centerX < (width + scaledRadius) && (centerY > -scaledRadius && centerY < height + scaledRadius)){
-            for(int i = 0; i < 3; i++){
+            
                 BufferedImage roomImage = roomImages[roomType][i];
                 AffineTransform scale = angles[roomRotation];
-                
                 int xCenterDist = (int)(centerX - (roomImage.getWidth() / (2 / scaleFactor)) * (1 / scaleFactor) - (width / 2));
                 int yCenterDist = (int)(centerY - (roomImage.getHeight() / (2 / scaleFactor)) * (1 / scaleFactor) - (height / 2));
                 scale = scale.getScaleInstance(scaleFactor, scaleFactor);
                 scale.translate((centerX - (roomImage.getWidth() / (2 / scaleFactor))) * (1 / scaleFactor), (centerY - (roomImage.getHeight() / (2 / scaleFactor))) * (1 / scaleFactor));
                 scale.translate(-(xCenterDist / 25) * i, -((yCenterDist / 25) * i + (10 * i)));
+                int[] possMovesInts = cave.possibleMoves(playerLoc);
+                int index = 0;
+                if(Integer.parseInt(number) - 1 == playerLoc && i == 0){
+                    for(int k : possMovesInts){
+                        BufferedImage tunnelImage = tunnelImages[(roomRotation + Integer.parseInt(number) + k) % 4];
+                        AffineTransform tunnelShift = new AffineTransform();
+                        
+                        int[] twoDCoords = oneToTwoD(k);
+                        double[] screenCoords = twoDToScreenSpace(twoDCoords[0], twoDCoords[1]);
+                        double[] dist = {screenCoords[0] - centerX, screenCoords[1] - centerY};
+                        double angle = Math.atan2(dist[1], dist[0]);
+                        tunnelShift.translate((centerX), centerY);
+                        tunnelShift.rotate(angle);
+                        tunnelShift.translate(0, -(tunnelImage.getHeight() / 2));
+                        g2d.drawImage(tunnelImage, tunnelShift, null);
+                        index ++;
+                    }
+                }
                 g2d.drawImage(roomImage, scale, null);
                 g2d.drawImage(roomsLayer1[roomType], scale, null);
                 g2d.drawImage(roomsLayer2[roomType], scale, null);
+
+    
             }
 
-        }
         if(cave.canMove(playerLoc, Integer.parseInt(number) - 1)){
             g2d.setColor(new Color(0, 255, 0));
 
@@ -293,6 +326,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
         ArrayList<Integer> exploredRoomsTemp = exploredRooms;
         for(int i : possibleMovesInt) possibleMoves.add(i);
+        for(int b = 0; b < 3; b ++){
         //Column
         for(int i = 0; i < 5; i++){
             
@@ -315,10 +349,10 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
                     currentColor = new Color(20, 20, 20);
                 }
                 
-                drawRoom(x + startX, (y + ( (k % 2) * (SQRT3*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), currentColor);
+                drawRoom(x + startX, (y + ( (k % 2) * (SQRT3*radius)/2) ) + startY, radius + 1, String.valueOf(currentRoomNum + 1), b);
             }
         }
-    
+    }
     }
     private void drawFailMoveHex(int millis, int loc){
         int x = loc % 6;
@@ -361,6 +395,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         int[] mapCoords = oneToTwoD(whereTo);
         double[] moveToCoords = twoDToScreenSpace(mapCoords[0], mapCoords[1]);
         distanceMovingTo = new double[] {1280 - moveToCoords[0], 720 - moveToCoords[1]};
+        subAngle = Math.atan2(distanceMovingTo[1], distanceMovingTo[0]);
         lastOffset = this.mapOffset;
 
     }
@@ -684,7 +719,7 @@ public class Gui extends JPanel implements MouseListener, ActionListener{
         double resultX = (x * (mapRoomSize*1.5));
         return new double[] {
             resultX + mapStartX + mapOffset[0],
-            (resultY + ((x % 2) * (SQRT3*mapRoomSize)/2) ) + mapStartY + mapOffset[1]
+            (resultY + ((Math.abs(x) % 2) * (SQRT3*mapRoomSize)/2) ) + mapStartY + mapOffset[1]
         };
     }
     
